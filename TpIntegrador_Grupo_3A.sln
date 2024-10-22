@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TpIntegrador_Grupo_3A", "Tp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessService", "DataAccess\DataAccessService.csproj", "{D25ECE2B-D78D-41B9-A075-C1BD662DE33C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{6AD9A665-5416-408A-9ACD-B4FFB8E39022}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{03A98043-7966-4B9D-A7D2-BE1B393DB6A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{D25ECE2B-D78D-41B9-A075-C1BD662DE33C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D25ECE2B-D78D-41B9-A075-C1BD662DE33C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D25ECE2B-D78D-41B9-A075-C1BD662DE33C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AD9A665-5416-408A-9ACD-B4FFB8E39022}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AD9A665-5416-408A-9ACD-B4FFB8E39022}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AD9A665-5416-408A-9ACD-B4FFB8E39022}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AD9A665-5416-408A-9ACD-B4FFB8E39022}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03A98043-7966-4B9D-A7D2-BE1B393DB6A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03A98043-7966-4B9D-A7D2-BE1B393DB6A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03A98043-7966-4B9D-A7D2-BE1B393DB6A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03A98043-7966-4B9D-A7D2-BE1B393DB6A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace TpIntegrador_Grupo_3A
 {
-    public partial class Contact : Page
+    public partial class Productos : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
