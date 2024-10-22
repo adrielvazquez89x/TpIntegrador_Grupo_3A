@@ -6,13 +6,13 @@
         <div id="carouselExample" class="carousel slide">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="https://childrens-spaces.com/wp-content/uploads/2019/02/moda-infantil.jpg" class="d-block w-100" alt="...">
+                    <img src="./Images/slider1.jpg" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="https://childrens-spaces.com/wp-content/uploads/2019/02/moda-infantil.jpg" class="d-block w-100" alt="...">
+                    <img src="./Images/slider1.jpg" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="https://childrens-spaces.com/wp-content/uploads/2019/02/moda-infantil.jpg" class="d-block w-100" alt="...">
+                    <img src="./Images/slider1.jpg" class="d-block w-100" alt="...">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
