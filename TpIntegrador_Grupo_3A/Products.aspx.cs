@@ -37,10 +37,10 @@ namespace TpIntegrador_Grupo_3A
                 new Product { Id = 1, Name = "Vestido", Price = 1000,
                     Category = cat, Season = sea, Section = sect, 
                     Images = new List<Model.Image>{ new Model.Image { Id= 1, IdProduct = 1, Url= "https://ninayco.com/81667-superlarge_default/vestido-red-shine-.jpg" } } },
-                         new Product { Id = 2, Name = "Cazadora", Price = 10400,
+                         new Product { Id = 2, Name = "Blusa", Price = 10400,
                     Category = cat, Season = sea, Section = sect,
                     Images = new List<Model.Image>{ new Model.Image { Id= 2, IdProduct = 2, Url= "https://ninayco.com/81667-superlarge_default/vestido-red-shine-.jpg" } } },
-                                  new Product { Id = 3, Name = "Capa de mago", Price = 2000,
+                                  new Product { Id = 3, Name = "Minifalda", Price = 2000,
                     Category = cat, Season = sea, Section = sect,
                     Images = new List<Model.Image>{ new Model.Image { Id= 3, IdProduct = 3, Url= "https://ninayco.com/81667-superlarge_default/vestido-red-shine-.jpg" } } },
             };
