@@ -26,7 +26,7 @@ namespace Business
                 //para precargar un agente existente
                 if (!string.IsNullOrEmpty(id))
                 {
-                    data.setQuery("SELECT  Id, Provincia, Ciudad, Barrio, Calle, Numero, CP, Piso, Unidad FROM Direcciones WHERE Id=" + id);
+                    data.setQuery("SELECT Id, Provincia, Ciudad, Barrio, Calle, Numero, CP, Piso, Unidad FROM Direcciones WHERE Id=" + id);
                 }
 
                 data.executeRead();
@@ -45,7 +45,7 @@ namespace Business
                         Number = (int)reader["Numero"],
                         CP = (string)reader["CP"],
                         Floor = (int)reader["Piso"],
-                        Unit = (char)reader["Unidad"]
+                        Unit = (string)reader["Unidad"]
                     };
 
                     adressList.Add(aux);

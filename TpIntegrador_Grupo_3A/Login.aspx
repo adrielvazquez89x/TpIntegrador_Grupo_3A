@@ -4,7 +4,7 @@
         <div class="row w-100 justify-content-center">
             <div class="col-md-4">
                 <div>
-                    <h1 class="text-center mb-2">Inmobiliaria C#</h1>
+                    <h1 class="text-center mb-2">Bienvenido a UrbanGlam</h1>
                 </div>
                 <div class="card mt-5 shadow-sm border-0">
 
