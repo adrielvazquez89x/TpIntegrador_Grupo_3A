@@ -120,6 +120,7 @@
     <Content Include="Images\slider1.jpg" />
     <Content Include="Login.aspx" />
     <Content Include="PassConfig.aspx" />
+    <Content Include="PersonalData.aspx" />
     <Content Include="Products.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -186,6 +187,13 @@
     </Compile>
     <Compile Include="PassConfig.aspx.designer.cs">
       <DependentUpon>PassConfig.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalData.aspx.cs">
+      <DependentUpon>PersonalData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonalData.aspx.designer.cs">
+      <DependentUpon>PersonalData.aspx</DependentUpon>
     </Compile>
     <Compile Include="Products.aspx.cs">
       <DependentUpon>Products.aspx</DependentUpon>

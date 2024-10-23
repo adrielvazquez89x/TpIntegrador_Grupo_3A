@@ -7,14 +7,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - Mi aplicación ASP.NET</title>
+    <title>UrbanGlam</title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
 
     <webopt:BundleReference runat="server" Path="~/Content/css" />
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/Images/iconoPag.png" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="~/Css/Master.css">
 </head>
@@ -41,15 +41,18 @@
 
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" runat="server" href="~/">Ropa Local</a>
+                <a class="navbar-brand" runat="server" href="~/">
+                    UrbanGlam <img src="Images/iconoPag.png" alt="Icono" class="me-2" style="height:40px;" />
+                      
+                </a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Productos">Productos</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/">Novedades</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Productos">Liquidación</a></li>
                     </ul>
 
                     <div class="d-flex">
@@ -83,7 +86,7 @@
                             </asp:Repeater>
                             <hr>
                             <li class="nav-item">
-                                <a href="/settings" class="nav-link d-flex align-items-center px-3 py-2">
+                                <a href="/PersonalData" class="nav-link d-flex align-items-center px-3 py-2">
                                     <i class='bi bi-gear me-2 fs-5'></i>
                                     <span class="d-none d-sm-inline">Datos Personales</span>
                                 </a>

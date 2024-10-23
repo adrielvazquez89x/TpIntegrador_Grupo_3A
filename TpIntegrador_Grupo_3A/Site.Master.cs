@@ -12,14 +12,15 @@ namespace TpIntegrador_Grupo_3A
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (!IsPostBack)
             {
                 List<Link> links = new List<Link>
                 {
-                    new Link { Name = "Buzos", Url = "/products?category=buzos", Icon ="bi-arrow-through-heart", Active= false },
-                    new Link { Name = "Pantalones", Url = "/products?category=buzos", Icon="bi-balloon-heart", Active= false  },
-                    new Link { Name = "Remeras", Url = "/products?category=buzos", Icon="bi-chat-heart", Active= false  },
-                    new Link { Name = "Vestidos", Url = "/products?category=buzos", Icon="bi-emoji-heart-eyes", Active = false}
+                    new Link { Name = "Buzos", Url = "/products?category=Buzos", Icon ="bi-arrow-through-heart", Active= false },
+                    new Link { Name = "Pantalones", Url = "/products?category=Pantalones", Icon="bi-balloon-heart", Active= false  },
+                    new Link { Name = "Remeras", Url = "/products?category=Remeras", Icon="bi-chat-heart", Active= false  },
+                    new Link { Name = "Vestidos", Url = "/products?category=Vestidos", Icon="bi-emoji-heart-eyes", Active = false}
                 };
 
                 RepeaterSidebar.DataSource = links;

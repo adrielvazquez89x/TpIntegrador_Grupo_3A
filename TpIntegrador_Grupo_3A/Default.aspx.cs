@@ -11,7 +11,7 @@ namespace TpIntegrador_Grupo_3A
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            this.Title = "UrbanGlam";
         }
     }
 }

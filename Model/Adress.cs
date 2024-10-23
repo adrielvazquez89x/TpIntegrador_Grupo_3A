@@ -16,6 +16,6 @@ namespace Model
         public int Number { get; set; }
         public string CP { get; set; }
         public int Floor { get; set; }
-        public char Unit { get; set; }
+        public string Unit { get; set; }
     }
 }
