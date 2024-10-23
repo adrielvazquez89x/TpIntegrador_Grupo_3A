@@ -14,6 +14,14 @@ namespace TpIntegrador_Grupo_3A
         public List<Product> listProd;
         protected void Page_Load(object sender, EventArgs e)
         {
+            string category = Request.QueryString["category"];
+            if (!IsPostBack)
+            {
+                // LoadProductsByCategory(category);    //Carga los productos según la categoría
+            }
+
+
+
             var cat = new Category();
             cat.Name = "Noche";
             cat.Id = 1;
