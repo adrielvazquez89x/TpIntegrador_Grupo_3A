@@ -19,7 +19,6 @@ namespace Business
 
             try
             {
-
                 data.setQuery("SELECT Id, Provincia, Ciudad, Barrio, Calle, Numero, CP, Piso, Unidad FROM Direcciones");
 
                 // Si se proporciona un ID, se ajusta la consulta
