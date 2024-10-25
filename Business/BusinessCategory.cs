@@ -11,6 +11,42 @@ namespace Business
 {
     public class BusinessCategory
     {
+
+        public List<Category> ListCategories()
+        {
+            List<Category> list = new List<Category>();
+            DataAccess data = new DataAccess();
+
+            try
+            {
+                data.setQuery("SELECT * FROM Categorias");
+                data.executeRead();
+
+                while (data.Reader.Read()) 
+                {
+                    Category aux = new Category
+                    {
+                        Id = (int)data.Reader["Id"],
+                        Name = (string)data.Reader["Nombre"],
+                        Active = (bool)data.Reader["Activo"]
+                    };
+
+                    list.Add(aux);
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
+
         public string Add(Category category)
         {
             DataAccess data = new DataAccess();
