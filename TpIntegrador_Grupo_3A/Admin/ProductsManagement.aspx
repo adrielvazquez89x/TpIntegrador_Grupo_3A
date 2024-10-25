@@ -10,13 +10,13 @@
                 {%>
             <div class="d-flex col-6 justify-content-around">
                 <div>
-                    <asp:Button ID="btnPickCategory" runat="server" Text="Categories" CssClass="btn btn-dark" OnClick="btnPickCategory_Click" />
+                    <asp:Button ID="btnPickCategory" runat="server" Text="Categorias" CssClass="btn btn-dark" OnClick="btnPickCategory_Click" />
                 </div>
                 <div>
-                    <asp:Button ID="btnPickSeason" runat="server" Text="Seasons" CssClass="btn btn-dark" />
+                    <asp:Button ID="btnPickSeason" runat="server" Text="Temporadas" CssClass="btn btn-dark" />
                 </div>
                 <div>
-                    <asp:Button ID="btnPickSection" runat="server" Text="Sections" CssClass="btn btn-dark" />
+                    <asp:Button ID="btnPickSection" runat="server" Text="Secciones" CssClass="btn btn-dark" />
                 </div>
             </div>
             <%}%>

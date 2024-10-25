@@ -42,14 +42,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adress.cs" />
-    <Compile Include="Category.cs" />
+    <Compile Include="ProductAttributes\Category.cs" />
+    <Compile Include="ProductAttributes\Colour.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Season.cs" />
-    <Compile Include="Section.cs" />
+    <Compile Include="ProductAttributes\Season.cs" />
+    <Compile Include="ProductAttributes\Section.cs" />
+    <Compile Include="ProductAttributes\Size.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

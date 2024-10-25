@@ -22,7 +22,7 @@ namespace DataAccessService
         
         public DataAccess()
         {
-            _connection = new SqlConnection($"server=.\\SQLEXPRESS; database = LocalRopa_DB; integrated security = true");
+            _connection = new SqlConnection($"server=.\\SQLEXPRESS04; database = LocalRopa_DB; integrated security = true");
            
             _command = new SqlCommand();
         }
