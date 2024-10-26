@@ -27,7 +27,7 @@ namespace Business
                     Category aux = new Category
                     {
                         Id = (int)data.Reader["Id"],
-                        Name = (string)data.Reader["Nombre"],
+                        Description = (string)data.Reader["Nombre"],
                         Active = (bool)data.Reader["Activo"]
                     };
 
@@ -54,7 +54,7 @@ namespace Business
             try
             {
                 data.setQuery("INSERT INTO Categorias (Nombre) Values (@Category)");
-                data.setParameter("@Category", category.Name);
+                data.setParameter("@Category", category.Description);
                 data.executeAction();
                 return "ok";
             }
@@ -87,7 +87,7 @@ namespace Business
             try
             {
                 data.setQuery("UPDATE Categorias SET Nombre = @Category WHERE Id = @Id");
-                data.setParameter("@Category", category.Name);
+                data.setParameter("@Category", category.Description);
                 data.setParameter("@Id", category.Id);
                 data.executeAction();
                 return "ok";

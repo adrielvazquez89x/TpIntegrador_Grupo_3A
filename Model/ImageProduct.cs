@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Image
+    public class ImageProduct
     {
         public int Id { get; set; }
         public int IdProduct { get; set; }
-        public string Url { get; set; }
+        public string UrlImage { get; set; }
     }
 }

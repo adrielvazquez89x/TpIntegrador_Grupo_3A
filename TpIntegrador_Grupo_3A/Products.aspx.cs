@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Business;
 using Microsoft.Ajax.Utilities;
 using Model;
 
@@ -11,39 +12,53 @@ namespace TpIntegrador_Grupo_3A
 {
     public partial class Productos : System.Web.UI.Page
     {
-        public List<Product> listProd;
+        public List<Product> prodList;
+        public List<Model.ImageProduct> ImageList;
+
+        public int IdSelectedArt;
+
+        public Product selectedProd = new Product();
+
+        public Category selectedCateg = new Category();
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            string category = Request.QueryString["category"];
+            BusinessProduct businessProd = new BusinessProduct();
+            BusinessImageProduct businessImage = new BusinessImageProduct();
+            prodList = businessProd.list();
             if (!IsPostBack)
             {
-                // LoadProductsByCategory(category);    //Carga los productos según la categoría
+                //for (int i = 0; i < prodList.Count; i++)
+                //{
+                //    Product aux = prodList[i];
+                //    aux.Images = businessImage.list(aux.Id);
+                //}
+                rptProdList.DataSource = prodList;
+                rptProdList.DataBind();
             }
 
 
+            //string category = Request.QueryString["category"];
+            //if (!IsPostBack)
+            //{
+            //    // LoadProductsByCategory(category);    //Carga los productos según la categoría
+            //}
+        }
 
-            var cat = new Category();
-            cat.Name = "Noche";
-            cat.Id = 1;
-            var sea = new Season();
-            sea.Id = 1;
-            sea.Name = "Verano";
-            var sect = new Section();
-            sect.Name = "Mujer";
-            sect.Id = 1;
-
-            listProd = new List<Product>
+        protected void rptProdList_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                //new Product { Id = 1, Name = "Vestido", Price = 1000,
-                //    Category = cat, Seasons = sea, Sections = sect, 
-                //    Images = new List<Model.Image>{ new Model.Image { Id= 1, IdProduct = 1, Url= "https://ninayco.com/81667-superlarge_default/vestido-red-shine-.jpg" } } },
-                //         new Product { Id = 2, Name = "Blusa", Price = 10400,
-                //    Category = cat, Seasons = sea, Sections = sect,
-                //    Images = new List<Model.Image>{ new Model.Image { Id= 2, IdProduct = 2, Url= "https://ninayco.com/81667-superlarge_default/vestido-red-shine-.jpg" } } },
-                //                  new Product { Id = 3, Name = "Minifalda", Price = 2000,
-                //    Category = cat, Seasons = sea, Sections = sect,
-                //    Images = new List<Model.Image>{ new Model.Image { Id= 3, IdProduct = 3, Url= "https://ninayco.com/81667-superlarge_default/vestido-red-shine-.jpg" } } },
-            };
+                Product currentProduct = (Product)e.Item.DataItem;
+                Repeater rptImagesList = (Repeater)e.Item.FindControl("rptImagesList"); // Toma el Repeater anidado
+                rptImagesList.DataSource = currentProduct.Images;
+                rptImagesList.DataBind();
+            }
+        }
+
+        protected void btnPick_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

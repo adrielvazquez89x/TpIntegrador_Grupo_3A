@@ -43,14 +43,14 @@ namespace TpIntegrador_Grupo_3A.Admin
             //Manejamos el botón de agregar y editar
             if (btnAddCategory.Text == "Agregar")
             {
-                result = businessCategory.Add(new Category { Name = txtCategory.Text.Trim() });
+                result = businessCategory.Add(new Category {Description = txtCategory.Text.Trim() });
             }
             else
             {
                 if (Session["ObjectInMod"] != null)
                 {
                     Category category = (Category)Session["ObjectInMod"];
-                    category.Name = txtCategory.Text.Trim();
+                    category.Description = txtCategory.Text.Trim();
                     result = businessCategory.Update(category);
                     Session["ObjectInMod"] = null;
                     btnAddCategory.Text = "Agregar";
@@ -100,7 +100,7 @@ namespace TpIntegrador_Grupo_3A.Admin
 
             Session["ObjectInMod"] = category;
 
-            txtCategory.Text = category.Name;
+            txtCategory.Text = category.Description;
             btnAddCategory.Text = "Editar";
             CurrentOption = Buttons.Category;
         }
@@ -147,7 +147,7 @@ namespace TpIntegrador_Grupo_3A.Admin
             string categoryName = args[1];
             bool categoryActive = bool.Parse(args[2]);
 
-            return new Category { Id = categoryId, Name = categoryName, Active = categoryActive };
+            return new Category { Id = categoryId, Description = categoryName, Active = categoryActive };
         }
 
         protected void btnBack_Click(object sender, EventArgs e)

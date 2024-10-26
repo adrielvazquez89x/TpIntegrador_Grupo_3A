@@ -44,7 +44,7 @@
     <Compile Include="Adress.cs" />
     <Compile Include="ProductAttributes\Category.cs" />
     <Compile Include="ProductAttributes\Colour.cs" />
-    <Compile Include="Image.cs" />
+    <Compile Include="ImageProduct.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
