@@ -58,7 +58,7 @@
                         OnPageIndexChanging="dgvCategories_PageIndexChanging" AllowPaging="true"
                         PageSize="5">
                         <Columns>
-                            <asp:BoundField DataField="Name" HeaderText="Nombre" />
+                            <asp:BoundField DataField="Description" HeaderText="Nombre" />
 
                             <asp:TemplateField HeaderText="Activo">
                                 <ItemTemplate>
@@ -74,7 +74,7 @@
                                     <asp:LinkButton
                                         ID="btnEditCategory"
                                         runat="server"
-                                        CommandArgument='<%# Eval("Id") + "|" + Eval("Name")+ "|" + Eval("Active") %>'
+                                        CommandArgument='<%# Eval("Id") + "|" + Eval("Description")+ "|" + Eval("Active") %>'
                                         CssClass="btn btn-sm text-primary me-2"
                                         OnClick="btnEditCategory_Click">
                                     <i class="bi bi-pencil-square"></i>
@@ -87,7 +87,7 @@
                                         runat="server"
                                         CssClass="btn btn-sm text-danger me-2"
                                         OnClick="btnDeleteCategory_Click"
-                                        CommandArgument='<%# Eval("Id") + "|" + Eval("Name")+ "|" + Eval("Active") %>'
+                                        CommandArgument='<%# Eval("Id") + "|" + Eval("Description")+ "|" + Eval("Active") %>'
                                         Visible='<%# Convert.ToBoolean(Eval("Active")) %>'
                                         ToolTip="Desactivar">
                                         <i class="bi bi-trash-fill"></i>
@@ -99,7 +99,7 @@
                                         runat="server"
                                         CssClass="btn btn-sm text-success"
                                         OnClick="btnActivateCategory_Click"                                        
-                                        CommandArgument='<%# Eval("Id") + "|" + Eval("Name")+ "|" + Eval("Active") %>'
+                                        CommandArgument='<%# Eval("Id") + "|" + Eval("Description")+ "|" + Eval("Active") %>'
                                         Visible='<%# !Convert.ToBoolean(Eval("Active")) %>'
                                         ToolTip="Activar">
                                         <i class="bi bi-check-circle"></i>

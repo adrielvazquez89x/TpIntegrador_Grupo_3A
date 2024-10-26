@@ -17,7 +17,7 @@ namespace Business
         {
             try
             {
-                string query = "SELECT * FROM Categorias WHERE Actvio=1";
+                string query = "SELECT * FROM Categorias";
                 data.setQuery(query);
 
                 if (id != 0)
