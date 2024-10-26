@@ -79,9 +79,9 @@
                         <asp:Repeater ID="RepeaterSidebar" runat="server">
                             <ItemTemplate>
                                 <li class="nav-item">
-                                    <a href='<%# Eval("Url") %>' class="nav-link d-flex align-items-center px-3 py-2 <%# Eval("Active").ToString() == "True" ? "active" : "" %>">
+                                    <a href='/products?Idcategory=<%# Eval("Id") %>' class="nav-link d-flex align-items-center px-3 py-2">
                                         <i class='bi <%# Eval("Icon") %> me-2 fs-5'></i>
-                                        <span class="d-none d-sm-inline"><%# Eval("Name") %></span>
+                                        <span class="d-none d-sm-inline"><%# Eval("Description") %></span>
                                     </a>
                                 </li>
                             </ItemTemplate>

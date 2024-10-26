@@ -13,7 +13,7 @@ namespace Business
     {
         List<Season> listSeason = new List<Season>();
         DataAccess data = new DataAccess();
-        public List<Season> list(int id)  //esta lista es para cuando alguien quiere ver cierta temporada
+        public List<Season> list(int id)
         {
             try
             {

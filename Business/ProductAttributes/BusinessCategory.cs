@@ -33,6 +33,7 @@ namespace Business
                     {
                         Id = (int)data.Reader["Id"],
                         Description = (string)data.Reader["Descripcion"],
+                        Icon = (string)data.Reader["Icono"],
                         Active = (bool)data.Reader["Activo"]
                     };
 
