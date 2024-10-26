@@ -25,24 +25,17 @@ namespace TpIntegrador_Grupo_3A
         {
             BusinessProduct businessProd = new BusinessProduct();
             BusinessImageProduct businessImage = new BusinessImageProduct();
-            prodList = businessProd.list();
+            //prodList = businessProd.list();
+            int idCategory =Request.QueryString["Idcategory"] is null ? 0 : int.Parse(Request.QueryString["Idcategory"]);  //validarlo (podrian a mano ponerle algo no entero)
+
             if (!IsPostBack)
             {
-                //for (int i = 0; i < prodList.Count; i++)
-                //{
-                //    Product aux = prodList[i];
-                //    aux.Images = businessImage.list(aux.Id);
-                //}
+                prodList = businessProd.listByCategory(idCategory);    //Carga los productos según la categoría
+
                 rptProdList.DataSource = prodList;
                 rptProdList.DataBind();
             }
 
-
-            //string category = Request.QueryString["category"];
-            //if (!IsPostBack)
-            //{
-            //    // LoadProductsByCategory(category);    //Carga los productos según la categoría
-            //}
         }
 
         protected void rptProdList_ItemDataBound(object sender, RepeaterItemEventArgs e)

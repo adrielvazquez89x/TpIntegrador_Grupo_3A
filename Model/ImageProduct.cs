@@ -9,7 +9,6 @@ namespace Model
     public class ImageProduct
     {
         public int Id { get; set; }
-        //public int IdProduct { get; set; }
         public string CodProd { get; set; }
         public string UrlImage { get; set; }
     }
