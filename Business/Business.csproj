@@ -42,10 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessAdress.cs" />
-    <Compile Include="BusinessCategory.cs" />
+    <Compile Include="ProductAttributes\BusinessCategory.cs" />
     <Compile Include="BusinessImageProduct.cs" />
     <Compile Include="BusinessProduct.cs" />
+    <Compile Include="ProductAttributes\BusinessColour.cs" />
+    <Compile Include="ProductAttributes\BusinessSeason.cs" />
     <Compile Include="BusinessUser.cs" />
+    <Compile Include="ProductAttributes\BusinessSection.cs" />
+    <Compile Include="ProductAttributes\BusinessSize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

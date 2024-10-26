@@ -10,7 +10,7 @@ namespace Model
     public class Product
     {
         public int Id { get; set; }
-        public string Code { get; set; }
+        public string Code { get; set; } //B001AXL
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int Stock {  get; set; }
@@ -18,8 +18,9 @@ namespace Model
         public Category Category { get; set; }  //buzos, pantalones, remeras, camisas...
         public Colour Colour { get; set; }  //el color y talle es unico porque el id ya hace referencia a una prenda en particular con cierto talle y color
         public Size Size { get; set; }
+        public Season Seasons { get; set; }
+        public DateTime CreationDate { get; set; }
         public List<ImageProduct> Images { get; set; }
-        public List<Season> Seasons { get; set; }
-        public List<Section> Sections { get; set; } //urbano, fiesta, formal, tendencia, noche, clasicos, estampados...
+        public List<Section> Sections { get; set; } //Ultimos lanzamientos, urbano, fiesta, formal, tendencia, noche, clasicos, estampados...
     }
 }

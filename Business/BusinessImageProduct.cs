@@ -10,20 +10,20 @@ namespace Business
 {
     public class BusinessImageProduct
     {
-        public List<ImageProduct> list(int id = 0)
+        public List<ImageProduct> list(string code="")
         {
             List<ImageProduct> list = new List<ImageProduct>();
             DataAccess data = new DataAccess();
 
             try
             {
-                string query = "SELECT Id, IdProducto, UrlImagen FROM ImagenesProductos";
+                string query = "SELECT Id, CodigoProducto, UrlImagen FROM ImagenesProductos";
                 data.setQuery(query);
 
-                if (id != 0)
+                if (code != "")
                 {
-                    data.setQuery(query += " WHERE IdProducto = @IdProducto");
-                    data.setParameter("@IdProducto", id);
+                    data.setQuery(query += " WHERE CodigoProducto = @CodigoProducto");
+                    data.setParameter("@CodigoProducto", code);
                 }
 
                 data.executeRead();
@@ -32,7 +32,7 @@ namespace Business
                 {
                     ImageProduct aux = new ImageProduct();
                     aux.Id = (int)data.Reader["Id"];
-                    aux.IdProduct = (int)data.Reader["IdProducto"];
+                    aux.CodProd =(string)data.Reader["CodigoProducto"];
                     aux.UrlImage = (string)data.Reader["UrlImagen"];
 
                     list.Add(aux);

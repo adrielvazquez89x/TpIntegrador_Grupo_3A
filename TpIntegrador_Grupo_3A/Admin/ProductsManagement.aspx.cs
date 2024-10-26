@@ -76,7 +76,7 @@ namespace TpIntegrador_Grupo_3A.Admin
             try
             {
                 BusinessCategory businessCategory = new BusinessCategory();
-                List<Category> categories = businessCategory.ListCategories();
+                List<Category> categories = businessCategory.list();
 
                 dgvCategories.DataSource = categories;
                 dgvCategories.DataBind();

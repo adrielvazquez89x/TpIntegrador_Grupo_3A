@@ -17,16 +17,18 @@ namespace Business
         {
             try
             {
-                string query = "SELECT P.Id AS IdProducto, P.Codigo, P.Nombre, P.Precio, P.Stock, P.Descripcion, P.IdCategoria, P.IdColor, P.IdTalle, " +
-                              "Ca.Descripcion AS Categoria, Co.Descripcion AS Color, T.Descripcion AS Talle " +
+                string query = "SELECT P.Id AS IdProducto, P.Codigo, P.Nombre, P.Precio, P.Stock, P.Descripcion, P.FechaCreacion, P.IdCategoria, P.IdColor, " +
+                              "P.IdTalle, P.IdSeccion, P.IdTemporada, Ca.Descripcion AS Categoria, Co.Descripcion AS Color, Ta.Descripcion AS Talle, " +
+                              "S.Descripcion AS Seccion, Te.Descripcion AS Temporada " +
                               "FROM PRODUCTOS P JOIN CATEGORIAS Ca ON Ca.Id = P.IdCategoria JOIN COLORES Co ON Co.Id = P.IdColor " +
-                              "JOIN TALLES T ON T.Id = P.IdTalle";
+                              "JOIN TALLES Ta ON Ta.Id = P.IdTalle JOIN Temporadas Te ON Te.Id=P.IdTemporada "+
+                              "JOIN Secciones S ON S.Id=P.IdSeccion WHERE P.Activo=1 ";
                 data.setQuery(query);
 
                 if (id != 0)
                 {
-                    data.setQuery(query += " WHERE IdProducto = @IdProducto");
-                    data.setParameter("@Idproducto", id);
+                    data.setQuery(query += " AND IdProducto = @IdProducto");
+                    data.setParameter("@IdProducto", id);
                 }
                 data.executeRead();
 
@@ -49,11 +51,11 @@ namespace Business
                     aux.Size.Id = (int)data.Reader["IdTalle"];
                     aux.Size.Description = (string)data.Reader["Talle"];
 
-                    //DESDE ACÁ HABRIA QUE LLAMAR AL METODO LISTAR DE LA CLASE IMG PASANDO EL ID.PRODUCTO, y lo mismo con temporadas y secciones
+
                     BusinessImageProduct businessImage = new BusinessImageProduct();
-                    imageList = businessImage.list(aux.Id);
+                    imageList = businessImage.list(aux.Code);
                     aux.Images = imageList;
-                    //esto mismo hay que hacerlo con Temporadas y Secciones
+
 
                     productList.Add(aux);
                 }
