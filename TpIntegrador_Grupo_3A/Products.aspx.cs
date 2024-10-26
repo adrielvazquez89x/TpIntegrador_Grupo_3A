@@ -24,7 +24,7 @@ namespace TpIntegrador_Grupo_3A
         protected void Page_Load(object sender, EventArgs e)
         {
             BusinessProduct businessProd = new BusinessProduct();
-            BusinessImageProduct businessImage = new BusinessImageProduct();
+            //BusinessImageProduct businessImage = new BusinessImageProduct();
             //prodList = businessProd.list();
             int idCategory =Request.QueryString["Idcategory"] is null ? 0 : int.Parse(Request.QueryString["Idcategory"]);  //validarlo (podrian a mano ponerle algo no entero)
 

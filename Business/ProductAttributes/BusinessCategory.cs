@@ -17,7 +17,7 @@ namespace Business
         {
             try
             {
-                string query = "SELECT * FROM Categorias WHERE Actvio=1";
+                string query = "SELECT * FROM Categorias WHERE Activo=1";
                 data.setQuery(query);
 
                 if (id != 0)
@@ -33,6 +33,7 @@ namespace Business
                     {
                         Id = (int)data.Reader["Id"],
                         Description = (string)data.Reader["Descripcion"],
+                        Icon = (string)data.Reader["Icono"],
                         Active = (bool)data.Reader["Activo"]
                     };
 
