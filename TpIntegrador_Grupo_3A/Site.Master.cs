@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using Business;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,20 +11,15 @@ namespace TpIntegrador_Grupo_3A
 {
     public partial class SiteMaster : MasterPage
     {
+        public List<Category> categList;
         protected void Page_Load(object sender, EventArgs e)
         {
-            
             if (!IsPostBack)
             {
-                List<Link> links = new List<Link>
-                {
-                    new Link { Name = "Buzos", Url = "/products?Idcategory=1", Icon ="bi-arrow-through-heart", Active= false },
-                    new Link { Name = "Pantalones", Url = "/products?Idcategory=2", Icon="bi-balloon-heart", Active= false  },
-                    new Link { Name = "Remeras", Url = "/products?Idcategory=3", Icon="bi-chat-heart", Active= false  },
-                    new Link { Name = "Vestidos", Url = "/products?Idcategory=4", Icon="bi-emoji-heart-eyes", Active = false}
-                };
+                BusinessCategory businessCategory = new BusinessCategory();
+                categList = businessCategory.list();
 
-                RepeaterSidebar.DataSource = links;
+                RepeaterSidebar.DataSource = categList;
                 RepeaterSidebar.DataBind();
             }
 

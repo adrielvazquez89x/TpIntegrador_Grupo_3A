@@ -1,4 +1,5 @@
-﻿using DataAccessService;
+﻿using Business.ProductAttributes;
+using DataAccessService;
 using Model;
 using System;
 using System.Collections;
@@ -6,12 +7,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Business
 {
     public class BusinessProduct
     {
         List<Product> productList = new List<Product>();
+        List<Model.Section> sectionList = new List<Model.Section>();
         List<ImageProduct> imageList = new List<ImageProduct>();
         DataAccess data = new DataAccess();
         public List<Product> list(int id=0) //lista todos los productos o uno en particular
@@ -23,7 +26,7 @@ namespace Business
                               "S.Descripcion AS Seccion, Te.Descripcion AS Temporada " +
                               "FROM PRODUCTOS P JOIN CATEGORIAS Ca ON Ca.Id = P.IdCategoria JOIN COLORES Co ON Co.Id = P.IdColor " +
                               "JOIN TALLES Ta ON Ta.Id = P.IdTalle JOIN Temporadas Te ON Te.Id=P.IdTemporada "+
-                              "JOIN Secciones S ON S.Id=P.IdSeccion WHERE P.Activo=1 ";
+                              "WHERE P.Activo=1 ";  //quité JOIN Secciones S ON S.Id=P.IdSeccion
                 data.setQuery(query);
 
                 if (id != 0)
@@ -51,12 +54,13 @@ namespace Business
                     aux.Size = new Size();
                     aux.Size.Id = (int)data.Reader["IdTalle"];
                     aux.Size.Description = (string)data.Reader["Talle"];
-
+                    aux.Season = new Season();
+                    aux.Season.Id = (int)data.Reader["IdTemporada"];
+                    aux.Season.Description = (string)data.Reader["Temporada"];
 
                     BusinessImageProduct businessImage = new BusinessImageProduct();
                     imageList = businessImage.list(aux.Code);
                     aux.Images = imageList;
-
 
                     productList.Add(aux);
                 }

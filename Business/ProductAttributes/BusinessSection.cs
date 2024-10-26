@@ -12,7 +12,7 @@ namespace Business.ProductAttributes
     {
         List<Section> listSection = new List<Section>();
         DataAccess data = new DataAccess();
-        public List<Section> list(int id=0)  //esta lista es para cuando alguien quiere ver cierta temporada
+        public List<Section> list(int id=0)
         {
             try
             {
