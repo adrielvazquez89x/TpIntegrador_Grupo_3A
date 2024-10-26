@@ -13,11 +13,11 @@ namespace Business
     {
         List<Season> listSeason = new List<Season>();
         DataAccess data = new DataAccess();
-        public List<Season> list(int id)
+        public List<Season> list(int id = 0)
         {
             try
             {
-                string query = "SELECT * FROM Temporadas WHERE Activo=1";
+                string query = "SELECT * FROM Temporadas";
                 data.setQuery(query);
 
                 if (id != 0)

@@ -96,7 +96,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Admin\Categories.aspx" />
+    <Content Include="Admin\Colours.aspx" />
+    <Content Include="Admin\Seasons.aspx" />
+    <Content Include="Admin\Sections.aspx" />
+    <Content Include="Admin\Sizes.aspx" />
+    <Content Include="Admin\UserControl_ButtonBack.ascx" />
+    <Content Include="Admin\UserControl_Buttons.ascx" />
     <Content Include="Admin\ProductsManagement.aspx" />
+    <Content Include="Admin\UserControl_Toast.ascx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -163,12 +171,68 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\Categories.aspx.cs">
+      <DependentUpon>Categories.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Categories.aspx.designer.cs">
+      <DependentUpon>Categories.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Colours.aspx.cs">
+      <DependentUpon>Colours.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Colours.aspx.designer.cs">
+      <DependentUpon>Colours.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Seasons.aspx.cs">
+      <DependentUpon>Seasons.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Seasons.aspx.designer.cs">
+      <DependentUpon>Seasons.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Sections.aspx.cs">
+      <DependentUpon>Sections.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Sections.aspx.designer.cs">
+      <DependentUpon>Sections.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Sizes.aspx.cs">
+      <DependentUpon>Sizes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Sizes.aspx.designer.cs">
+      <DependentUpon>Sizes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\UserControl_ButtonBack.ascx.cs">
+      <DependentUpon>UserControl_ButtonBack.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\UserControl_ButtonBack.ascx.designer.cs">
+      <DependentUpon>UserControl_ButtonBack.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\UserControl_Buttons.ascx.cs">
+      <DependentUpon>UserControl_Buttons.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\UserControl_Buttons.ascx.designer.cs">
+      <DependentUpon>UserControl_Buttons.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\ProductsManagement.aspx.cs">
       <DependentUpon>ProductsManagement.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Admin\ProductsManagement.aspx.designer.cs">
       <DependentUpon>ProductsManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\UserControl_Toast.ascx.cs">
+      <DependentUpon>UserControl_Toast.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\UserControl_Toast.ascx.designer.cs">
+      <DependentUpon>UserControl_Toast.ascx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />

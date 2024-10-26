@@ -16,7 +16,7 @@ namespace Business.ProductAttributes
         {
             try
             {
-                string query = "SELECT * FROM Secciones WHERE Activo=1";
+                string query = "SELECT * FROM Secciones ";
                 data.setQuery(query);
 
                 if (id != 0)
@@ -43,6 +43,83 @@ namespace Business.ProductAttributes
             catch (Exception ex)
             {
 
+                throw ex;
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
+
+        public string Add(Section section)
+        {
+            try
+            {
+                data.setQuery("INSERT INTO Secciones (Descripcion) Values (@seccion)");
+                data.setParameter("@seccion", section.Description);
+                data.executeAction();
+                return "ok";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
+
+        public string Update(Section section)
+        {
+            try
+            {
+                data.setQuery("UPDATE Secciones SET Descripcion = @seccion WHERE Id = @id");
+                data.setParameter("@seccion", section.Description);
+                data.setParameter("@id", section.Id);
+                data.executeAction();
+                return "ok";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
+
+        public string Delete(int id)
+        {
+            try
+            {
+                data.setQuery("Update Secciones SET Activo = 0 where Id = @Id");
+                data.setParameter("@id", id);
+                data.executeAction();
+                return "ok";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
+
+        public string Activate(int id)
+        {
+            try
+            {
+                data.setQuery("Update Secciones SET Activo = 1 where Id = @Id");
+                data.setParameter("@Id", id);
+                data.executeAction();
+                return "ok";
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
             finally

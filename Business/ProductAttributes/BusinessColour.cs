@@ -17,7 +17,7 @@ namespace Business.ProductAttributes
         {
             try
             {
-                string query = "SELECT * FROM Colores WHERE Active=1";
+                string query = "SELECT * FROM Colores";
                 data.setQuery(query);
 
                 if (id != 0)
