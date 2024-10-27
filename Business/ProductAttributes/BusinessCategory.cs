@@ -1,5 +1,7 @@
-﻿using DataAccessService;
+﻿using Business.ProductAttributes;
+using DataAccessService;
 using Model;
+using Model.ProductAttributes;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -12,6 +14,7 @@ namespace Business
     public class BusinessCategory
     {
         List<Category> listCategory = new List<Category>();
+        List<SubCategory> subCatList = new List<SubCategory>();
         DataAccess data = new DataAccess();
         public List<Category> list(int id=0)
         {
@@ -29,13 +32,17 @@ namespace Business
 
                 while (data.Reader.Read()) 
                 {
-                    Category aux = new Category
-                    {
-                        Id = (int)data.Reader["Id"],
-                        Description = (string)data.Reader["Descripcion"],
-                        Icon = (string)data.Reader["Icono"],
-                        Active = (bool)data.Reader["Activo"]
-                    };
+                    Category aux = new Category();
+
+                    aux.Id = (int)data.Reader["Id"];
+                    aux.Description = (string)data.Reader["Descripcion"];
+                    aux.Icon = (string)data.Reader["Icono"];
+                    aux.Active = (bool)data.Reader["Activo"];
+
+                    BusinessSubCategory businessSubCat = new BusinessSubCategory();
+                    subCatList = businessSubCat.list(aux.Id);
+                    aux.SubCategory = subCatList;
+
 
                     listCategory.Add(aux);
                 }

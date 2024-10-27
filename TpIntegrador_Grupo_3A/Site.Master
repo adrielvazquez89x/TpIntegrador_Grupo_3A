@@ -76,13 +76,24 @@
                 <div id="sidebar" runat="server" class="col-auto col-md-3 col-lg-2 px-sm-2 px-0 bg-light vh-100">
                     <ul class="nav flex-column nav-pills mb-auto">
                         <%-- Enlaces  --%>
-                        <asp:Repeater ID="RepeaterSidebar" runat="server">
+                        <asp:Repeater ID="RepeaterSidebar" runat="server" OnItemDataBound="RepeaterSidebar_ItemDataBound">
                             <ItemTemplate>
                                 <li class="nav-item">
                                     <a href='/products?Idcategory=<%# Eval("Id") %>' class="nav-link d-flex align-items-center px-3 py-2">
                                         <i class='bi <%# Eval("Icon") %> me-2 fs-5'></i>
                                         <span class="d-none d-sm-inline"><%# Eval("Description") %></span>
                                     </a>
+
+                                    <asp:Repeater ID="rptSubCat" runat="server">
+                                        <ItemTemplate>
+                                            <a href='#' class="nav-link d-flex align-items-center px-3 py-2">
+                                                
+                                                <span class="d-none d-sm-inline"><%# Eval("Description") %></span>
+                                            </a>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+
+
                                 </li>
                             </ItemTemplate>
                         </asp:Repeater>

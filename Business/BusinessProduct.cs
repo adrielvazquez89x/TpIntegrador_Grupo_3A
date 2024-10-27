@@ -23,10 +23,10 @@ namespace Business
             {
                 string query = "SELECT P.Id AS IdProducto, P.Codigo, P.Nombre, P.Precio, P.Stock, P.Descripcion, P.FechaCreacion, P.IdCategoria, P.IdColor, " +
                               "P.IdTalle, P.IdSeccion, P.IdTemporada, Ca.Descripcion AS Categoria, Co.Descripcion AS Color, Ta.Descripcion AS Talle, " +
-                              "S.Descripcion AS Seccion, Te.Descripcion AS Temporada " +
+                              "Te.Descripcion AS Temporada " +
                               "FROM PRODUCTOS P JOIN CATEGORIAS Ca ON Ca.Id = P.IdCategoria JOIN COLORES Co ON Co.Id = P.IdColor " +
                               "JOIN TALLES Ta ON Ta.Id = P.IdTalle JOIN Temporadas Te ON Te.Id=P.IdTemporada "+
-                              "WHERE P.Activo=1 ";  //quité JOIN Secciones S ON S.Id=P.IdSeccion
+                              "WHERE P.Activo=1 ";  //quité S.Descripcion AS Seccion,  y JOIN Secciones S ON S.Id=P.IdSeccion
                 data.setQuery(query);
 
                 if (id != 0)

@@ -28,5 +28,16 @@ namespace TpIntegrador_Grupo_3A
                 sidebar.Visible = false;
             }
         }
+
+        protected void RepeaterSidebar_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                Category currentCategory = (Category)e.Item.DataItem;
+                Repeater rptSubCat = (Repeater)e.Item.FindControl("rptSubCat"); // Toma el Repeater anidado
+                rptSubCat.DataSource = currentCategory.SubCategory;
+                rptSubCat.DataBind();
+            }
+        }
     }
 }
