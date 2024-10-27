@@ -60,9 +60,9 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Codigo Posta</label>
+                <label class="form-label">Codigo Postal</label>
                 <asp:TextBox runat="server" CssClass="form-control" ID="txtCP" />
-                <asp:RequiredFieldValidator ErrorMessage="Debe cargar su Codigo Posta" CssClass="validacion" ControlToValidate="txtCP" runat="server" />
+                <asp:RequiredFieldValidator ErrorMessage="Debe cargar su Codigo Postal" CssClass="validacion" ControlToValidate="txtCP" runat="server" />
             </div>
 
             <div class="mb-3">

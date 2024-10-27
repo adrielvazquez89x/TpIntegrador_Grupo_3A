@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -49,7 +50,7 @@ namespace Business
 
             try
             {
-  
+
                 // Buscar el usuario por email
                 data.setQuery("SELECT * FROM Usuarios WHERE Email = @Email;");
                 data.setParameter("@Email", user.Email);
@@ -87,7 +88,7 @@ namespace Business
                 return false;
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -106,21 +107,22 @@ namespace Business
             {
                 data.setQuery("select * from Usuarios where Email = @email;");
                 data.setParameter("@email", email);
+                data.executeRead();
 
-                SqlDataReader reader = data.Reader;
+                var reader = data.Reader;
 
 
                 if (reader.Read())
                 {
-                    aux.UserId = (int)reader["Id"];
-                    aux.Dni = reader["Dni"].ToString();
+                    aux.UserId = (int)reader["IdUsuario"];
+                    aux.Dni = (string)reader["Dni"];
                     aux.FirstName = (string)reader["Nombre"];
                     aux.LastName = (string)reader["Apellido"];
                     aux.Email = (string)reader["Email"];
-                    aux.ImageUrl = (string)reader["UrlImg"];
-                    aux.Mobile = reader["Celular"].ToString();
-                    aux.BirthDate = (DateTime)reader["FechaNac"];
-                    aux.RegistrationDate = (DateTime)reader["FechaAlta"];
+                    // aux.ImageUrl = (string)reader["UrlImg"];
+                    // aux.Mobile = (string)reader["Celular"];
+                    // aux.BirthDate = (DateTime)reader["FechaNac"];
+                    //aux.RegistrationDate = (DateTime)reader["FechaAlta"];
                 }
                 return aux;
 
@@ -157,9 +159,107 @@ namespace Business
             finally { data.closeConnection(); }
 
         }
+
+
+
+        public void Update(User user)
+        {
+            DataAccess data = new DataAccess();
+            try
+            {
+                data.setQuery("Update USERS set Nombre = @nombre, Apellido = @apellido,urlImagenPerfil = @imagen, Email =@email Where Id = @id");
+                data.setParameter("@nombre", user.FirstName);
+                data.setParameter("@apellido", user.LastName);
+                data.setParameter("@email", user.Email);
+                //datos.setearParametro("@imagen", (object)user.ImagenPerfil ?? DBNull.Value);
+                data.setParameter("@id", user.UserId);
+                data.executeAction();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
+
+        public string GenerateToken()
+        {
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                var tokenData = new byte[32];
+                rng.GetBytes(tokenData);
+                return Convert.ToBase64String(tokenData);
+            }
+        }
+
+
+        public void StoreResetToken(string email, string token)
+        {
+            
+            data.setQuery("UPDATE Usuarios SET ResetearToken = @token, TokenVencimiento = @expiration WHERE Email = @email;");
+            data.setParameter("@token", token);
+            data.setParameter("@expiration", DateTime.Now.AddHours(1)); // Expira en 1 hora
+            data.setParameter("@email", email);
+            data.executeAction();
+        }
+
+        //VERIFICAR SI EL ENLACE EXPIRO (NO PUEDO HACER FUNCIONARLO)
+        //public bool VerifyResetToken(string email, string token)
+        //{
+        //    data.setQuery("SELECT TokenVencimiento FROM Usuarios WHERE Email = @email AND ResetearToken = @token;");
+        //    data.setParameter("@email", email);
+        //    data.setParameter("@token", token);
+        //    data.executeRead();
+
+        //    if (data.Reader.Read())
+        //    {
+        //        try
+        //        {
+        //            var expiration = (DateTime)data.Reader["TokenVencimiento"];
+        //            Console.WriteLine($"Email: {email}, Token: {token}, Expiration: {expiration}");
+
+        //            if (expiration > DateTime.Now)
+        //                return true; // Verifica si el token no ha expirado
+        //        }
+        //        catch (InvalidCastException ex)
+        //        {
+        //            Console.WriteLine($"Error al convertir TokenVencimiento: {ex.Message}");
+
+        //        }
+        //    }
+        //    return false;
+        //}
+
+        public void ResetPassword(string email, string newPassword)
+        {
+
+            try
+            {
+                var hashedPassword = new PasswordHasher().HashPassword(newPassword);
+
+                data.setQuery("UPDATE Usuarios SET ContraseniaHash = @pass, ResetearToken = NULL, TokenVencimiento = NULL WHERE Email = @email;");
+                data.setParameter("@pass", hashedPassword);
+                data.setParameter("@email", email);
+
+                data.executeAction();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+
     }
 }
-
 //public User userById(int id)
 //{
 //    DataAccess data = new DataAccess();

@@ -22,5 +22,8 @@ namespace Model
         public string SecurityStamp { get; set; }
 
         public bool Admin { get; set; }
+
+        public string ResetToken { get; set; }
+        public DateTime TokenExpiration { get; set; }
     }
 }
