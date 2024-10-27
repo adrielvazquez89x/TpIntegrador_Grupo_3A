@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.ProductAttributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -16,6 +17,7 @@ namespace Model
         public int Stock {  get; set; }
         public string Description { get; set; }
         public Category Category { get; set; }  //buzos, pantalones, remeras, camisas...
+        public SubCategory SubCategory { get; set; }
         public Colour Colour { get; set; }  //el color y talle es unico porque el id ya hace referencia a una prenda en particular con cierto talle y color
         public Size Size { get; set; }
         public Season Season { get; set; }

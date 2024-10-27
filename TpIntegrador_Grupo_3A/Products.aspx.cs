@@ -28,9 +28,12 @@ namespace TpIntegrador_Grupo_3A
             //prodList = businessProd.list();
             int idCategory =Request.QueryString["Idcategory"] is null ? 0 : int.Parse(Request.QueryString["Idcategory"]);  //validarlo (podrian a mano ponerle algo no entero)
 
+            int idSubCategory = Request.QueryString["IdSubCategory"] is null ? 0 : int.Parse(Request.QueryString["IdSubCategory"]);  //validarlo (podrian a mano ponerle algo no entero)
+
+
             if (!IsPostBack)
             {
-                prodList = businessProd.listByCategory(idCategory);    //Carga los productos según la categoría
+                prodList = businessProd.listByCategory(idCategory, idSubCategory);    //Carga los productos según la categoría
 
                 rptProdList.DataSource = prodList;
                 rptProdList.DataBind();
