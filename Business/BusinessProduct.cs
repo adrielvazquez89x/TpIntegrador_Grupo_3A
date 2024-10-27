@@ -1,6 +1,7 @@
 ﻿using Business.ProductAttributes;
 using DataAccessService;
 using Model;
+using Model.ProductAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -77,22 +78,25 @@ namespace Business
             }
         }
 
-        public List<Product> listByCategory(int idCategory) //lista todos los productos o uno en particular
+        public List<Product> listByCategory(int idCategory, int idSubCat=0) //lista todos los productos de cierta categoria o filtra tambien por SubCat
         {
             try
             {
-                string query="SELECT P.Id AS IdProducto, P.Codigo, P.Nombre, P.Precio, P.Stock, P.Descripcion, P.FechaCreacion, P.IdCategoria, P.IdColor, " +
-                              "P.IdTalle, P.IdSeccion, P.IdTemporada, Ca.Descripcion AS Categoria, Co.Descripcion AS Color, Ta.Descripcion AS Talle, " +
-                              "S.Descripcion AS Seccion, Te.Descripcion AS Temporada " +
+                string query= "SELECT P.Id AS IdProducto, P.Codigo, P.Nombre, P.Precio, P.Stock, P.Descripcion, P.FechaCreacion, P.IdCategoria, P.IdSubCategoria, P.IdColor, " +
+                              "P.IdTalle, P.IdSeccion, P.IdTemporada, Ca.Descripcion AS Categoria, Sub.Descripcion AS SubCategoria, " +
+                              "Co.Descripcion AS Color, Ta.Descripcion AS Talle, Te.Descripcion AS Temporada " +
                               "FROM PRODUCTOS P JOIN CATEGORIAS Ca ON Ca.Id = P.IdCategoria JOIN COLORES Co ON Co.Id = P.IdColor " +
                               "JOIN TALLES Ta ON Ta.Id = P.IdTalle JOIN Temporadas Te ON Te.Id=P.IdTemporada " +
-                              "JOIN Secciones S ON S.Id=P.IdSeccion WHERE P.Activo=1";
+                              "JOIN SubCategorias Sub ON P.IdSubCategoria=Sub.Id " +
+                              "WHERE P.Activo=1 AND P.IdCategoria=@IdCategoria";
                 data.setQuery(query);
-                if (idCategory != 0)
+                
+                if (idSubCat != 0)
                 {
-                    data.setQuery(query += "  AND P.IdCategoria=@IdCategoria");
-                    data.setParameter("@IdCategoria", idCategory);
+                    data.setQuery(query += " AND P.IdSubCategoria=@IdSubCat");
+                    data.setParameter("@IdSubCat", idSubCat);
                 }
+                data.setParameter("@IdCategoria", idCategory);
                 data.executeRead();
 
                 while (data.Reader.Read())
@@ -107,6 +111,9 @@ namespace Business
                     aux.Category = new Category();
                     aux.Category.Id = (int)data.Reader["IdCategoria"];
                     aux.Category.Description = (string)data.Reader["Categoria"];
+                    aux.SubCategory = new SubCategory();
+                    aux.SubCategory.Id = (int)data.Reader["IdSubCategoria"];
+                    aux.SubCategory.Description = (string)data.Reader["SubCategoria"];
                     aux.Colour = new Colour();
                     aux.Colour.Id = (int)data.Reader["IdColor"];
                     aux.Colour.Description = (string)data.Reader["Color"];

@@ -89,12 +89,17 @@
                                             </h2>
                                             <div id="collapse<%# Eval("Id") %>" class="accordion-collapse collapse" aria-labelledby="heading<%# Eval("Id") %>" data-bs-parent="#accordionSidebar">
                                                 <div class="accordion-body">
+                                                    <%-- Campo oculto para almacenar el IdCategory que requiero para el link --%>
+                                                    <asp:HiddenField ID="hfCategoryId" runat="server" Value='<%# Eval("Id") %>' />
+
                                                     <%-- Repeater de subcategorías --%>
-                                                    <asp:Repeater ID="rptSubCat" runat="server">
+                                                    <asp:Repeater ID="rptSubCat" runat="server" OnItemDataBound="rptSubCat_ItemDataBound">
                                                         <ItemTemplate>
-                                                            <a href='/products?SubCategoryId=<%# Eval("Id") %>' class="nav-link d-flex align-items-center px-3 py-2">
+                                                            <%--Este Link informa la Categoria y SubCategoria Elegida--%>
+                                                            <asp:HyperLink ID="SubCategoryLink" runat="server" CssClass="nav-link d-flex align-items-center px-3 py-2">
                                                                 <span class="d-none d-sm-inline"><%# Eval("Description") %></span>
-                                                            </a>
+                                                            </asp:HyperLink>
+
                                                         </ItemTemplate>
                                                     </asp:Repeater>
                                                 </div>
