@@ -22,11 +22,12 @@ namespace Business
         {
             try
             {
-                string query = "SELECT P.Id AS IdProducto, P.Codigo, P.Nombre, P.Precio, P.Stock, P.Descripcion, P.FechaCreacion, P.IdCategoria, P.IdColor, " +
-                              "P.IdTalle, P.IdSeccion, P.IdTemporada, Ca.Descripcion AS Categoria, Co.Descripcion AS Color, Ta.Descripcion AS Talle, " +
+                string query = "SELECT P.Id AS IdProducto, P.Codigo, P.Nombre, P.Precio, P.Descripcion, P.FechaCreacion, P.IdCategoria, " +
+                              "P.IdSubCategoria, P.IdTemporada, Ca.Descripcion AS Categoria, SuC.Descripcion AS SubCategoria, " +
                               "Te.Descripcion AS Temporada " +
-                              "FROM PRODUCTOS P JOIN CATEGORIAS Ca ON Ca.Id = P.IdCategoria JOIN COLORES Co ON Co.Id = P.IdColor " +
-                              "JOIN TALLES Ta ON Ta.Id = P.IdTalle JOIN Temporadas Te ON Te.Id=P.IdTemporada "+
+                              "FROM PRODUCTOS P JOIN CATEGORIAS Ca ON Ca.Id = P.IdCategoria " +
+                              "JOIN SubCategorias SuC ON P.IdSubCategoria=SuC.Id " +
+                              "JOIN Temporadas Te ON Te.Id=P.IdTemporada " +
                               "WHERE P.Activo=1 ";  //quité S.Descripcion AS Seccion,  y JOIN Secciones S ON S.Id=P.IdSeccion
                 data.setQuery(query);
 
@@ -44,17 +45,10 @@ namespace Business
                     aux.Code = (string)data.Reader["Codigo"];
                     aux.Name = (string)data.Reader["Nombre"];
                     aux.Price = Math.Round((decimal)data.Reader["Precio"], 2);
-                    aux.Stock = (int)data.Reader["Stock"];
                     aux.Description = (string)data.Reader["Descripcion"];
                     aux.Category = new Category();
                     aux.Category.Id = (int)data.Reader["IdCategoria"];
                     aux.Category.Description = (string)data.Reader["Categoria"];                   
-                    aux.Colour = new Colour();
-                    aux.Colour.Id = (int)data.Reader["IdColor"];
-                    aux.Colour.Description = (string)data.Reader["Color"];
-                    aux.Size = new Size();
-                    aux.Size.Id = (int)data.Reader["IdTalle"];
-                    aux.Size.Description = (string)data.Reader["Talle"];
                     aux.Season = new Season();
                     aux.Season.Id = (int)data.Reader["IdTemporada"];
                     aux.Season.Description = (string)data.Reader["Temporada"];
@@ -82,12 +76,12 @@ namespace Business
         {
             try
             {
-                string query= "SELECT P.Id AS IdProducto, P.Codigo, P.Nombre, P.Precio, P.Stock, P.Descripcion, P.FechaCreacion, P.IdCategoria, P.IdSubCategoria, P.IdColor, " +
-                              "P.IdTalle, P.IdSeccion, P.IdTemporada, Ca.Descripcion AS Categoria, Sub.Descripcion AS SubCategoria, " +
-                              "Co.Descripcion AS Color, Ta.Descripcion AS Talle, Te.Descripcion AS Temporada " +
-                              "FROM PRODUCTOS P JOIN CATEGORIAS Ca ON Ca.Id = P.IdCategoria JOIN COLORES Co ON Co.Id = P.IdColor " +
-                              "JOIN TALLES Ta ON Ta.Id = P.IdTalle JOIN Temporadas Te ON Te.Id=P.IdTemporada " +
-                              "JOIN SubCategorias Sub ON P.IdSubCategoria=Sub.Id " +
+                string query= "SELECT P.Id AS IdProducto, P.Codigo, P.Nombre, P.Precio, P.Descripcion, P.FechaCreacion, P.IdCategoria, " +
+                              "P.IdSubCategoria, P.IdTemporada, Ca.Descripcion AS Categoria, SuC.Descripcion AS SubCategoria, " +
+                              "Te.Descripcion AS Temporada " +
+                              "FROM PRODUCTOS P JOIN CATEGORIAS Ca ON Ca.Id = P.IdCategoria " +
+                              "JOIN SubCategorias SuC ON P.IdSubCategoria=SuC.Id "+
+                              "JOIN Temporadas Te ON Te.Id=P.IdTemporada " +
                               "WHERE P.Activo=1 AND P.IdCategoria=@IdCategoria";
                 data.setQuery(query);
                 
@@ -106,7 +100,6 @@ namespace Business
                     aux.Code = (string)data.Reader["Codigo"];
                     aux.Name = (string)data.Reader["Nombre"];
                     aux.Price = Math.Round((decimal)data.Reader["Precio"], 2);
-                    aux.Stock = (int)data.Reader["Stock"];
                     aux.Description = (string)data.Reader["Descripcion"];
                     aux.Category = new Category();
                     aux.Category.Id = (int)data.Reader["IdCategoria"];
@@ -114,12 +107,6 @@ namespace Business
                     aux.SubCategory = new SubCategory();
                     aux.SubCategory.Id = (int)data.Reader["IdSubCategoria"];
                     aux.SubCategory.Description = (string)data.Reader["SubCategoria"];
-                    aux.Colour = new Colour();
-                    aux.Colour.Id = (int)data.Reader["IdColor"];
-                    aux.Colour.Description = (string)data.Reader["Color"];
-                    aux.Size = new Size();
-                    aux.Size.Id = (int)data.Reader["IdTalle"];
-                    aux.Size.Description = (string)data.Reader["Talle"];
 
 
                     BusinessImageProduct businessImage = new BusinessImageProduct();
@@ -146,12 +133,12 @@ namespace Business
         {
             try
             {
-                string query = "SELECT P.Id AS IdProducto, P.Codigo, P.Nombre, P.Precio, P.Stock, P.Descripcion, P.FechaCreacion, P.IdCategoria, P.IdSubCategoria, P.IdColor, " +
-                              "P.IdTalle, P.IdTemporada, Ca.Descripcion AS Categoria, Sub.Descripcion AS SubCategoria, " +
-                              "Co.Descripcion AS Color, Ta.Descripcion AS Talle, Te.Descripcion AS Temporada " +
-                              "FROM PRODUCTOS P JOIN CATEGORIAS Ca ON Ca.Id = P.IdCategoria JOIN COLORES Co ON Co.Id = P.IdColor " +
-                              "JOIN TALLES Ta ON Ta.Id = P.IdTalle JOIN Temporadas Te ON Te.Id=P.IdTemporada " +
-                              "JOIN SubCategorias Sub ON P.IdSubCategoria=Sub.Id " +
+                string query = "SELECT P.Id AS IdProducto, P.Codigo, P.Nombre, P.Precio, P.Descripcion, P.FechaCreacion, P.IdCategoria, " +
+                              "P.IdSubCategoria, P.IdTemporada, Ca.Descripcion AS Categoria, SuC.Descripcion AS SubCategoria, " +
+                              "Te.Descripcion AS Temporada " +
+                              "FROM PRODUCTOS P JOIN CATEGORIAS Ca ON Ca.Id = P.IdCategoria " +
+                              "JOIN SubCategorias SuC ON P.IdSubCategoria=SuC.Id " +
+                              "JOIN Temporadas Te ON Te.Id=P.IdTemporada " +
                               "JOIN ProductosXSecciones  PXS on P.Codigo=PXS.CodigoProducto " +
                               "WHERE P.Activo=1 AND PXS.IdSeccion=@IdSeccion";
                 data.setQuery(query);
@@ -166,7 +153,6 @@ namespace Business
                     aux.Code = (string)data.Reader["Codigo"];
                     aux.Name = (string)data.Reader["Nombre"];
                     aux.Price = Math.Round((decimal)data.Reader["Precio"], 2);
-                    aux.Stock = (int)data.Reader["Stock"];
                     aux.Description = (string)data.Reader["Descripcion"];
                     aux.Category = new Category();
                     aux.Category.Id = (int)data.Reader["IdCategoria"];
@@ -174,12 +160,6 @@ namespace Business
                     aux.SubCategory = new SubCategory();
                     aux.SubCategory.Id = (int)data.Reader["IdSubCategoria"];
                     aux.SubCategory.Description = (string)data.Reader["SubCategoria"];
-                    aux.Colour = new Colour();
-                    aux.Colour.Id = (int)data.Reader["IdColor"];
-                    aux.Colour.Description = (string)data.Reader["Color"];
-                    aux.Size = new Size();
-                    aux.Size.Id = (int)data.Reader["IdTalle"];
-                    aux.Size.Description = (string)data.Reader["Talle"];
 
 
                     BusinessImageProduct businessImage = new BusinessImageProduct();
