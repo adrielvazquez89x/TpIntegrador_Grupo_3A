@@ -70,6 +70,11 @@
             </div>
         </nav>
 
+                        <%-- Banner Principal --%>
+                <div class="col body-content">
+                    <asp:ContentPlaceHolder ID="BannerContent" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
         <div class="container-fluid">
             <div class="row">
                 <%-- Sidebar --%>

@@ -11,6 +11,7 @@ namespace Business.ProductAttributes
     public class BusinessSection
     {
         List<Section> listSection = new List<Section>();
+        List<Product> prodList = new List<Product>();
         DataAccess data = new DataAccess();
         public List<Section> list(int id=0)
         {
@@ -28,12 +29,16 @@ namespace Business.ProductAttributes
 
                 while (data.Reader.Read())
                 {
-                    Section aux = new Section
-                    {
-                        Id = (int)data.Reader["Id"],
-                        Description = (string)data.Reader["Descripcion"],
-                        Active = (bool)data.Reader["Activo"]
-                    };
+                    Section aux = new Section();
+
+                    aux.Id = (int)data.Reader["Id"];
+                    aux.Description = (string)data.Reader["Descripcion"];
+                    aux.Description2 = data.Reader["Descripcion2"] is DBNull ? "" : (string)data.Reader["Descripcion2"];
+                    aux.Active = (bool)data.Reader["Activo"];
+
+                    BusinessProduct businessProduct = new BusinessProduct();
+                    prodList = businessProduct.listBySection(aux.Id);
+                    aux.Products = prodList;
 
                     listSection.Add(aux);
                 }

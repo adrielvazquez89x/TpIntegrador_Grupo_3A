@@ -23,6 +23,5 @@ namespace Model
         public Season Season { get; set; }
         public DateTime CreationDate { get; set; }
         public List<ImageProduct> Images { get; set; }
-        public List<Section> Sections { get; set; } //Ultimos lanzamientos, urbano, fiesta, formal, tendencia, noche, clasicos, estampados...
     }
 }
