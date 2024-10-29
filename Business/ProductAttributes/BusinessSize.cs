@@ -49,7 +49,7 @@ namespace Business.ProductAttributes
         {
             try
             {
-                data.setQuery($"INSERT INTO Talles (Descripcion) Values ({size.Description})");
+                data.setQuery($"INSERT INTO Talles (Descripcion) Values ('{size.Description}')");
                 data.executeAction();
                 return "ok";
             }
@@ -79,7 +79,7 @@ namespace Business.ProductAttributes
         {
             try
             {
-                data.setQuery($"UPDATE Talles SET Descripcion = {size.Description} WHERE Id = {size.Id}");
+                data.setQuery($"UPDATE Talles SET Descripcion = '{size.Description}' WHERE Id = {size.Id}");
                 data.executeAction();
                 return "ok";
             }
@@ -105,7 +105,7 @@ namespace Business.ProductAttributes
             }
         }
 
-        public string Deactivate(int id)
+        public string Delete(int id)
         {
             try
             {

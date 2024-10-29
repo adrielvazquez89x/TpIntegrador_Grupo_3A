@@ -21,7 +21,7 @@ namespace Business
                 
                 if (code != "")
                 {
-                   query += " WHERE CodigoProducto = "+ code;
+                   query += " WHERE CodigoProducto = '"+ code +"'";
                 }
                 data.setQuery(query);
                 data.executeRead();
@@ -52,7 +52,7 @@ namespace Business
         {
             try
             {
-                data.setQuery("DELETE FROM ImagenesProductos WHERE CodigoProducto = " + code);
+                data.setQuery("DELETE FROM ImagenesProductos WHERE CodigoProducto = '" + code + "'");
 
                 data.executeRead();
 

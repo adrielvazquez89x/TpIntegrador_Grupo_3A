@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Business.ProductAttributes
 {
-    internal class BusinessFavourite
+    public class BusinessFavourite
     {
         List<FavouriteProducts> favList = new List<FavouriteProducts>();
         DataAccess data = new DataAccess();
@@ -49,8 +49,6 @@ namespace Business.ProductAttributes
             {
                 data.closeConnection();
             }
-
-
         }
 
         public void Add(int idUser, int idProduct)
@@ -89,21 +87,5 @@ namespace Business.ProductAttributes
             }
         }
 
-        public void eliminacionMultiple(int IdUser, List<int> listaIds)
-        {
-            AccesoDatos datos = new AccesoDatos();
-
-            try
-            {
-                string idsStringify = string.Join(",", listaIds);
-                datos.setConsulta($"DELETE FROM FAVORITOS WHERE IdUser = {IdUser} AND IdArticulo IN ({idsStringify})");
-                datos.ejecutarAccion();
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
     }
 }

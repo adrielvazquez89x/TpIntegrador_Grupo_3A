@@ -49,7 +49,7 @@ namespace Business.ProductAttributes
         {
             try
             {
-                data.setQuery($"UPDATE SubCategorias SET Descripcion = {subCategory.Description} WHERE IdCategoria = {IdCategory}");
+                data.setQuery($"UPDATE SubCategorias SET Descripcion = '{subCategory.Description}' WHERE IdCategoria = {IdCategory}");
                 data.executeAction();
                 return "ok";
             }

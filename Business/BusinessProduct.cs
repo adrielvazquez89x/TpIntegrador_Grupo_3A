@@ -15,7 +15,6 @@ namespace Business
     public class BusinessProduct
     {
         List<Product> productList = new List<Product>();
-        List<Model.Section> sectionList = new List<Model.Section>();
         List<ImageProduct> imageList = new List<ImageProduct>();
         DataAccess data = new DataAccess();
         public List<Product> list(int id=0) //lista todos los productos o uno en particular

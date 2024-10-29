@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Business;
+using Business.ProductAttributes;
 using Microsoft.Ajax.Utilities;
 using Model;
 using Model.ProductAttributes;
@@ -19,6 +20,7 @@ namespace TpIntegrador_Grupo_3A
 
         public int IdSelectedProd;
         public bool SessionOn { get; set; }
+        public User user {  get; set; }
         public bool ProdIsFav { get; set; }
 
         public Product selectedProd = new Product();
@@ -61,12 +63,31 @@ namespace TpIntegrador_Grupo_3A
 
         protected void bntFav_Click(object sender, EventArgs e)
         {
+            try
+            {
+                BusinessFavourite businessFav = new BusinessFavourite();
+                businessFav.Add(user.Id, IdSelectedProd);
 
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
+            }
         }
 
         protected void btnUndoFav_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                BusinessFavourite businessFav = new BusinessFavourite();
+                businessFav.Delete(user.Id, IdSelectedProd);
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
+            }
         }
     }
 }

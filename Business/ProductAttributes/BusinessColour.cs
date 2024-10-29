@@ -55,7 +55,7 @@ namespace Business.ProductAttributes
         {
             try
             {
-                data.setQuery($"INSERT INTO Colores (Descripcion) Values ({colour.Description})");
+                data.setQuery($"INSERT INTO Colores (Descripcion) Values ('{colour.Description}')");
                 data.executeAction();
                 return "ok";
             }
@@ -85,7 +85,7 @@ namespace Business.ProductAttributes
         {
             try
             {
-                data.setQuery($"UPDATE Colores SET Descripcion = {colour.Description} WHERE Id ={colour.Id}");
+                data.setQuery($"UPDATE Colores SET Descripcion = '{colour.Description}' WHERE Id ={colour.Id}");
                 data.executeAction();
                 return "ok";
             }
@@ -111,7 +111,7 @@ namespace Business.ProductAttributes
             }
         }
 
-        public string Deactivate(int id)
+        public string Delete(int id)
         {
             try
             {

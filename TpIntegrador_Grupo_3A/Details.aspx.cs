@@ -1,4 +1,5 @@
 ﻿using Business;
+using Business.ProductAttributes;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace TpIntegrador_Grupo_3A
     public partial class Details : System.Web.UI.Page
     {
         public int IdSelectedProd;
+        public User user { get; set; }
         public List<Product> products { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -49,9 +51,9 @@ namespace TpIntegrador_Grupo_3A
         {
             try
             {
-                FavoritosNegocio negocio = new FavoritosNegocio();
-                negocio.agregarFavorito(UsuarioLogeado.Id, ArticuloActual.Id);
-                ArticuloFaveado = true;
+                BusinessFavourite businessFav = new BusinessFavourite();
+                businessFav.Add(user.Id, IdSelectedProd);
+
             }
             catch (Exception ex)
             {

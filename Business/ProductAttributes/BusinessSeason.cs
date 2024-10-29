@@ -54,7 +54,7 @@ namespace Business
         {
             try
             {
-                data.setQuery($"INSERT INTO Temporadas (Descripcion) Values ({season.Description})");
+                data.setQuery($"INSERT INTO Temporadas (Descripcion) Values ('{season.Description}')");
                 data.executeAction();
                 return "ok";
             }
@@ -84,7 +84,7 @@ namespace Business
         {
             try
             {
-                data.setQuery($"UPDATE Temporadas SET Descripcion = {season.Description} WHERE Id = {season.Id}");
+                data.setQuery($"UPDATE Temporadas SET Descripcion = '{season.Description}' WHERE Id = {season.Id}");
                 data.executeAction();
                 return "ok";
             }
@@ -110,7 +110,7 @@ namespace Business
             }
         }
 
-        public string Deactivate(int id)
+        public string Delete(int id)
         {
             try
             {
