@@ -18,13 +18,12 @@ namespace Business
             try
             {
                 string query = "SELECT * FROM Temporadas WHERE Activo=1";
-                data.setQuery(query);
 
                 if (id != 0)
                 {
-                    data.setQuery(query += " AND Id = @id");
-                    data.setParameter("@id", id);
+                    query += " AND Id = "+ id;
                 }
+                data.setQuery(query);
                 data.executeRead();
 
                 while (data.Reader.Read())
@@ -55,14 +54,13 @@ namespace Business
         {
             try
             {
-                data.setQuery("INSERT INTO Temporadas (Descripcion) Values (@temporada)");
-                data.setParameter("@Temporada", season.Description);
+                data.setQuery($"INSERT INTO Temporadas (Descripcion) Values ({season.Description})");
                 data.executeAction();
                 return "ok";
             }
             catch (SqlException ex)
             {
-                if (ex.Number == 2627) // Vien de la base de datos
+                if (ex.Number == 2627) // Viene de la base de datos
                 {
                     return "La temporada ya existe.";
                 }
@@ -86,9 +84,7 @@ namespace Business
         {
             try
             {
-                data.setQuery("UPDATE Temporadas SET Descripcion = @Temporada WHERE Id = @Id");
-                data.setParameter("@Temporada", season.Description);
-                data.setParameter("@Id", season.Id);
+                data.setQuery($"UPDATE Temporadas SET Descripcion = {season.Description} WHERE Id = {season.Id}");
                 data.executeAction();
                 return "ok";
             }
@@ -114,12 +110,11 @@ namespace Business
             }
         }
 
-        public string Delete(int id)
+        public string Deactivate(int id)
         {
             try
             {
-                data.setQuery("Update Temporadas SET Activo = 0 where Id = @Id");
-                data.setParameter("@Id", id);
+                data.setQuery("Update Temporadas SET Activo = 0 where Id = "+ id);
                 data.executeAction();
                 return "ok";
             }
@@ -137,8 +132,7 @@ namespace Business
         {
             try
             {
-                data.setQuery("Update Temporadas SET Activo = 1 where Id = @Id");
-                data.setParameter("@Id", id);
+                data.setQuery("Update Temporadas SET Activo = 1 where Id = "+ id);
                 data.executeAction();
                 return "ok";
             }

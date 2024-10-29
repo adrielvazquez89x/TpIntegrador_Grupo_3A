@@ -83,11 +83,6 @@
                 </ItemTemplate>
             </asp:Repeater>
         </div>
-        </div>
-        
-
-
-
 
     </main>
 </asp:Content>

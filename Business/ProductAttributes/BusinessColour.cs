@@ -18,16 +18,13 @@ namespace Business.ProductAttributes
             try
             {
                 string query = "SELECT * FROM Colores WHERE Active=1";
-                data.setQuery(query);
 
                 if (id != 0)
                 {
-                    data.setQuery(query += " AND Id = @id");
-                    data.setParameter("@id", id);
+                    query += " AND Id = "+ id;
                 }
+                data.setQuery(query);
                 data.executeRead();
-
-
 
                 while (data.Reader.Read())
                 {
@@ -58,8 +55,7 @@ namespace Business.ProductAttributes
         {
             try
             {
-                data.setQuery("INSERT INTO Colores (Descripcion) Values (@Color)");
-                data.setParameter("@Color", colour.Description);
+                data.setQuery($"INSERT INTO Colores (Descripcion) Values ({colour.Description})");
                 data.executeAction();
                 return "ok";
             }
@@ -89,9 +85,7 @@ namespace Business.ProductAttributes
         {
             try
             {
-                data.setQuery("UPDATE Colores SET Descripcion = @Color WHERE Id = @Id");
-                data.setParameter("@Color", colour.Description);
-                data.setParameter("@Id", colour.Id);
+                data.setQuery($"UPDATE Colores SET Descripcion = {colour.Description} WHERE Id ={colour.Id}");
                 data.executeAction();
                 return "ok";
             }
@@ -117,18 +111,17 @@ namespace Business.ProductAttributes
             }
         }
 
-        public string Delete(int id)
+        public string Deactivate(int id)
         {
             try
             {
-                data.setQuery("Update Colores SET Activo = 0 where Id = @Id");
-                data.setParameter("@Id", id);
+                data.setQuery($"Update Colores SET Activo = 0 where Id = {id}");
                 data.executeAction();
                 return "ok";
             }
             catch (Exception ex)
             {
-                throw ex;
+                return "Error al desactivar el color: " + ex.Message;
             }
             finally
             {
@@ -140,14 +133,13 @@ namespace Business.ProductAttributes
         {
             try
             {
-                data.setQuery("Update Colores SET Activo = 1 where Id = @Id");
-                data.setParameter("@Id", id);
+                data.setQuery($"Update Colores SET Activo = 1 where Id = {id}");
                 data.executeAction();
                 return "ok";
             }
             catch (Exception ex)
             {
-                throw ex;
+                return "Error al activar el color: " + ex.Message;
             }
             finally
             {

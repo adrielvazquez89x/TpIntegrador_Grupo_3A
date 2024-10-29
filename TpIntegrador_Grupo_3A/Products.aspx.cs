@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.EnterpriseServices;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -7,6 +8,7 @@ using System.Web.UI.WebControls;
 using Business;
 using Microsoft.Ajax.Utilities;
 using Model;
+using Model.ProductAttributes;
 
 namespace TpIntegrador_Grupo_3A
 {
@@ -15,17 +17,16 @@ namespace TpIntegrador_Grupo_3A
         public List<Product> prodList;
         public List<Model.ImageProduct> ImageList;
 
-        public int IdSelectedArt;
+        public int IdSelectedProd;
+        public bool SessionOn { get; set; }
+        public bool ProdIsFav { get; set; }
 
         public Product selectedProd = new Product();
-
         public Category selectedCateg = new Category();
 
         protected void Page_Load(object sender, EventArgs e)
         {
             BusinessProduct businessProd = new BusinessProduct();
-            //BusinessImageProduct businessImage = new BusinessImageProduct();
-            //prodList = businessProd.list();
             int idCategory =Request.QueryString["Idcategory"] is null ? 0 : int.Parse(Request.QueryString["Idcategory"]);  //validarlo (podrian a mano ponerle algo no entero)
 
             int idSubCategory = Request.QueryString["IdSubCategory"] is null ? 0 : int.Parse(Request.QueryString["IdSubCategory"]);  //validarlo (podrian a mano ponerle algo no entero)
@@ -52,7 +53,18 @@ namespace TpIntegrador_Grupo_3A
             }
         }
 
-        protected void btnPick_Click(object sender, EventArgs e)
+        protected void btnDetails_Click(object sender, EventArgs e)
+        {
+            IdSelectedProd = int.Parse(((Button)sender).CommandArgument);
+            Response.Redirect($"/Details?id={IdSelectedProd}");
+        }
+
+        protected void bntFav_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnUndoFav_Click(object sender, EventArgs e)
         {
 
         }

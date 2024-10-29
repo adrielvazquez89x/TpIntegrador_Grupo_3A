@@ -3,6 +3,7 @@ using Model;
 using Model.ProductAttributes;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,8 +18,7 @@ namespace Business.ProductAttributes
         {
             try
             {
-                data.setQuery("SELECT * FROM SubCategorias WHERE IdCategoria=@IdCategoria");
-                data.setParameter("@IdCategoria", IdCategory);
+                data.setQuery("SELECT * FROM SubCategorias WHERE IdCategoria= "+ IdCategory);
                 data.executeRead();
 
                 while (data.Reader.Read())
@@ -37,7 +37,6 @@ namespace Business.ProductAttributes
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally
@@ -45,5 +44,28 @@ namespace Business.ProductAttributes
                 data.closeConnection();
             }
         }
+
+        public string Update(int IdCategory, SubCategory subCategory)
+        {
+            try
+            {
+                data.setQuery($"UPDATE SubCategorias SET Descripcion = {subCategory.Description} WHERE IdCategoria = {IdCategory}");
+                data.executeAction();
+                return "ok";
+            }
+            catch (SqlException ex)
+            {
+                return "Error al actualizar la descripcion. Info de error: " + ex.Message;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
+
     }
 }

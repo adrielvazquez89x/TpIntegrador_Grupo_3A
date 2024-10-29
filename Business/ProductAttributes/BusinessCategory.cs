@@ -21,13 +21,13 @@ namespace Business
             try
             {
                 string query = "SELECT * FROM Categorias WHERE Activo=1";
-                data.setQuery(query);
+                
 
                 if (id != 0)
                 {
-                    data.setQuery(query += " AND Id = @id");
-                    data.setParameter("@id", id);
+                    query += " AND Id = "+ id;
                 }
+                data.setQuery(query);
                 data.executeRead();
 
                 while (data.Reader.Read()) 
@@ -64,8 +64,7 @@ namespace Business
         {
             try
             {
-                data.setQuery("INSERT INTO Categorias (Descripcion) Values (@Categoria)");
-                data.setParameter("@Categoria", category.Description);
+                data.setQuery($"INSERT INTO Categorias (Descripcion) Values ({category.Description})");
                 data.executeAction();
                 return "ok";
             }
@@ -95,9 +94,7 @@ namespace Business
         {
             try
             {
-                data.setQuery("UPDATE Categorias SET Descripcion = @Categoria WHERE Id = @Id");
-                data.setParameter("@Categoria", category.Description);
-                data.setParameter("@Id", category.Id);
+                data.setQuery($"UPDATE Categorias SET Descripcion = {category.Description} WHERE Id = {category.Id}");
                 data.executeAction();
                 return "ok";
             }
@@ -123,12 +120,11 @@ namespace Business
             }
         }
 
-        public string Delete(int id)
+        public string Deactivate(int id)
         {            
             try
             {
-                data.setQuery("Update Categorias SET Activo = 0 where Id = @Id");
-                data.setParameter("@Id", id);
+                data.setQuery($"Update Categorias SET Activo = 0 where Id = {id}");
                 data.executeAction();
                 return "ok";
             }
@@ -146,8 +142,7 @@ namespace Business
         {
             try
             {
-                data.setQuery("Update Categorias SET Activo = 1 where Id = @Id");
-                data.setParameter("@Id", id);
+                data.setQuery($"Update Categorias SET Activo = 1 where Id = {id}");
                 data.executeAction();
                 return "ok";
             }

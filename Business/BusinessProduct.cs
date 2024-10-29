@@ -28,14 +28,13 @@ namespace Business
                               "FROM PRODUCTOS P JOIN CATEGORIAS Ca ON Ca.Id = P.IdCategoria " +
                               "JOIN SubCategorias SuC ON P.IdSubCategoria=SuC.Id " +
                               "JOIN Temporadas Te ON Te.Id=P.IdTemporada " +
-                              "WHERE P.Activo=1 ";  //quité S.Descripcion AS Seccion,  y JOIN Secciones S ON S.Id=P.IdSeccion
-                data.setQuery(query);
+                              "WHERE P.Activo=1 ";
 
                 if (id != 0)
                 {
-                    data.setQuery(query += " AND IdProducto = @IdProducto");
-                    data.setParameter("@IdProducto", id);
+                    query += " AND P.Id = "+ id;
                 }
+                data.setQuery(query);
                 data.executeRead();
 
                 while (data.Reader.Read())
@@ -48,7 +47,10 @@ namespace Business
                     aux.Description = (string)data.Reader["Descripcion"];
                     aux.Category = new Category();
                     aux.Category.Id = (int)data.Reader["IdCategoria"];
-                    aux.Category.Description = (string)data.Reader["Categoria"];                   
+                    aux.Category.Description = (string)data.Reader["Categoria"];
+                    aux.SubCategory = new SubCategory();
+                    aux.SubCategory.Id = (int)data.Reader["IdSubCategoria"];
+                    aux.SubCategory.Description = (string)data.Reader["SubCategoria"];
                     aux.Season = new Season();
                     aux.Season.Id = (int)data.Reader["IdTemporada"];
                     aux.Season.Description = (string)data.Reader["Temporada"];
@@ -82,15 +84,13 @@ namespace Business
                               "FROM PRODUCTOS P JOIN CATEGORIAS Ca ON Ca.Id = P.IdCategoria " +
                               "JOIN SubCategorias SuC ON P.IdSubCategoria=SuC.Id "+
                               "JOIN Temporadas Te ON Te.Id=P.IdTemporada " +
-                              "WHERE P.Activo=1 AND P.IdCategoria=@IdCategoria";
-                data.setQuery(query);
+                              $"WHERE P.Activo=1 AND P.IdCategoria={idCategory}";
                 
                 if (idSubCat != 0)
                 {
-                    data.setQuery(query += " AND P.IdSubCategoria=@IdSubCat");
-                    data.setParameter("@IdSubCat", idSubCat);
+                    query += " AND P.IdSubCategoria= "+ idSubCat;
                 }
-                data.setParameter("@IdCategoria", idCategory);
+                data.setQuery(query);
                 data.executeRead();
 
                 while (data.Reader.Read())
@@ -107,7 +107,9 @@ namespace Business
                     aux.SubCategory = new SubCategory();
                     aux.SubCategory.Id = (int)data.Reader["IdSubCategoria"];
                     aux.SubCategory.Description = (string)data.Reader["SubCategoria"];
-
+                    aux.Season = new Season();
+                    aux.Season.Id = (int)data.Reader["IdTemporada"];
+                    aux.Season.Description = (string)data.Reader["Temporada"];
 
                     BusinessImageProduct businessImage = new BusinessImageProduct();
                     imageList = businessImage.list(aux.Code);
@@ -133,17 +135,15 @@ namespace Business
         {
             try
             {
-                string query = "SELECT P.Id AS IdProducto, P.Codigo, P.Nombre, P.Precio, P.Descripcion, P.FechaCreacion, P.IdCategoria, " +
+                data.setQuery("SELECT P.Id AS IdProducto, P.Codigo, P.Nombre, P.Precio, P.Descripcion, P.FechaCreacion, P.IdCategoria, " +
                               "P.IdSubCategoria, P.IdTemporada, Ca.Descripcion AS Categoria, SuC.Descripcion AS SubCategoria, " +
                               "Te.Descripcion AS Temporada " +
                               "FROM PRODUCTOS P JOIN CATEGORIAS Ca ON Ca.Id = P.IdCategoria " +
                               "JOIN SubCategorias SuC ON P.IdSubCategoria=SuC.Id " +
                               "JOIN Temporadas Te ON Te.Id=P.IdTemporada " +
                               "JOIN ProductosXSecciones  PXS on P.Codigo=PXS.CodigoProducto " +
-                              "WHERE P.Activo=1 AND PXS.IdSeccion=@IdSeccion";
-                data.setQuery(query);
+                              $"WHERE P.Activo=1 AND PXS.IdSeccion={idSection}");
 
-                data.setParameter("@IdSeccion", idSection);
                 data.executeRead();
 
                 while (data.Reader.Read())
@@ -160,7 +160,9 @@ namespace Business
                     aux.SubCategory = new SubCategory();
                     aux.SubCategory.Id = (int)data.Reader["IdSubCategoria"];
                     aux.SubCategory.Description = (string)data.Reader["SubCategoria"];
-
+                    aux.Season = new Season();
+                    aux.Season.Id = (int)data.Reader["IdTemporada"];
+                    aux.Season.Description = (string)data.Reader["Temporada"];
 
                     BusinessImageProduct businessImage = new BusinessImageProduct();
                     imageList = businessImage.list(aux.Code);
