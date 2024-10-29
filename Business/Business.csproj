@@ -46,6 +46,7 @@
     <Compile Include="BusinessImageProduct.cs" />
     <Compile Include="BusinessProduct.cs" />
     <Compile Include="ProductAttributes\BusinessColour.cs" />
+    <Compile Include="ProductAttributes\BusinessFavourite.cs" />
     <Compile Include="ProductAttributes\BusinessSeason.cs" />
     <Compile Include="BusinessUser.cs" />
     <Compile Include="ProductAttributes\BusinessSection.cs" />

@@ -7,8 +7,17 @@
             <asp:Repeater ID="rptProdList" runat="server" OnItemDataBound="rptProdList_ItemDataBound">
                 <ItemTemplate>
                     <div class="col-md-4 mb-4">
-                     
+
                         <div class="card h-100" style="width: 18rem;">
+
+
+                            <asp:LinkButton runat="server" ID="btnUndoFav" OnClick="btnUndoFav_Click">
+                                 <i class="bi bi-heart"></i>
+                            </asp:LinkButton>
+                            <asp:LinkButton runat="server" ID="bntFav" OnClick="bntFav_Click">
+                                <i class="bi bi-heart-fill"></i>
+                            </asp:LinkButton>
+
                             <!-- Carrusel de imágenes -->
                             <div id="carouselExample<%# Eval("Id") %>" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
@@ -38,7 +47,7 @@
                                 <h5 class="card-title"><%# Eval("Name") %></h5>
                                 <p class="card-text"><%# Eval("Description") %></p>
                                 <asp:Button
-                                    ID="btnPick" OnClick="btnPick_Click"
+                                    ID="btnDetails" OnClick="btnDetails_Click"
                                     CommandArgument='<%# Eval("Id")%>'
                                     runat="server"
                                     Text="Detalles" CssClass="btn btn-primary w-100" />

@@ -49,14 +49,13 @@ namespace Business.ProductAttributes
         {
             try
             {
-                data.setQuery("INSERT INTO Talles (Descripcion) Values (@Talle)");
-                data.setParameter("@Talle", size.Description);
+                data.setQuery($"INSERT INTO Talles (Descripcion) Values ('{size.Description}')");
                 data.executeAction();
                 return "ok";
             }
             catch (SqlException ex)
             {
-                if (ex.Number == 2627) // Vien de la base de datos
+                if (ex.Number == 2627)
                 {
                     return "El talle ya existe.";
                 }
@@ -80,9 +79,7 @@ namespace Business.ProductAttributes
         {
             try
             {
-                data.setQuery("UPDATE Talles SET Descripcion = @Talle WHERE Id = @Id");
-                data.setParameter("@Talle", size.Description);
-                data.setParameter("@Id", size.Id);
+                data.setQuery($"UPDATE Talles SET Descripcion = '{size.Description}' WHERE Id = {size.Id}");
                 data.executeAction();
                 return "ok";
             }
@@ -112,8 +109,7 @@ namespace Business.ProductAttributes
         {
             try
             {
-                data.setQuery("Update Talles SET Activo = 0 where Id = @Id");
-                data.setParameter("@Id", id);
+                data.setQuery("Update Talles SET Activo = 0 where Id = "+ id);
                 data.executeAction();
                 return "ok";
             }
@@ -131,8 +127,7 @@ namespace Business.ProductAttributes
         {
             try
             {
-                data.setQuery("Update Talles SET Activo = 1 where Id = @Id");
-                data.setParameter("@Id", id);
+                data.setQuery("Update Talles SET Activo = 1 where Id = "+ id);
                 data.executeAction();
                 return "ok";
             }
