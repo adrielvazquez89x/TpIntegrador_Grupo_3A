@@ -98,6 +98,7 @@
   <ItemGroup>
     <Content Include="Admin\Categories.aspx" />
     <Content Include="Admin\Colours.aspx" />
+    <Content Include="Admin\ProductForm.aspx" />
     <Content Include="Admin\Seasons.aspx" />
     <Content Include="Admin\Sections.aspx" />
     <Content Include="Admin\Sizes.aspx" />
@@ -184,6 +185,13 @@
     </Compile>
     <Compile Include="Admin\Colours.aspx.designer.cs">
       <DependentUpon>Colours.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ProductForm.aspx.cs">
+      <DependentUpon>ProductForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ProductForm.aspx.designer.cs">
+      <DependentUpon>ProductForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Seasons.aspx.cs">
       <DependentUpon>Seasons.aspx</DependentUpon>

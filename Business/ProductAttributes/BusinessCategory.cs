@@ -13,7 +13,7 @@ namespace Business
     {
         List<Category> listCategory = new List<Category>();
         DataAccess data = new DataAccess();
-        public List<Category> list(int id=0)
+        public List<Category> list(bool showAll = true, int id = 0 )
         {
             try
             {
@@ -25,9 +25,15 @@ namespace Business
                     data.setQuery(query += " AND Id = @id");
                     data.setParameter("@id", id);
                 }
+
+                if(!showAll)
+                {
+                       data.setQuery(query += " WHERE Activo = 1");
+                }
+
                 data.executeRead();
 
-                while (data.Reader.Read()) 
+                while (data.Reader.Read())
                 {
                     Category aux = new Category
                     {
@@ -62,7 +68,7 @@ namespace Business
                 data.executeAction();
                 return "ok";
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
                 if (ex.Number == 2627) // Vien de la base de datos
                 {
@@ -96,7 +102,7 @@ namespace Business
             }
             catch (SqlException ex)
             {
-                if (ex.Number == 2627) 
+                if (ex.Number == 2627)
                 {
                     return "La categoría ya existe.";
                 }
@@ -117,7 +123,7 @@ namespace Business
         }
 
         public string Delete(int id)
-        {            
+        {
             try
             {
                 data.setQuery("Update Categorias SET Activo = 0 where Id = @Id");

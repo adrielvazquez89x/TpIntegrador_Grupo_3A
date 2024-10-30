@@ -31,5 +31,32 @@ namespace TpIntegrador_Grupo_3A.Admin
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::TpIntegrador_Grupo_3A.Admin.UserControl_Buttons ControUser_Buttons;
+
+        /// <summary>
+        /// Control dgvProducts.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView dgvProducts;
+
+        /// <summary>
+        /// Control btnAddProduct.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnAddProduct;
+
+        /// <summary>
+        /// Control UserControl_Toast.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::TpIntegrador_Grupo_3A.Admin.UserControl_Toast UserControl_Toast;
     }
 }

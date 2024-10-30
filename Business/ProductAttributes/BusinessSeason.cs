@@ -13,7 +13,7 @@ namespace Business
     {
         List<Season> listSeason = new List<Season>();
         DataAccess data = new DataAccess();
-        public List<Season> list(int id = 0)
+        public List<Season> list(bool showAll = true, int id = 0)
         {
             try
             {
@@ -24,6 +24,10 @@ namespace Business
                 {
                     data.setQuery(query += " AND Id = @id");
                     data.setParameter("@id", id);
+                }
+                if (!showAll)
+                {
+                    data.setQuery(query += " WHERE Activo = 1");
                 }
                 data.executeRead();
 

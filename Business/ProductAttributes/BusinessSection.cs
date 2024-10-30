@@ -12,7 +12,7 @@ namespace Business.ProductAttributes
     {
         List<Section> listSection = new List<Section>();
         DataAccess data = new DataAccess();
-        public List<Section> list(int id=0)
+        public List<Section> list(bool showAll = true, int id = 0)
         {
             try
             {
@@ -23,6 +23,10 @@ namespace Business.ProductAttributes
                 {
                     data.setQuery(query += " AND Id = @id");
                     data.setParameter("@id", id);
+                }
+                if (!showAll)
+                {
+                    data.setQuery(query += " WHERE Activo = 1");
                 }
                 data.executeRead();
 

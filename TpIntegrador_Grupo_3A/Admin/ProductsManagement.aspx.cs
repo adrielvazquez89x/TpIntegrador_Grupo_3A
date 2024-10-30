@@ -15,7 +15,37 @@ namespace TpIntegrador_Grupo_3A.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                BindProducts();
+            }
+        }
 
+        private void BindProducts()
+        {
+            try
+            {
+                BusinessProduct businessProducts = new BusinessProduct();
+                List<Product> categories = businessProducts.list();
+
+                dgvProducts.DataSource = categories;
+                dgvProducts.DataBind();
+            }
+            catch (Exception)
+            {
+                UserControl_Toast.ShowToast("Error al cargar las categorías", false);
+            }
+        }
+
+        protected void dgvProducts_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            dgvProducts.PageIndex = e.NewPageIndex;
+            BindProducts();
+        }
+
+        protected void btnAddProduct_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ProductForm.aspx");
         }
 
     }

@@ -13,7 +13,7 @@ namespace Business.ProductAttributes
     {
         List<Colour> listColour = new List<Colour>();
         DataAccess data = new DataAccess();
-        public List<Colour> list(int id=0)
+        public List<Colour> list(bool showAll = true, int id = 0)
         {
             try
             {
@@ -24,6 +24,10 @@ namespace Business.ProductAttributes
                 {
                     data.setQuery(query += " AND Id = @id");
                     data.setParameter("@id", id);
+                }
+                if (!showAll)
+                {
+                    data.setQuery(query += " WHERE Activo = 1");
                 }
                 data.executeRead();
 

@@ -1,13 +1,7 @@
-﻿using Business.ProductAttributes;
-using DataAccessService;
+﻿using DataAccessService;
 using Model;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Collections.Specialized.BitVector32;
 
 namespace Business
 {
@@ -17,23 +11,39 @@ namespace Business
         List<Model.Section> sectionList = new List<Model.Section>();
         List<ImageProduct> imageList = new List<ImageProduct>();
         DataAccess data = new DataAccess();
-        public List<Product> list(int id=0) //lista todos los productos o uno en particular
+        public List<Product> list(int id = 0) //lista todos los productos o uno en particular
         {
             try
             {
-                string query = "SELECT P.Id AS IdProducto, P.Codigo, P.Nombre, P.Precio, P.Stock, P.Descripcion, P.FechaCreacion, P.IdCategoria, P.IdColor, " +
-                              "P.IdTalle, P.IdSeccion, P.IdTemporada, Ca.Descripcion AS Categoria, Co.Descripcion AS Color, Ta.Descripcion AS Talle, " +
-                              "S.Descripcion AS Seccion, Te.Descripcion AS Temporada " +
-                              "FROM PRODUCTOS P JOIN CATEGORIAS Ca ON Ca.Id = P.IdCategoria JOIN COLORES Co ON Co.Id = P.IdColor " +
-                              "JOIN TALLES Ta ON Ta.Id = P.IdTalle JOIN Temporadas Te ON Te.Id=P.IdTemporada "+
-                              "WHERE P.Activo=1 ";  //quité JOIN Secciones S ON S.Id=P.IdSeccion
+                string query = @"
+                                SELECT 
+                                        p.Id AS IdProducto, p.Codigo, 
+                                        p.Nombre, p.Precio, 
+                                        p.Stock, p.Descripcion, 
+                                        p.FechaCreacion, p.Activo, 
+                                        c.Id AS IdCategoria, c.Descripcion AS Categoria, 
+                                        c.Activo AS CategoriaActivo, col.Id AS IdColor, 
+                                        col.Descripcion AS Color, col.Activo AS ColorActivo, t.Id AS IdTalle,
+                                        t.Descripcion AS Talle, t.Activo AS TalleActivo, s.Id AS IdTemporada,
+                                        s.Descripcion AS Temporada, s.Activo AS TemporadaActivo FROM Productos p
+                                    INNER JOIN Categorias c ON p.IdCategoria = c.Id
+                                    INNER JOIN Colores col ON p.IdColor = col.Id
+                                    INNER JOIN Talles t ON p.IdTalle = t.Id
+                                    INNER JOIN Temporadas s ON p.IdTemporada = s.Id
+                                ";
+
+                if (id != 0)
+                {
+                    query += " WHERE p.Id = @IdProducto";
+                }
+
                 data.setQuery(query);
 
                 if (id != 0)
                 {
-                    data.setQuery(query += " AND IdProducto = @IdProducto");
                     data.setParameter("@IdProducto", id);
                 }
+
                 data.executeRead();
 
                 while (data.Reader.Read())
@@ -47,7 +57,7 @@ namespace Business
                     aux.Description = (string)data.Reader["Descripcion"];
                     aux.Category = new Category();
                     aux.Category.Id = (int)data.Reader["IdCategoria"];
-                    aux.Category.Description = (string)data.Reader["Categoria"];                   
+                    aux.Category.Description = (string)data.Reader["Categoria"];
                     aux.Colour = new Colour();
                     aux.Colour.Id = (int)data.Reader["IdColor"];
                     aux.Colour.Description = (string)data.Reader["Color"];
@@ -57,6 +67,7 @@ namespace Business
                     aux.Season = new Season();
                     aux.Season.Id = (int)data.Reader["IdTemporada"];
                     aux.Season.Description = (string)data.Reader["Temporada"];
+                    aux.CreationDate = (DateTime)data.Reader["FechaCreacion"];
 
                     BusinessImageProduct businessImage = new BusinessImageProduct();
                     imageList = businessImage.list(aux.Code);
@@ -81,7 +92,7 @@ namespace Business
         {
             try
             {
-                string query="SELECT P.Id AS IdProducto, P.Codigo, P.Nombre, P.Precio, P.Stock, P.Descripcion, P.FechaCreacion, P.IdCategoria, P.IdColor, " +
+                string query = "SELECT P.Id AS IdProducto, P.Codigo, P.Nombre, P.Precio, P.Stock, P.Descripcion, P.FechaCreacion, P.IdCategoria, P.IdColor, " +
                               "P.IdTalle, P.IdSeccion, P.IdTemporada, Ca.Descripcion AS Categoria, Co.Descripcion AS Color, Ta.Descripcion AS Talle, " +
                               "S.Descripcion AS Seccion, Te.Descripcion AS Temporada " +
                               "FROM PRODUCTOS P JOIN CATEGORIAS Ca ON Ca.Id = P.IdCategoria JOIN COLORES Co ON Co.Id = P.IdColor " +
