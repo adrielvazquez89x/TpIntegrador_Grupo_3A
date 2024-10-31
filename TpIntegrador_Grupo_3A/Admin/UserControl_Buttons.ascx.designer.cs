@@ -11,52 +11,52 @@ namespace TpIntegrador_Grupo_3A.Admin
 {
 
 
-    public partial class Products
+    public partial class UserControl_Buttons
     {
 
         /// <summary>
-        /// Control UpdatePanel1.
+        /// Control btnPickCategory.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::System.Web.UI.WebControls.Button btnPickCategory;
 
         /// <summary>
-        /// Control ControUser_Buttons.
+        /// Control btnPickSeason.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::TpIntegrador_Grupo_3A.Admin.UserControl_Buttons ControUser_Buttons;
+        protected global::System.Web.UI.WebControls.Button btnPickSeason;
 
         /// <summary>
-        /// Control dgvProducts.
+        /// Control btnPickSection.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvProducts;
+        protected global::System.Web.UI.WebControls.Button btnPickSection;
 
         /// <summary>
-        /// Control btnAddProduct.
+        /// Control btnPickColour.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnAddProduct;
+        protected global::System.Web.UI.WebControls.Button btnPickColour;
 
         /// <summary>
-        /// Control UserControl_Toast.
+        /// Control btnPickSize.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::TpIntegrador_Grupo_3A.Admin.UserControl_Toast UserControl_Toast;
+        protected global::System.Web.UI.WebControls.Button btnPickSize;
     }
 }

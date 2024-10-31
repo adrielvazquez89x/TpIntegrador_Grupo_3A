@@ -15,17 +15,21 @@ namespace Business.ProductAttributes
         List<Model.Section> listSection = new List<Model.Section>();
         List<Product> prodList = new List<Product>();
         DataAccess data = new DataAccess();
-        public List<Model.Section> list(int id=0)
+        public List<Section> list(bool showAll = true, int id = 0)
         {
             try
             {
-                string query = "SELECT * FROM Secciones WHERE Activo=1";
+                string query = "SELECT * FROM Secciones ";
+                data.setQuery(query);
 
                 if (id != 0)
                 {
                     query += " AND Id = "+ id;
                 }
-                data.setQuery(query);
+                if (!showAll)
+                {
+                    data.setQuery(query += " WHERE Activo = 1");
+                }
                 data.executeRead();
 
                 while (data.Reader.Read())

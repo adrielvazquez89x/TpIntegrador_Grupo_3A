@@ -13,17 +13,21 @@ namespace Business.ProductAttributes
     {
         List<Colour> listColour = new List<Colour>();
         DataAccess data = new DataAccess();
-        public List<Colour> list(int id=0)
+        public List<Colour> list(bool showAll = true, int id = 0)
         {
             try
             {
-                string query = "SELECT * FROM Colores WHERE Active=1";
+                string query = "SELECT * FROM Colores";
+                data.setQuery(query);
 
                 if (id != 0)
                 {
                     query += " AND Id = "+ id;
                 }
-                data.setQuery(query);
+                if (!showAll)
+                {
+                    data.setQuery(query += " WHERE Activo = 1");
+                }
                 data.executeRead();
 
                 while (data.Reader.Read())

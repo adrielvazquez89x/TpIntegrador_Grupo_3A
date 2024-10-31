@@ -1,137 +1,64 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProductsManagement.aspx.cs" Inherits="TpIntegrador_Grupo_3A.Admin.Products" %>
 
+<%@ Register Src="~/Admin/UserControl_Buttons.ascx" TagPrefix="uc1" TagName="UserControl_Buttons" %>
+<%@ Register Src="~/Admin/UserControl_Toast.ascx" TagPrefix="uc1" TagName="UserControl_Toast" %>
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>Gestión de Productos</h2>
+    <h2 class="text-center my-5">Gestión de Productos</h2>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <%-- Botones para cambiar --%>
-            <%          
-                if (CurrentOption == Buttons.NotPicked)
-                {%>
-            <div class="d-flex col-6 justify-content-around">
-                <div>
-                    <asp:Button ID="btnPickCategory" runat="server" Text="Categorias" CssClass="btn btn-dark" OnClick="btnPickCategory_Click" />
-                </div>
-                <div>
-                    <asp:Button ID="btnPickSeason" runat="server" Text="Temporadas" CssClass="btn btn-dark" />
-                </div>
-                <div>
-                    <asp:Button ID="btnPickSection" runat="server" Text="Secciones" CssClass="btn btn-dark" />
-                </div>
-            </div>
-            <%}%>
-            <%-- Botón para volver --%>
-            <%if (CurrentOption != Buttons.NotPicked)
-                {%>
-            <div>
-                <asp:Button ID="btnBack" runat="server" Text="Volver" CssClass="btn btn-dark" OnClick="btnBack_Click" />
-            </div>
-            <%}%>
+            <uc1:UserControl_Buttons runat="server" ID="ControUser_Buttons" />
+        
+            <h2 class="my-5 text-center">Artículos existentes</h2>
+            <asp:GridView
+                ID="dgvProducts"
+                runat="server"
+                AutoGenerateColumns="False"
+                CssClass="table table-striped"
+                OnPageIndexChanging="dgvProducts_PageIndexChanging"
+                AllowPaging="true"
+                PageSize="5" 
+                PagerSettings-Visible="true"
+                PagerSettings-Mode="NumericFirstLast"
+                PagerSettings-FirstPageText="<<"
+                PagerSettings-LastPageText=">>"
+                PagerSettings-NextPageText=">"
+                PagerSettings-PreviousPageText="<"
+               
+            >
+                <Columns>
+                    <asp:BoundField DataField="Id" HeaderText="Id" />
+                    <asp:BoundField DataField="Code" HeaderText="Código" />
+                    <asp:BoundField DataField="Name" HeaderText="Nombre" />
+                    <asp:BoundField DataField="Description" HeaderText="Descripción" />
+                    <asp:BoundField DataField="Price" HeaderText="Precio" DataFormatString="{0:C}" HtmlEncode="False" />
+                    <asp:BoundField DataField="Stock" HeaderText="Stock" />
+                    <asp:TemplateField HeaderText="Categoría">
+                        <ItemTemplate>
+                            <%# Eval("Category.Description") %>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Talle">
+                        <ItemTemplate>
+                            <%# Eval("Size.Description") %>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Color">
+                        <ItemTemplate>
+                            <%# Eval("Colour.Description") %>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:BoundField DataField="CreationDate" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" HtmlEncode="False" />
+                </Columns>
+            </asp:GridView>
 
-            <%-- Categoria --%>
-            <% 
-                if (CurrentOption == Buttons.Category)
-                {%>
-            <div class="row">
-                <%-- Categorias --%>
-                <div class="col-4">
-                    <h3 class="text-bg-success">Categorias</h3>
-                    <div class="d-flex gap-3">
-                        <asp:Label ID="lblCategory" runat="server" Text="Categoria"></asp:Label>
-                        <asp:TextBox ID="txtCategory" runat="server" CssClass="form-control"></asp:TextBox>
-                        <asp:Button
-                            ID="btnAddCategory"
-                            runat="server"
-                            Text="Agregar"
-                            CssClass="btn btn-primary"
-                            OnClick="btnAddCategory_Click" />
-                    </div>
-                </div>
-                <div class="col-4">
-                    <asp:GridView
-                        ID="dgvCategories"
-                        runat="server"
-                        CssClass="table"
-                        DataKeyNames="Id"
-                        AutoGenerateColumns="false"
-                        OnSelectedIndexChanged="dgvCategories_SelectedIndexChanged"
-                        OnPageIndexChanging="dgvCategories_PageIndexChanging" AllowPaging="true"
-                        PageSize="5">
-                        <Columns>
-                            <asp:BoundField DataField="Description" HeaderText="Nombre" />
+            <asp:LinkButton ID="btnAddProduct" runat="server" CssClass="buttonCus btn-electric-blue" OnClick="btnAddProduct_Click">
+                <i class="bi bi-bag-plus fs-4"></i>
+                Agregar Producto
+            </asp:LinkButton>
 
-                            <asp:TemplateField HeaderText="Activo">
-                                <ItemTemplate>
-                                    <%# Convert.ToBoolean(Eval("Active")) ? 
-                                     "<i class='bi bi-check-circle-fill text-success'></i>" : 
-                                        "<i class='bi bi-x-circle-fill text-danger'></i>" %>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-
-                            <asp:TemplateField HeaderText="Acciones">
-                                <ItemTemplate>
-                                    <!-- Editar -->
-                                    <asp:LinkButton
-                                        ID="btnEditCategory"
-                                        runat="server"
-                                        CommandArgument='<%# Eval("Id") + "|" + Eval("Description")+ "|" + Eval("Active") %>'
-                                        CssClass="btn btn-sm text-primary me-2"
-                                        OnClick="btnEditCategory_Click">
-                                    <i class="bi bi-pencil-square"></i>
-                                    </asp:LinkButton>
-
-
-                                    <!-- Botón de Eliminar (Visible cuando Active es true) -->
-                                    <asp:LinkButton
-                                        ID="btnDeleteCategory"
-                                        runat="server"
-                                        CssClass="btn btn-sm text-danger me-2"
-                                        OnClick="btnDeleteCategory_Click"
-                                        CommandArgument='<%# Eval("Id") + "|" + Eval("Description")+ "|" + Eval("Active") %>'
-                                        Visible='<%# Convert.ToBoolean(Eval("Active")) %>'
-                                        ToolTip="Desactivar">
-                                        <i class="bi bi-trash-fill"></i>
-                                     </asp:LinkButton>
-
-                                    <!-- Botón de Activar (Visible cuando Active es false) -->
-                                    <asp:LinkButton
-                                        ID="btnActivateCategory"
-                                        runat="server"
-                                        CssClass="btn btn-sm text-success"
-                                        OnClick="btnActivateCategory_Click"                                        
-                                        CommandArgument='<%# Eval("Id") + "|" + Eval("Description")+ "|" + Eval("Active") %>'
-                                        Visible='<%# !Convert.ToBoolean(Eval("Active")) %>'
-                                        ToolTip="Activar">
-                                        <i class="bi bi-check-circle"></i>
-                                     </asp:LinkButton>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-
-
-                        </Columns>
-                    </asp:GridView>
-                </div>
-            </div>
-            <%}
-
-            %>
-
-
-            <%-- Toastie --%>
-            <div class="toast-container position-fixed top-0 end-0 p-3">
-                <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="toast-header">
-                        <strong class="me-auto">Notificación</strong>
-                        <small class="text-muted">Ahora</small>
-                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Cerrar"></button>
-                    </div>
-                    <div class="toast-body">
-                        <asp:Literal ID="ltlToastMessage" runat="server"></asp:Literal>
-                    </div>
-                </div>
-            </div>
+            <uc1:UserControl_Toast runat="server" ID="UserControl_Toast" />
         </ContentTemplate>
     </asp:UpdatePanel>
-
-
 </asp:Content>
