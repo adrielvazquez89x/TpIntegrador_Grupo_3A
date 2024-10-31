@@ -15,29 +15,29 @@ namespace Business
         {
             try
             {
-                string query = @"
-                                SELECT 
-                                        p.Id AS IdProducto, p.Codigo, 
-                                        p.Nombre, p.Precio, 
-                                        p.Stock, p.Descripcion, 
-                                        p.FechaCreacion, p.Activo, 
-                                        c.Id AS IdCategoria, c.Descripcion AS Categoria, 
-                                        c.Activo AS CategoriaActivo, col.Id AS IdColor, 
-                                        col.Descripcion AS Color, col.Activo AS ColorActivo, t.Id AS IdTalle,
-                                        t.Descripcion AS Talle, t.Activo AS TalleActivo, s.Id AS IdTemporada,
-                                        s.Descripcion AS Temporada, s.Activo AS TemporadaActivo FROM Productos p
-                                    INNER JOIN Categorias c ON p.IdCategoria = c.Id
-                                    INNER JOIN Colores col ON p.IdColor = col.Id
-                                    INNER JOIN Talles t ON p.IdTalle = t.Id
-                                    INNER JOIN Temporadas s ON p.IdTemporada = s.Id
-                                ";
+                //string query = @"
+                //                SELECT 
+                //                        p.Id AS IdProducto, p.Codigo, 
+                //                        p.Nombre, p.Precio, 
+                //                        p.Stock, p.Descripcion, 
+                //                        p.FechaCreacion, p.Activo, 
+                //                        c.Id AS IdCategoria, c.Descripcion AS Categoria, 
+                //                        c.Activo AS CategoriaActivo, col.Id AS IdColor, 
+                //                        col.Descripcion AS Color, col.Activo AS ColorActivo, t.Id AS IdTalle,
+                //                        t.Descripcion AS Talle, t.Activo AS TalleActivo, s.Id AS IdTemporada,
+                //                        s.Descripcion AS Temporada, s.Activo AS TemporadaActivo FROM Productos p
+                //                    INNER JOIN Categorias c ON p.IdCategoria = c.Id
+                //                    INNER JOIN Colores col ON p.IdColor = col.Id
+                //                    INNER JOIN Talles t ON p.IdTalle = t.Id
+                //                    INNER JOIN Temporadas s ON p.IdTemporada = s.Id
+                //                ";
 
-                if (id != 0)
-                {
-                    query += " WHERE p.Id = @IdProducto";
-                }
+                //if (id != 0)
+                //{
+                //    query += " WHERE p.Id = @IdProducto";
+                //}
+                //data.setQuery(query);
 
-                data.setQuery(query);
                 string query = "SELECT P.Id AS IdProducto, P.Codigo, P.Nombre, P.Precio, P.Descripcion, P.FechaCreacion, P.IdCategoria, " +
                               "P.IdSubCategoria, P.IdTemporada, Ca.Descripcion AS Categoria, SuC.Descripcion AS SubCategoria, " +
                               "Te.Descripcion AS Temporada " +

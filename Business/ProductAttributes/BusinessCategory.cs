@@ -20,7 +20,7 @@ namespace Business
         {
             try
             {
-                string query = "SELECT * FROM Categorias WHERE Activo=1";
+                string query = "SELECT * FROM Categorias";
                 
 
                 if (id != 0)
@@ -42,7 +42,7 @@ namespace Business
 
                     aux.Id = (int)data.Reader["Id"];
                     aux.Description = (string)data.Reader["Descripcion"];
-                    aux.Icon = (string)data.Reader["Icono"];
+                    //aux.Icon = (string)data.Reader["Icono"];
                     aux.Active = (bool)data.Reader["Activo"];
 
                     BusinessSubCategory businessSubCat = new BusinessSubCategory();

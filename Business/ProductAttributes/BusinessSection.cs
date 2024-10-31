@@ -15,7 +15,7 @@ namespace Business.ProductAttributes
         List<Model.Section> listSection = new List<Model.Section>();
         List<Product> prodList = new List<Product>();
         DataAccess data = new DataAccess();
-        public List<Section> list(bool showAll = true, int id = 0)
+        public List<Model.Section> list(bool showAll = true, int id = 0)
         {
             try
             {
