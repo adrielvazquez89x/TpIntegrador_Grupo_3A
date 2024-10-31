@@ -70,7 +70,7 @@ namespace Business
             }
             catch(SqlException ex)
             {
-                if (ex.Number == 2627) // Vien de la base de datos
+                if (ex.Number == 2627) // Viene de la base de datos
                 {
                     return "La categoría ya existe.";
                 }
@@ -90,24 +90,17 @@ namespace Business
             }
         }
 
-        public string Update(Category category)
+        public void Update(Category category)
         {
             try
             {
                 data.setQuery($"UPDATE Categorias SET Descripcion = '{category.Description}' WHERE Id = {category.Id}");
                 data.executeAction();
-                return "ok";
             }
             catch (SqlException ex)
             {
-                if (ex.Number == 2627) 
-                {
-                    return "La categoría ya existe.";
-                }
-                else
-                {
-                    return "Error al agregar la categoría: " + ex.Message;
-                }
+
+                throw ex;
 
             }
             catch (Exception ex)

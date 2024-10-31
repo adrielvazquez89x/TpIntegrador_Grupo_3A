@@ -86,25 +86,17 @@ namespace Business.ProductAttributes
             }
         }
 
-        public string Update(Model.Section section)
+        public void Update(Model.Section section)
         {
             try
             {
                 data.setQuery($"UPDATE Secciones SET Descripcion = '{section.Description}', Descripcion2 = '{section.Description2}' WHERE Id = {section.Id}");
                 data.executeAction();
-                return "ok";
             }
             catch (SqlException ex)
             {
-                if (ex.Number == 2627)
-                {
-                    return "La sección ya existe.";
-                }
-                else
-                {
-                    return "Error al agregar la sección: " + ex.Message;
-                }
 
+                throw ex;
             }
             catch (Exception ex)
             {

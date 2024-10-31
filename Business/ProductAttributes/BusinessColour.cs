@@ -81,25 +81,17 @@ namespace Business.ProductAttributes
             }
         }
 
-        public string Update(Colour colour)
+        public void Update(Colour colour)
         {
             try
             {
                 data.setQuery($"UPDATE Colores SET Descripcion = '{colour.Description}' WHERE Id ={colour.Id}");
                 data.executeAction();
-                return "ok";
             }
             catch (SqlException ex)
             {
-                if (ex.Number == 2627)
-                {
-                    return "El color ya existe.";
-                }
-                else
-                {
-                    return "Error al agregar el color: " + ex.Message;
-                }
 
+                throw ex;
             }
             catch (Exception ex)
             {

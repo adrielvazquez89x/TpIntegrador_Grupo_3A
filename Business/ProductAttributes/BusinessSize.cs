@@ -75,25 +75,16 @@ namespace Business.ProductAttributes
             }
         }
 
-        public string Update(Size size)
+        public void Update(Size size)
         {
             try
             {
                 data.setQuery($"UPDATE Talles SET Descripcion = '{size.Description}' WHERE Id = {size.Id}");
                 data.executeAction();
-                return "ok";
             }
             catch (SqlException ex)
             {
-                if (ex.Number == 2627)
-                {
-                    return "El talle ya existe.";
-                }
-                else
-                {
-                    return "Error al agregar el talle: " + ex.Message;
-                }
-
+                throw ex;
             }
             catch (Exception ex)
             {

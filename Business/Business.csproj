@@ -52,6 +52,7 @@
     <Compile Include="ProductAttributes\BusinessSection.cs" />
     <Compile Include="ProductAttributes\BusinessSize.cs" />
     <Compile Include="ProductAttributes\BusinessSubCategory.cs" />
+    <Compile Include="ProductAttributes\BusinessStock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

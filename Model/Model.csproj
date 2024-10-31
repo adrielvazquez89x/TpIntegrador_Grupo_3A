@@ -48,6 +48,7 @@
     <Compile Include="ImageProduct.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="Product.cs" />
+    <Compile Include="ProductAttributes\Stock.cs" />
     <Compile Include="ProductAttributes\SubCategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProductAttributes\Season.cs" />
