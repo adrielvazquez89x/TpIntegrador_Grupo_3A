@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="PassConfig.aspx.cs" Inherits="TpIntegrador_Grupo_3A.PassConfig" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+<%--<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container vh-100 d-flex align-items-center justify-content-center">
         <div class="row w-100 justify-content-center">
             <div class="col-md-4">
@@ -38,4 +38,4 @@
         </div>
     </div>
 
-</asp:Content>
+</asp:Content>--%>

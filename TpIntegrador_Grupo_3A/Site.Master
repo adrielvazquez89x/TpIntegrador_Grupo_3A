@@ -16,7 +16,7 @@
     <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/Images/iconoPag.png" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-..." crossorigin="anonymous">
     <link rel="stylesheet" href="~/Css/Master.css">
 </head>
 
@@ -60,8 +60,11 @@
                     <div class="d-flex">
                         <li class="nav-item">
                             <a href="/Login" class="navbar-brand" runat="server">
-                                <i class='bi bi-person-circle me-2 fs-5'></i>
-                                <span class="d-none d-sm-inline">Login</span>
+                                <a href="Login.aspx" class="btn btn-success me-2">Login</a>
+
+                                <a href="Register.aspx" class="btn btn-outline-primary m-auto">Registrarse</a>
+                             <asp:Image ID="imgPerfilAvatar" Style="height: 40px; width: 40px; border-radius: 50%; margin-left: 10px;"
+                            runat="server" />
                             </a>
                         </li>
                     </div>

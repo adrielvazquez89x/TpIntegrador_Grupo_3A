@@ -11,43 +11,34 @@ namespace TpIntegrador_Grupo_3A
 {
 
 
-    public partial class Login
+    public partial class ResetPassword
     {
 
         /// <summary>
-        /// txtEmail control.
+        /// txtResetEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEmail;
+        protected global::System.Web.UI.WebControls.TextBox txtResetEmail;
 
         /// <summary>
-        /// lblError control.
+        /// lblResetError control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblError;
+        protected global::System.Web.UI.WebControls.Label lblResetError;
 
         /// <summary>
-        /// txtPassword control.
+        /// btnSendReset control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPassword;
-
-        /// <summary>
-        /// btnIniciar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnIniciar;
+        protected global::System.Web.UI.WebControls.Button btnSendReset;
     }
 }

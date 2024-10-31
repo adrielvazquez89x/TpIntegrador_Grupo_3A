@@ -23,10 +23,10 @@ namespace TpIntegrador_Grupo_3A
                 RepeaterSidebar.DataBind();
             }
 
-            if (Request.Url.AbsolutePath.Contains("login") || Request.Url.AbsolutePath.Contains("Login"))
-            {
-                sidebar.Visible = false;
-            }
+            //if (Request.Url.AbsolutePath.Contains("login") || Request.Url.AbsolutePath.Contains("Login"))
+            //{
+            //    sidebar.Visible = false;
+            //}
         }
 
         protected void RepeaterSidebar_ItemDataBound(object sender, RepeaterItemEventArgs e)
