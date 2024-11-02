@@ -30,7 +30,6 @@
 
         <!-- Secciones de productos -->
         <div class="container m-5">
-
             <asp:Repeater ID="RptSecciones" runat="server" OnItemDataBound="RptSecciones_ItemDataBound">
                 <ItemTemplate>
                     <div class="row mb-4">

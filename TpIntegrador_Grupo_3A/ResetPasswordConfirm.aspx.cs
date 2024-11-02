@@ -28,11 +28,11 @@ namespace TpIntegrador_Grupo_3A
             }
 
             // Verificar si el token es válido (NO ANDA AUN)
-            //if (!businessUser.VerifyResetToken(email, token))
-            //{
-            //    lblConfirmError.Text = "El enlace no es válido o ha expirado.";
-            //    return;
-            //}
+            if (!businessUser.VerifyResetToken(email, token))
+            {
+                lblConfirmError.Text = "El enlace no es válido o ha expirado.";
+                return;
+            }
 
             // Verificar las contraseñas
             if (txtNewPassword.Text != txtConfirmPassword.Text)

@@ -30,6 +30,12 @@ namespace TpIntegrador_Grupo_3A
                 if (businessUser.Login(user))
                 {
                     Session.Add("user", user);
+                    if (Security.isAdmin(Session["user"]))
+                    {
+                       
+                        Response.Redirect("Admin/ProductsManagement.aspx");
+                    }
+
                     // Redirigir a la página principal o al área protegida
                     if (string.IsNullOrEmpty(user.FirstName) || string.IsNullOrEmpty(user.LastName))
                     {

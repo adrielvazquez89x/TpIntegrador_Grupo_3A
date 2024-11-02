@@ -1,4 +1,5 @@
 ﻿using DataAccessService;
+using DataAccessService.DataAccessService;
 using Microsoft.AspNet.Identity;
 using Model;
 using System;
@@ -28,7 +29,7 @@ namespace Business
                 data.setParameter("@pass", user.PasswordHash);
                 data.setParameter("security", user.SecurityStamp);
 
-                user.UserId = data.getIdEcalar();
+                user.UserId = data.ActionScalar();
 
 
             }
@@ -115,9 +116,9 @@ namespace Business
                 if (reader.Read())
                 {
                     aux.UserId = (int)reader["IdUsuario"];
-                    aux.Dni = (string)reader["Dni"];
-                    aux.FirstName = (string)reader["Nombre"];
-                    aux.LastName = (string)reader["Apellido"];
+                    // aux.Dni = (string)reader["Dni"];
+                    // aux.FirstName = (string)reader["Nombre"];
+                    //aux.LastName = (string)reader["Apellido"];
                     aux.Email = (string)reader["Email"];
                     // aux.ImageUrl = (string)reader["UrlImg"];
                     // aux.Mobile = (string)reader["Celular"];
@@ -211,29 +212,66 @@ namespace Business
         //VERIFICAR SI EL ENLACE EXPIRO (NO PUEDO HACER FUNCIONARLO)
         //public bool VerifyResetToken(string email, string token)
         //{
-        //    data.setQuery("SELECT TokenVencimiento FROM Usuarios WHERE Email = @email AND ResetearToken = @token;");
-        //    data.setParameter("@email", email);
-        //    data.setParameter("@token", token);
-        //    data.executeRead();
-
-        //    if (data.Reader.Read())
+        //    try
         //    {
-        //        try
+        //        data.setQuery("SELECT TokenVencimiento FROM Usuarios WHERE Email = @email AND ResetearToken = @token;");
+        //        data.setParameter("@email", email);
+        //        data.setParameter("@token", token);
+        //        data.executeRead();
+
+        //        if (data.Reader.Read())
         //        {
         //            var expiration = (DateTime)data.Reader["TokenVencimiento"];
         //            Console.WriteLine($"Email: {email}, Token: {token}, Expiration: {expiration}");
 
-        //            if (expiration > DateTime.Now)
-        //                return true; // Verifica si el token no ha expirado
-        //        }
-        //        catch (InvalidCastException ex)
-        //        {
-        //            Console.WriteLine($"Error al convertir TokenVencimiento: {ex.Message}");
-
+        //            return expiration > DateTime.Now; // Verifica si el token no ha expirado
         //        }
         //    }
-        //    return false;
+        //    catch (Exception ex)
+        //    {
+        //        // Manejar excepciones adecuadamente
+        //        Console.WriteLine($"Error al verificar el token: {ex.Message}");
+        //    }
+
+        //    return false; // Retorna false si no se encontró el token o si ha expirado
         //}
+
+        public bool VerifyResetToken(string email, string token)
+        {
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(token))
+            { 
+                return false; // Retorna false si el email o token están vacíos
+            }
+
+            try
+            {
+                data.setQuery("SELECT ResetearToken, TokenVencimiento FROM Usuarios WHERE Email = @email;");
+                data.setParameter("@email", email);
+                data.executeRead();
+
+                if (data.Reader.Read())
+                {
+                    Console.WriteLine("El token es válido.");
+                    var expiration = (DateTime)data.Reader["TokenVencimiento"];
+                    //Console.WriteLine($"Email: {email}, Token: {token}, Expiration: {expiration}");
+
+                    //return expiration > DateTime.Now; // Verifica si el token no ha expirado
+                    return expiration > DateTime.Now; 
+                }
+                else
+                {
+                    Console.WriteLine("No se encontraron resultados para el email y token proporcionados.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejar excepciones adecuadamente
+                Console.WriteLine($"Error al verificar el token: {ex.Message}");
+            }
+
+            return false; // Retorna false si no se encontró el token o si ha expirado
+        }
+
 
         public void ResetPassword(string email, string newPassword)
         {
@@ -242,12 +280,14 @@ namespace Business
             {
                 var hashedPassword = new PasswordHasher().HashPassword(newPassword);
 
-                data.setQuery("UPDATE Usuarios SET ContraseniaHash = @pass, ResetearToken = NULL, TokenVencimiento = NULL WHERE Email = @email;");
-                data.setParameter("@pass", hashedPassword);
-                data.setParameter("@email", email);
+                using (var data = new DataAccess())
+                {
+                    data.setQuery("UPDATE Usuarios SET ContraseniaHash = @pass, ResetearToken = NULL, TokenVencimiento = NULL WHERE Email = @email;");
+                    data.setParameter("@pass", hashedPassword);
+                    data.setParameter("@email", email);
 
-                data.executeAction();
-
+                    data.executeAction();
+                }
             }
             catch (Exception ex)
             {

@@ -58,26 +58,45 @@
                     </ul>
 
                     <div class="d-flex">
-                        <li class="nav-item">
+
+                        <%-- <li class="nav-item">
                             <a href="/Login" class="navbar-brand" runat="server">
                                 <a href="Login.aspx" class="btn btn-success me-2">Login</a>
-
                                 <a href="Register.aspx" class="btn btn-outline-primary m-auto">Registrarse</a>
                              <asp:Image ID="imgPerfilAvatar" Style="height: 40px; width: 40px; border-radius: 50%; margin-left: 10px;"
                             runat="server" />
                             </a>
                         </li>
+                    </div>--%>
+
+                        <% if (!Business.Security.ActiveSession(Session["user"]))
+                            { %>
+                        <a href="Login.aspx" class="btn btn-success me-2">Login</a>
+                        <a href="Register.aspx" class="btn btn-outline-primary m-auto">Registrarse</a>
+                        <%
+                            }
+                            else
+                            {
+                        %>
+                        <asp:Button Text="Salir" ID="btnExit" CssClass="btn btn-outline-primary me-2" OnClick="btnExit_Click" runat="server" />
+                        <asp:Label ID="lblUser" Text="user" CssClass="text-light m-auto me-2" runat="server" />
+                        <%} %>
+                         
                     </div>
+
+
+
+
 
                 </div>
             </div>
         </nav>
 
-                        <%-- Banner Principal --%>
-                <div class="col body-content">
-                    <asp:ContentPlaceHolder ID="BannerContent" runat="server">
-                    </asp:ContentPlaceHolder>
-                </div>
+        <%-- Banner Principal --%>
+        <div class="col body-content">
+            <asp:ContentPlaceHolder ID="BannerContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
         <div class="container-fluid">
             <div class="row">
                 <%-- Sidebar --%>
