@@ -22,7 +22,7 @@ namespace TpIntegrador_Grupo_3A
             try
             {
                 BusinessUser businessUser = new BusinessUser();
-                User user = new User();
+                Model.User user = new Model.User();
 
                  user.Email = txtEmail.Text;
                  user.PasswordHash = txtPassword.Text;

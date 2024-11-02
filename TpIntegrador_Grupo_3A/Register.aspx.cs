@@ -35,7 +35,7 @@ namespace TpIntegrador_Grupo_3A
                     return;
                 }
 
-                User user = new User
+                Model.User user = new Model.User
                 {
                     Email = txtEmail.Text,
                     PasswordHash = passwordHasher.HashPassword(txtPassword.Text),

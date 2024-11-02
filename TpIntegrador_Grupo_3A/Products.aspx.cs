@@ -10,6 +10,7 @@ using Business.ProductAttributes;
 using Microsoft.Ajax.Utilities;
 using Model;
 using Model.ProductAttributes;
+using Security;
 
 namespace TpIntegrador_Grupo_3A
 {
@@ -18,9 +19,10 @@ namespace TpIntegrador_Grupo_3A
         public List<Product> prodList;
         public List<Model.ImageProduct> ImageList;
 
+        public string CodeSelectedProd;
         public int IdSelectedProd;
         public bool SessionOn { get; set; }
-        public User user {  get; set; }
+        public Model.User user {  get; set; }
         public bool ProdIsFav { get; set; }
 
         public Product selectedProd = new Product();
@@ -36,12 +38,21 @@ namespace TpIntegrador_Grupo_3A
 
             if (!IsPostBack)
             {
-                prodList = businessProd.listByCategory(idCategory, idSubCategory);    //Carga los productos según la categoría
-
+                if (idCategory == 0)
+                {
+                    prodList = businessProd.list();    //Carga los productos según la categoría
+                }
+                else
+                {
+                    prodList = businessProd.listByCategory(idCategory, idSubCategory);    //Carga los productos según la categoría
+                }
                 rptProdList.DataSource = prodList;
                 rptProdList.DataBind();
             }
-
+            if (SessionSecurity.ActiveSession(Session["user"]))
+            {
+                user = (Model.User)Session["user"];
+            }
         }
 
         protected void rptProdList_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -65,8 +76,9 @@ namespace TpIntegrador_Grupo_3A
         {
             try
             {
+                CodeSelectedProd = ((LinkButton)sender).CommandArgument.ToString();
                 BusinessFavourite businessFav = new BusinessFavourite();
-                businessFav.Add(user.UserId, IdSelectedProd);
+                businessFav.Add(user.UserId, CodeSelectedProd);
 
             }
             catch (Exception ex)
@@ -80,8 +92,9 @@ namespace TpIntegrador_Grupo_3A
         {
             try
             {
+                CodeSelectedProd = ((Button)sender).CommandArgument.ToString();
                 BusinessFavourite businessFav = new BusinessFavourite();
-                businessFav.Delete(user.UserId, IdSelectedProd);
+                businessFav.Add(user.UserId, CodeSelectedProd);
             }
             catch (Exception ex)
             {

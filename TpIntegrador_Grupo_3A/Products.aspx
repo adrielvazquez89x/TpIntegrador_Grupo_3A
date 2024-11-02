@@ -10,13 +10,15 @@
 
                         <div class="card h-100" style="width: 18rem;">
 
-
-                            <asp:LinkButton runat="server" ID="btnUndoFav" OnClick="btnUndoFav_Click">
-                                 <i class="bi bi-heart"></i>
-                            </asp:LinkButton>
-                            <asp:LinkButton runat="server" ID="bntFav" OnClick="bntFav_Click">
+                             <% if (Security.SessionSecurity.ActiveSession(Session["user"]))
+                               {%>
+                            <asp:LinkButton runat="server" ID="btnUndoFav" OnClick="btnUndoFav_Click" CommandArgument='<%# Eval("Code")%>'>
                                 <i class="bi bi-heart-fill"></i>
                             </asp:LinkButton>
+                            <asp:LinkButton runat="server" ID="bntFav" OnClick="bntFav_Click" CommandArgument='<%# Eval("Code")%>'>
+                                 <i class="bi bi-heart"></i>
+                            </asp:LinkButton>
+                             <% }%>
 
                             <!-- Carrusel de imágenes -->
                             <div id="carouselExample<%# Eval("Id") %>" class="carousel slide" data-bs-ride="carousel">

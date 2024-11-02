@@ -1,6 +1,7 @@
 ﻿using Business;
 using Business.ProductAttributes;
 using Model;
+using Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,8 @@ namespace TpIntegrador_Grupo_3A
 {
     public partial class Details : System.Web.UI.Page
     {
-        public int IdSelectedProd;
-        public User user { get; set; }
+        public string CodeSelectedProd;
+        public Model.User user { get; set; }
         public List<Product> products { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -26,11 +27,15 @@ namespace TpIntegrador_Grupo_3A
                 rptProducts.DataSource = products;
                 rptProducts.DataBind();
             }
+            if (SessionSecurity.ActiveSession(Session["user"]))
+            {
+                user = (Model.User)Session["user"];
+            }
         }
 
         protected void btnAddToCart_Click(object sender, EventArgs e)
         {
-            IdSelectedProd = int.Parse(((Button)sender).CommandArgument);
+            CodeSelectedProd = ((LinkButton)sender).CommandArgument.ToString();
         }
 
 
@@ -51,9 +56,25 @@ namespace TpIntegrador_Grupo_3A
         {
             try
             {
+                CodeSelectedProd = ((LinkButton)sender).CommandArgument.ToString();
                 BusinessFavourite businessFav = new BusinessFavourite();
-                businessFav.Add(user.UserId, IdSelectedProd);
+                businessFav.Add(user.UserId, CodeSelectedProd);
 
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        protected void btnUndoFav_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CodeSelectedProd = ((Button)sender).CommandArgument.ToString();
+                BusinessFavourite businessFav = new BusinessFavourite();
+                businessFav.Add(user.UserId, CodeSelectedProd);
             }
             catch (Exception ex)
             {

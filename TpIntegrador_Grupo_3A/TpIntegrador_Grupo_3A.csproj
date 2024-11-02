@@ -135,9 +135,11 @@
     <Content Include="Global.asax" />
     <Content Include="Images\slider1.jpg" />
     <Content Include="Login.aspx" />
-    <Content Include="User\MyProfile.aspx" />
+    <Content Include="Cart.aspx" />
+    <Content Include="Favourites.aspx" />
+    <Content Include="MyProfile.aspx" />
     <Content Include="PassConfig.aspx" />
-    <Content Include="User\PersonalData.aspx" />
+    <Content Include="PersonalData.aspx" />
     <Content Include="Products.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="ResetPassword.aspx" />
@@ -292,11 +294,25 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User\MyProfile.aspx.cs">
+    <Compile Include="Cart.aspx.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cart.aspx.designer.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Favourites.aspx.cs">
+      <DependentUpon>Favourites.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Favourites.aspx.designer.cs">
+      <DependentUpon>Favourites.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyProfile.aspx.cs">
       <DependentUpon>MyProfile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User\MyProfile.aspx.designer.cs">
+    <Compile Include="MyProfile.aspx.designer.cs">
       <DependentUpon>MyProfile.aspx</DependentUpon>
     </Compile>
     <Compile Include="PassConfig.aspx.cs">
@@ -306,11 +322,11 @@
     <Compile Include="PassConfig.aspx.designer.cs">
       <DependentUpon>PassConfig.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User\PersonalData.aspx.cs">
+    <Compile Include="PersonalData.aspx.cs">
       <DependentUpon>PersonalData.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User\PersonalData.aspx.designer.cs">
+    <Compile Include="PersonalData.aspx.designer.cs">
       <DependentUpon>PersonalData.aspx</DependentUpon>
     </Compile>
     <Compile Include="Products.aspx.cs">
@@ -366,6 +382,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

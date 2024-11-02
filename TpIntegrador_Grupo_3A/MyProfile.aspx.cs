@@ -21,7 +21,7 @@ namespace TpIntegrador_Grupo_3A
                     if (SessionSecurity.ActiveSession(Session["user"]))
                     {
                         
-                        User user = (User)Session["user"];
+                        Model.User user = (Model.User)Session["user"];
                         txtEmail.Text = user.Email;
                         txtEmail.ReadOnly = true;
                         if (user.FirstName != null)
@@ -51,7 +51,7 @@ namespace TpIntegrador_Grupo_3A
             try
             {
                 BusinessUser businessUser = new BusinessUser();
-                User user = (User)Session["user"];
+                Model.User user = (Model.User)Session["user"];
                 user.FirstName = txtNombre.Text;
                 user.LastName = txtApellido.Text;
                 

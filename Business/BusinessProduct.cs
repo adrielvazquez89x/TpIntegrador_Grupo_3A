@@ -282,5 +282,67 @@ namespace Business
                 data.closeConnection();
             }
         }
+
+
+        public Product listByCode(string code) //lista todos los productos de cierta categoria o filtra tambien por SubCat
+        {
+            Product aux = new Product();
+            try
+            {
+                string query = " SELECT P.Id AS IdProducto, P.Codigo, P.Nombre, P.Precio, P.Descripcion, P.FechaCreacion, P.IdCategoria, P.IdSubCategoria, P.IdTemporada, " +
+                        "Ca.Descripcion AS Categoria, SuC.Descripcion AS SubCategoria, Te.Descripcion AS Temporada " +
+                        "FROM Productos P INNER JOIN Categorias Ca ON Ca.Id = P.IdCategoria INNER JOIN SubCategorias SuC ON P.IdSubCategoria = SuC.Id " +
+                        $"INNER JOIN Temporadas Te ON Te.Id = P.IdTemporada WHERE P.Activo = 1 AND P.Codigo='{code}'";
+
+            data.setQuery(query);
+            data.executeRead();
+
+            while (data.Reader.Read())
+            {
+                
+                aux.Id = (int)data.Reader["IdProducto"];
+                aux.Code = data.Reader["Codigo"] != DBNull.Value ? (string)data.Reader["Codigo"] : string.Empty;
+                aux.Name = data.Reader["Nombre"] != DBNull.Value ? (string)data.Reader["Nombre"] : string.Empty;
+                aux.Price = data.Reader["Precio"] != DBNull.Value ? Math.Round((decimal)data.Reader["Precio"], 2) : 0;
+                aux.Description = data.Reader["Descripcion"] != DBNull.Value ? (string)data.Reader["Descripcion"] : string.Empty;
+                aux.CreationDate = data.Reader["FechaCreacion"] != DBNull.Value ? (DateTime)data.Reader["FechaCreacion"] : DateTime.MinValue;
+
+                aux.Category = new Category
+                {
+                    Id = data.Reader["IdCategoria"] != DBNull.Value ? (int)data.Reader["IdCategoria"] : 0,
+                    Description = data.Reader["Categoria"] != DBNull.Value ? (string)data.Reader["Categoria"] : string.Empty
+                };
+
+                aux.SubCategory = new SubCategory
+                {
+                    Id = data.Reader["IdSubCategoria"] != DBNull.Value ? (int)data.Reader["IdSubCategoria"] : 0,
+                    Description = data.Reader["SubCategoria"] != DBNull.Value ? (string)data.Reader["SubCategoria"] : string.Empty
+                };
+
+                aux.Season = new Season
+                {
+                    Id = data.Reader["IdTemporada"] != DBNull.Value ? (int)data.Reader["IdTemporada"] : 0,
+                    Description = data.Reader["Temporada"] != DBNull.Value ? (string)data.Reader["Temporada"] : string.Empty
+                };
+
+                BusinessImageProduct businessImage = new BusinessImageProduct();
+                List<ImageProduct> imageList = businessImage.list(aux.Code);
+                aux.Images = imageList;
+
+            }
+
+            return aux;
+        }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
+
     }
 }
