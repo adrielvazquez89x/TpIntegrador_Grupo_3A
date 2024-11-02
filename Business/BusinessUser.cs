@@ -201,7 +201,7 @@ namespace Business
 
         public void StoreResetToken(string email, string token)
         {
-            
+
             data.setQuery("UPDATE Usuarios SET ResetearToken = @token, TokenVencimiento = @expiration WHERE Email = @email;");
             data.setParameter("@token", token);
             data.setParameter("@expiration", DateTime.Now.AddHours(1)); // Expira en 1 hora
@@ -209,37 +209,12 @@ namespace Business
             data.executeAction();
         }
 
-        //VERIFICAR SI EL ENLACE EXPIRO (NO PUEDO HACER FUNCIONARLO)
-        //public bool VerifyResetToken(string email, string token)
-        //{
-        //    try
-        //    {
-        //        data.setQuery("SELECT TokenVencimiento FROM Usuarios WHERE Email = @email AND ResetearToken = @token;");
-        //        data.setParameter("@email", email);
-        //        data.setParameter("@token", token);
-        //        data.executeRead();
 
-        //        if (data.Reader.Read())
-        //        {
-        //            var expiration = (DateTime)data.Reader["TokenVencimiento"];
-        //            Console.WriteLine($"Email: {email}, Token: {token}, Expiration: {expiration}");
-
-        //            return expiration > DateTime.Now; // Verifica si el token no ha expirado
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Manejar excepciones adecuadamente
-        //        Console.WriteLine($"Error al verificar el token: {ex.Message}");
-        //    }
-
-        //    return false; // Retorna false si no se encontró el token o si ha expirado
-        //}
 
         public bool VerifyResetToken(string email, string token)
         {
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(token))
-            { 
+            {
                 return false; // Retorna false si el email o token están vacíos
             }
 
@@ -256,7 +231,7 @@ namespace Business
                     //Console.WriteLine($"Email: {email}, Token: {token}, Expiration: {expiration}");
 
                     //return expiration > DateTime.Now; // Verifica si el token no ha expirado
-                    return expiration > DateTime.Now; 
+                    return expiration > DateTime.Now;
                 }
                 else
                 {
@@ -293,6 +268,51 @@ namespace Business
             {
 
                 throw ex;
+            }
+        }
+
+        public List<User> ListUsers()
+        {
+            DataAccess data = new DataAccess();
+            List<User> userList = new List<User>();
+
+            try
+            {
+                string queryUser = @"
+                SELECT 
+            U.IdUsuario,
+            U.Nombre,
+            U.Apellido,
+            U.FechaAlta,
+            U.Email
+        FROM Usuarios U";
+
+                data.setQuery(queryUser);
+                data.executeRead();
+
+                while (data.Reader.Read())
+                {
+                    User user = new User
+                    {
+                        UserId = (int)data.Reader["IdUsuario"],
+                        FirstName = data.Reader["Nombre"] != DBNull.Value ? (string)data.Reader["Nombre"] : string.Empty,
+                        LastName = data.Reader["Apellido"] != DBNull.Value ? (string)data.Reader["Apellido"] : string.Empty,
+                        Email = data.Reader["Email"] != DBNull.Value ? (string)data.Reader["Email"] : string.Empty,
+                        RegistrationDate = (DateTime)data.Reader["FechaAlta"]
+                    };
+
+                    userList.Add(user);
+                }
+
+                return userList;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al listar usuarios: " + ex.Message); // Mejor manejo de excepciones
+            }
+            finally
+            {
+                data.closeConnection();
             }
         }
 
