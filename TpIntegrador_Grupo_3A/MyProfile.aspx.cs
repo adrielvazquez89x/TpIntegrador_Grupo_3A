@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Business;
 using Model;
+using Security;
 
 namespace TpIntegrador_Grupo_3A
 {
@@ -17,22 +18,24 @@ namespace TpIntegrador_Grupo_3A
             {
                 if (!IsPostBack)
                 {
-                    if (Security.ActiveSession(Session["user"]))
+                    if (SessionSecurity.ActiveSession(Session["user"]))
                     {
                         
                         User user = (User)Session["user"];
                         txtEmail.Text = user.Email;
                         txtEmail.ReadOnly = true;
-                        txtNombre.Text = user.FirstName;
-                        txtApellido.Text = user.LastName;
-
-                        
+                        if (user.FirstName != null)
+                            txtNombre.Text = user.FirstName;
+                        if (user.LastName != null) 
+                            txtApellido.Text = user.LastName;
+                        if (user.ImageUrl != null)
+                            imgNuevoPerfil.ImageUrl = "~/img/" + user.ImageUrl;
                     }
                     else
                     {
-                        Session.Add("error", "Debes estar logueado para ingresar a esta seccion");
-                       // Response.Redirect("Error.aspx", false);
-
+                        //Session.Add("error", "Debes estar logueado para ingresar a esta seccion");
+                        // Response.Redirect("Error.aspx", false);
+                        Response.Redirect("Login.aspx", false);
                     }
 
                 }
@@ -40,6 +43,41 @@ namespace TpIntegrador_Grupo_3A
             catch (Exception ex)
             {
                 Session.Add("error", ex.ToString());
+            }
+        }
+
+        protected void btnGuardar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                BusinessUser businessUser = new BusinessUser();
+                User user = (User)Session["user"];
+                user.FirstName = txtNombre.Text;
+                user.LastName = txtApellido.Text;
+                
+                if (txtImagen.PostedFile.FileName != "")
+                {
+                    string ruta = Server.MapPath("./Images/");
+                    string imgName = "perfl-" + user.LastName + user.FirstName + user.UserId + ".jpg";
+                    txtImagen.PostedFile.SaveAs(ruta + imgName);
+                    user.ImageUrl = imgName;
+                }
+
+                businessUser.Update(user);
+
+                if (user.ImageUrl != null)
+                {
+                    Image img = (Image)Master.FindControl("imgAvatar");
+                    img.ImageUrl = "~/img/" + user.ImageUrl;
+                }
+
+                Response.Redirect("Default.aspx", false);
+            }
+            catch (Exception ex)
+            {
+                //Session.Add("error", "Error inesperado");
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
             }
         }
     }

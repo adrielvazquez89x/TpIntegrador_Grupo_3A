@@ -96,24 +96,17 @@ namespace Business
             }
         }
 
-        public void Update(Category category)
+        public string Update(Category category)
         {
             try
             {
                 data.setQuery($"UPDATE Categorias SET Descripcion = '{category.Description}' WHERE Id = {category.Id}");
                 data.executeAction();
+                return "ok";
             }
             catch (SqlException ex)
             {
-                if (ex.Number == 2627)
-                {
-                    return "La categoría ya existe.";
-                }
-                else
-                {
-                    return "Error al agregar la categoría: " + ex.Message;
-                }
-
+                return "Error al actualizar la categoria. Info de error: " + ex.Message;
             }
             catch (Exception ex)
             {

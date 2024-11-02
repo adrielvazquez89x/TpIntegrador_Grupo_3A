@@ -167,11 +167,11 @@ namespace Business
             DataAccess data = new DataAccess();
             try
             {
-                data.setQuery("Update USERS set Nombre = @nombre, Apellido = @apellido,urlImagenPerfil = @imagen, Email =@email Where Id = @id");
+                data.setQuery("Update Usuarios set Nombre = @nombre, Apellido = @apellido, UrlImg = @imagen, Email =@email Where IdUsuario = @id");
                 data.setParameter("@nombre", user.FirstName);
                 data.setParameter("@apellido", user.LastName);
                 data.setParameter("@email", user.Email);
-                //datos.setearParametro("@imagen", (object)user.ImagenPerfil ?? DBNull.Value);
+                data.setParameter("@imagen", user.ImageUrl != null ? user.ImageUrl : "");
                 data.setParameter("@id", user.UserId);
                 data.executeAction();
 

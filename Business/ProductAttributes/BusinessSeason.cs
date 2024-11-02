@@ -84,16 +84,17 @@ namespace Business
             }
         }
 
-        public void Update(Season season)
+        public string Update(Season season)
         {
             try
             {
                 data.setQuery($"UPDATE Temporadas SET Descripcion = '{season.Description}' WHERE Id = {season.Id}");
                 data.executeAction();
+                return "ok";
             }
             catch (SqlException ex)
             {
-                throw ex;
+                return "Error al actualizar la temporada. Info de error: " + ex.Message;
             }
             catch (Exception ex)
             {

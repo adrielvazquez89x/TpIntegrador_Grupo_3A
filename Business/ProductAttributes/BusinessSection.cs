@@ -90,17 +90,17 @@ namespace Business.ProductAttributes
             }
         }
 
-        public void Update(Model.Section section)
+        public string Update(Model.Section section)
         {
             try
             {
                 data.setQuery($"UPDATE Secciones SET Descripcion = '{section.Description}', Descripcion2 = '{section.Description2}' WHERE Id = {section.Id}");
                 data.executeAction();
+                return "ok";
             }
             catch (SqlException ex)
             {
-
-                throw ex;
+                return "Error al actualizar la seccion. Info de error: " + ex.Message;
             }
             catch (Exception ex)
             {

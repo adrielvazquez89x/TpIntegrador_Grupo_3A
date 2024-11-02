@@ -74,16 +74,17 @@ namespace Business.ProductAttributes
             }
         }
 
-        public void Update(Stock stock)
+        public string Update(Stock stock)
         {
             try
             {
                 data.setQuery($"UPDATE Stock SET CodigoProducto = '{stock.ProdCode}', IdColor={stock.IdColour}, IdTalle={stock.IdSize}, Stock={stock.Amount} WHERE Id = {stock.Id}");
                 data.executeAction();
+                return "ok";
             }
             catch (SqlException ex)
             {
-                throw ex;
+                return "Error al actualizar el stock. Info de error: " + ex.Message;
             }
             catch (Exception ex)
             {

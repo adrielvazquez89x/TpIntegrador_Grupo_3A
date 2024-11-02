@@ -13,6 +13,7 @@ namespace TpIntegrador_Grupo_3A
     public partial class _Default : Page
     {
         public List<Section> sectionList;
+        //public List<Product> prodList;
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Title = "UrbanGlam";
@@ -23,6 +24,12 @@ namespace TpIntegrador_Grupo_3A
 
                 RptSecciones.DataSource = sectionList;
                 RptSecciones.DataBind();
+
+                //BusinessProduct businessProd = new BusinessProduct();
+                //prodList = businessProd.list();
+
+                //rptProdList.DataSource = prodList;
+                //rptProdList.DataBind();
             }
         }
 
@@ -42,7 +49,7 @@ namespace TpIntegrador_Grupo_3A
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 Product currentProduct = (Product)e.Item.DataItem;
-                Repeater rptImgList = (Repeater)e.Item.FindControl("rptImgages"); // Toma el Repeater anidado
+                Repeater rptImgList = (Repeater)e.Item.FindControl("rptImages"); // Toma el Repeater anidado
                 rptImgList.DataSource = currentProduct.Images;
                 rptImgList.DataBind();
             }

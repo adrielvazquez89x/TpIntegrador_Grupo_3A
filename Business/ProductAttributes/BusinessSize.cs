@@ -75,16 +75,17 @@ namespace Business.ProductAttributes
             }
         }
 
-        public void Update(Size size)
+        public string Update(Size size)
         {
             try
             {
                 data.setQuery($"UPDATE Talles SET Descripcion = '{size.Description}' WHERE Id = {size.Id}");
                 data.executeAction();
+                return "ok";
             }
             catch (SqlException ex)
             {
-                throw ex;
+                return "Error al actualizar el stock. Info de error: " + ex.Message;
             }
             catch (Exception ex)
             {

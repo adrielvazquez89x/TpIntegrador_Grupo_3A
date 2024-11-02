@@ -130,6 +130,7 @@
     <Content Include="Css\Master.css" />
     <Content Include="Default.aspx" />
     <Content Include="Details.aspx" />
+    <Content Include="Error.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\slider1.jpg" />
@@ -274,6 +275,13 @@
     <Compile Include="Details.aspx.designer.cs">
       <DependentUpon>Details.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -400,6 +408,10 @@
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{6ad9a665-5416-408a-9acd-b4ffb8e39022}</Project>
       <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Security\Security.csproj">
+      <Project>{4ebc283f-e343-4051-b101-e01734b37227}</Project>
+      <Name>Security</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
