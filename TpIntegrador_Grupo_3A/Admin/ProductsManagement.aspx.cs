@@ -21,13 +21,21 @@ namespace TpIntegrador_Grupo_3A.Admin
         sin tener que hacer 1 página para cada situación. 
          */
         // Enum para manejar los botones, es como un array mas limpio. 
-        public enum Buttons { NotPicked = 0, Category = 1, Season = 2, Section = 3 };
+        public enum Buttons { NotPicked = 0, Category = 1, Season = 2, Section = 3, User = 4  };
         //Esto es para renderizar en el cliente.
         public Buttons CurrentOption;
 
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            //volver a poner para verificar la seguridad
+            //var user = Session["user"];
+            //if (user == null || !Security.isAdmin(user))
+            //{
+            //    // Redirige a Login.aspx si no es un administrador o si no hay sesión
+            //    Response.Redirect("~/Login.aspx");
+            //}
             if (!IsPostBack)
             {
                 CurrentOption = Buttons.NotPicked;
@@ -187,6 +195,29 @@ namespace TpIntegrador_Grupo_3A.Admin
             ScriptManager.RegisterStartupScript(this, GetType(), "showToastie", script, true);
         }
 
+        protected void dgvUsuarios_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+        }
+
+        protected void dgvUsuarios_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+
+        }
+
+        protected void btnEditUser_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnDeleteUser_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnActivateUser_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

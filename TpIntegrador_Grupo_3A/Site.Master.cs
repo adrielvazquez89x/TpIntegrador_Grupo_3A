@@ -1,4 +1,5 @@
 ﻿using Business;
+using Microsoft.AspNet.Identity;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,16 @@ namespace TpIntegrador_Grupo_3A
                 RepeaterSidebar.DataSource = categList;
                 RepeaterSidebar.DataBind();
             }
+
+            // chequeamos si la pag que estoy por cargar no es ninguna de estas 2
+            // si no es quiero que me verifique la seguridad 
+            if (!(Page is Login  || Page is Register  ))
+              
+                if (Security.ActiveSession(Session["user"]))
+                {
+                    User user = (User)Session["user"];
+                    lblUser.Text = user.FirstName;
+                }
 
             //if (Request.Url.AbsolutePath.Contains("login") || Request.Url.AbsolutePath.Contains("Login"))
             //{
@@ -61,6 +72,13 @@ namespace TpIntegrador_Grupo_3A
                 HyperLink link = (HyperLink)e.Item.FindControl("SubCategoryLink");
                 link.NavigateUrl = $"/products?IdCategory={hfCategoryId.Value}&IdSubCategory={subCategoryId}";
             }
+        }
+
+
+        protected void btnExit_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("~/Login.aspx");
         }
     }
 }
