@@ -135,6 +135,7 @@
                                     </li>
                                 </ItemTemplate>
                             </asp:Repeater>
+                            </div>
                             <hr>
                         <li class="nav-item">
                             <a href="/PersonalData" class="nav-link d-flex align-items-center px-3 py-2">
