@@ -11,7 +11,7 @@ namespace TpIntegrador_Grupo_3A.Admin
 {
 
 
-    public partial class Products
+    public partial class SubCategories
     {
 
         /// <summary>
@@ -24,31 +24,49 @@ namespace TpIntegrador_Grupo_3A.Admin
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
-        /// Control ControUser_Buttons.
+        /// Control UserControl_ButtonBack.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::TpIntegrador_Grupo_3A.Admin.UserControl_Buttons ControUser_Buttons;
+        protected global::TpIntegrador_Grupo_3A.Admin.UserControl_ButtonBack UserControl_ButtonBack;
 
         /// <summary>
-        /// Control dgvProducts.
+        /// Control lblSubCategory.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvProducts;
+        protected global::System.Web.UI.WebControls.Label lblSubCategory;
 
         /// <summary>
-        /// Control btnAddProduct.
+        /// Control txtSubCategory.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnAddProduct;
+        protected global::System.Web.UI.WebControls.TextBox txtSubCategory;
+
+        /// <summary>
+        /// Control btnAddSubCategory.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddSubCategory;
+
+        /// <summary>
+        /// Control dgvSubCategories.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView dgvSubCategories;
 
         /// <summary>
         /// Control UserControl_Toast.
