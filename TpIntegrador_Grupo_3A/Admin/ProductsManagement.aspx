@@ -18,9 +18,7 @@
                 <div>
                     <asp:Button ID="btnPickSection" runat="server" Text="Secciones" CssClass="btn btn-dark" />
                 </div>
-                <div>
-                    <asp:Button ID="btnManageUsers" runat="server" Text="Gestionar Usuarios" CssClass="btn btn-dark" />
-                </div>
+              
 
             </div>
             <%}%>
@@ -117,92 +115,6 @@
                 </div>
             </div>
 
-            <%}
-
-
-
-                if (CurrentOption == Buttons.User)
-                {%>
-            <div class="row">
-                <%-- Categorias --%>
-                <div class="col-4">
-                    <h3 class="text-bg-success">Usuarios</h3>
-                    <div class="d-flex gap-3">
-                        <asp:Label ID="lblUser" runat="server" Text="Usuarios"></asp:Label>
-                        <asp:TextBox ID="txtUser" runat="server" CssClass="form-control"></asp:TextBox>
-                        <asp:Button
-                            ID="btnAddUser"
-                            runat="server"
-                            Text="Agregar"
-                            CssClass="btn btn-primary"
-                            OnClick="btnAddCategory_Click" />
-                    </div>
-                </div>
-                <div class="col-4">
-                    <asp:GridView
-                        ID="dgvUsuarios"
-                        runat="server"
-                        CssClass="table"
-                        DataKeyNames="Id"
-                        AutoGenerateColumns="false"
-                        OnSelectedIndexChanged="dgvUsuarios_SelectedIndexChanged"
-                        OnPageIndexChanging="dgvUsuarios_PageIndexChanging" AllowPaging="true"
-                        PageSize="5">
-                        <Columns>
-                            <asp:BoundField DataField="Description" HeaderText="Nombre" />
-
-                            <asp:TemplateField HeaderText="Activo">
-                                <ItemTemplate>
-                                    <%# Convert.ToBoolean(Eval("Active")) ? 
-                         "<i class='bi bi-check-circle-fill text-success'></i>" : 
-                            "<i class='bi bi-x-circle-fill text-danger'></i>" %>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-
-                            <asp:TemplateField HeaderText="Acciones">
-                                <ItemTemplate>
-                                    <!-- Editar -->
-                                    <asp:LinkButton
-                                        ID="btnEditUser"
-                                        runat="server"
-                                        CommandArgument='<%# Eval("Id") + "|" + Eval("Description")+ "|" + Eval("Active") %>'
-                                        CssClass="btn btn-sm text-primary me-2"
-                                        OnClick="btnEditUser_Click">
-                        <i class="bi bi-pencil-square"></i>
-                                    </asp:LinkButton>
-
-
-                                    <!-- Botón de Eliminar (Visible cuando Active es true) -->
-                                    <asp:LinkButton
-                                        ID="btnDeleteUser"
-                                        runat="server"
-                                        CssClass="btn btn-sm text-danger me-2"
-                                        OnClick="btnDeleteUser_Click"
-                                        CommandArgument='<%# Eval("Id") + "|" + Eval("Description")+ "|" + Eval("Active") %>'
-                                        Visible='<%# Convert.ToBoolean(Eval("Active")) %>'
-                                        ToolTip="Desactivar">
-                            <i class="bi bi-trash-fill"></i>
-                                    </asp:LinkButton>
-
-                                    <!-- Botón de Activar (Visible cuando Active es false) -->
-                                    <asp:LinkButton
-                                        ID="btnActivateUser"
-                                        runat="server"
-                                        CssClass="btn btn-sm text-success"
-                                        OnClick="btnActivateUser_Click"
-                                        CommandArgument='<%# Eval("Id") + "|" + Eval("Description")+ "|" + Eval("Active") %>'
-                                        Visible='<%# !Convert.ToBoolean(Eval("Active")) %>'
-                                        ToolTip="Activar">
-                            <i class="bi bi-check-circle"></i>
-                                    </asp:LinkButton>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-
-
-                        </Columns>
-                    </asp:GridView>
-                </div>
-            </div>
             <%}
 
             %>

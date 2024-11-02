@@ -21,7 +21,7 @@ namespace TpIntegrador_Grupo_3A.Admin
         sin tener que hacer 1 página para cada situación. 
          */
         // Enum para manejar los botones, es como un array mas limpio. 
-        public enum Buttons { NotPicked = 0, Category = 1, Season = 2, Section = 3, User = 4  };
+        public enum Buttons { NotPicked = 0, Category = 1, Season = 2, Section = 3 };
         //Esto es para renderizar en el cliente.
         public Buttons CurrentOption;
 
