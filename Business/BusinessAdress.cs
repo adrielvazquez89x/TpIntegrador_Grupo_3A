@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccessService.DataAccessService;
 
 namespace Business
 {
@@ -73,7 +74,7 @@ namespace Business
                 data.setParameter("@Ciudad", adress.Town);
                 //ETC, igual esto se va a ir modificando...
 
-                adress.Id = data.getIdEcalar();
+                adress.Id = data.ActionScalar();
 
             }
             catch (Exception ex)

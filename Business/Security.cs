@@ -13,7 +13,6 @@ namespace Business
         public static bool ActiveSession(object obj)
         {
             //validamos si hay una persona logueada
-            // 
             User user = obj != null ? (User)obj : null;
             if (user != null && user.UserId != 0)
                 return true;

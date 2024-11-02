@@ -66,7 +66,7 @@ namespace TpIntegrador_Grupo_3A
             try
             {
                 BusinessFavourite businessFav = new BusinessFavourite();
-                businessFav.Add(user.Id, IdSelectedProd);
+                businessFav.Add(user.UserId, IdSelectedProd);
 
             }
             catch (Exception ex)
@@ -81,7 +81,7 @@ namespace TpIntegrador_Grupo_3A
             try
             {
                 BusinessFavourite businessFav = new BusinessFavourite();
-                businessFav.Delete(user.Id, IdSelectedProd);
+                businessFav.Delete(user.UserId, IdSelectedProd);
             }
             catch (Exception ex)
             {
