@@ -45,7 +45,7 @@ namespace Business.ProductAttributes
                 data.closeConnection();
             }
         }
-
+        
         public string Update(int IdCategory, SubCategory subCategory)
         {
             try
