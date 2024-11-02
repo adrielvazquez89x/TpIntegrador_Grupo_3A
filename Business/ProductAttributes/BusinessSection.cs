@@ -101,15 +101,7 @@ namespace Business.ProductAttributes
             }
             catch (SqlException ex)
             {
-                if (ex.Number == 2627)
-                {
-                    return "La sección ya existe.";
-                }
-                else
-                {
-                    return "Error al agregar la sección: " + ex.Message;
-                }
-
+                return "Error al actualizar la seccion. Info de error: " + ex.Message;
             }
             catch (Exception ex)
             {

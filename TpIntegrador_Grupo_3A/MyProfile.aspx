@@ -27,6 +27,12 @@
                 <label class="form-label">Fecha de Nacimiento</label>
                 <asp:TextBox runat="server" CssClass="form-control" ID="txtNacimiento" />
             </div>
+                <div class="mb-3">
+                    <label class="form-label">Imagen de Perfil</label>
+                    <input type="file" id="txtImagen" runat="server" class="form-control" />
+                </div>
+                <asp:Image ID="imgNuevoPerfil" ImageUrl="https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg"
+                    runat="server" CssClass="img-fluid mb-3" />
         </div>
 
 
@@ -75,16 +81,15 @@
                 <asp:TextBox runat="server" CssClass="form-control" ID="txtDpto" />
             </div>
 
-
-
         </div>
+    </div>
 
 
 
-        <div class="row m-4">
-            <div class=" text-center">
-                <asp:Button Text="Guardar" CssClass="btn btn-primary" ID="btnGuardar" runat="server" />
-                <a href="/" class="btn btn-secondary">Regresar</a>
-            </div>
+    <div class="row m-4">
+        <div class=" text-center">
+            <asp:Button Text="Guardar" CssClass="btn btn-primary" ID="btnGuardar" onclick="btnGuardar_Click" runat="server" />
+            <a href="/" class="btn btn-secondary">Regresar</a>
         </div>
+    </div>
 </asp:Content>

@@ -5,11 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Model;
 
-namespace Business
+namespace Security
 {
-    public static class Security
+    public static class SessionSecurity
     {
-
         public static bool ActiveSession(object obj)
         {
             //validamos si hay una persona logueada
@@ -26,7 +25,5 @@ namespace Business
             User user = obj != null ? (User)obj : null;
             return user != null ? user.Admin : false;
         }
-
-
     }
 }
