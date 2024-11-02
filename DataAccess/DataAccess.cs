@@ -63,6 +63,23 @@ namespace DataAccessService
             }
         }
 
+        public int ActionScalar()
+        {
+            _command.Connection = _connection;
+            try
+            {
+                _connection.Open();
+                //Ejecuta la consulta escalar y convierte el resultado a un entero
+                return int.Parse(_command.ExecuteScalar().ToString());
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public int getIdEcalar()
         {
             _command.Connection = _connection;

@@ -24,84 +24,39 @@ namespace TpIntegrador_Grupo_3A.Admin
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
-        /// Control btnPickCategory.
+        /// Control ControUser_Buttons.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPickCategory;
+        protected global::TpIntegrador_Grupo_3A.Admin.UserControl_Buttons ControUser_Buttons;
 
         /// <summary>
-        /// Control btnPickSeason.
+        /// Control dgvProducts.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPickSeason;
+        protected global::System.Web.UI.WebControls.GridView dgvProducts;
 
         /// <summary>
-        /// Control btnPickSection.
+        /// Control btnAddProduct.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPickSection;
+        protected global::System.Web.UI.WebControls.LinkButton btnAddProduct;
 
         /// <summary>
-        /// Control btnBack.
+        /// Control UserControl_Toast.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBack;
-
-        /// <summary>
-        /// Control lblCategory.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCategory;
-
-        /// <summary>
-        /// Control txtCategory.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCategory;
-
-        /// <summary>
-        /// Control btnAddCategory.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddCategory;
-
-        /// <summary>
-        /// Control dgvCategories.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvCategories;
-
-        /// <summary>
-        /// Control ltlToastMessage.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltlToastMessage;
+        protected global::TpIntegrador_Grupo_3A.Admin.UserControl_Toast UserControl_Toast;
     }
 }
