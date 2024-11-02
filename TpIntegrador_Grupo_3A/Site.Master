@@ -69,7 +69,7 @@
                         </li>
                     </div>--%>
 
-                        <% if (!Business.Security.ActiveSession(Session["user"]))
+                        <% if (!Security.SessionSecurity.ActiveSession(Session["user"]))
                             { %>
                         <a href="Login.aspx" class="btn btn-success me-2">Login</a>
                         <a href="Register.aspx" class="btn btn-outline-primary m-auto">Registrarse</a>

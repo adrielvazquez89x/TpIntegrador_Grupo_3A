@@ -1,6 +1,7 @@
 ﻿using Business;
 using Microsoft.AspNet.Identity;
 using Model;
+using Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace TpIntegrador_Grupo_3A
             // si no es quiero que me verifique la seguridad 
             if (!(Page is Login  || Page is Register  ))
               
-                if (Security.ActiveSession(Session["user"]))
+                if (SessionSecurity.ActiveSession(Session["user"]))
                 {
                     User user = (User)Session["user"];
                     lblUser.Text = user.FirstName;

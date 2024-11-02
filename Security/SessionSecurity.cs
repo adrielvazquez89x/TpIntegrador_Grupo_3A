@@ -20,7 +20,7 @@ namespace Security
         }
 
 
-        public static bool isAdmin(object obj)
+        public static bool IsAdmin(object obj)
         {
             User user = obj != null ? (User)obj : null;
             return user != null ? user.Admin : false;
