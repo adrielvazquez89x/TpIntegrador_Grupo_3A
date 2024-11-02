@@ -26,7 +26,7 @@ namespace TpIntegrador_Grupo_3A.Admin
             try
             {
                 BusinessProduct businessProducts = new BusinessProduct();
-                List<Product> categories = businessProducts.list();
+                List<Product> categories = businessProducts.listAdmin();
 
                 dgvProducts.DataSource = categories;
                 dgvProducts.DataBind();
@@ -48,5 +48,9 @@ namespace TpIntegrador_Grupo_3A.Admin
             Response.Redirect("ProductForm.aspx");
         }
 
+        protected void dgvProducts_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
+        }
     }
 }
