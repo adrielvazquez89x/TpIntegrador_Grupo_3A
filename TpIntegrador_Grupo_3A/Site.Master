@@ -53,22 +53,19 @@
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Products">Productos</a></li>
-                    </ul>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="Products.asp">Productos</a></li>
+                        <% if (Security.SessionSecurity.ActiveSession(Session["user"]))
+                            { %>
+                        <li><a href="Favorites.aspx" class="nav-link me-2">Favoritos</a></li>
+                        <li><a href="Cart.aspx" class="nav-link me-2">Mis compras</a></li>
+                        <li><a href="Cart.aspx" class="nav-link me-2">
+                            <i class="bi bi-cart"></i>Mi Carrito</a></li>
+
+                        <% }%>
+                   </ul>
+                    
 
                     <div class="d-flex">
-
-                        <%-- <li class="nav-item">
-                            <a href="/Login" class="navbar-brand" runat="server">
-                                <a href="Login.aspx" class="btn btn-success me-2">Login</a>
-                                <a href="Register.aspx" class="btn btn-outline-primary m-auto">Registrarse</a>
-                             <asp:Image ID="imgPerfilAvatar" Style="height: 40px; width: 40px; border-radius: 50%; margin-left: 10px;"
-                            runat="server" />
-                            </a>
-                        </li>
-                    </div>--%>
-
                         <% if (!Security.SessionSecurity.ActiveSession(Session["user"]))
                             { %>
                         <a href="Login.aspx" class="btn btn-success me-2">Login</a>
@@ -79,7 +76,8 @@
                             {
                         %>
                         <asp:Button Text="Salir" ID="btnExit" CssClass="btn btn-outline-primary me-2" OnClick="btnExit_Click" runat="server" />
-                        <asp:Label ID="lblUser" Text="user" CssClass="text-light m-auto me-2" runat="server" />
+                        <asp:Label ID="lblUser" CssClass="text-light m-auto me-2" runat="server" />
+                        <asp:Image ID="imgAvatar" Style="height: 40px; width: 40px; border-radius: 50%;" runat="server" />
                         <%} %>
                          
                     </div>

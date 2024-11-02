@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 
 namespace TpIntegrador_Grupo_3A
 {
-    public partial class _Default : Page
+    public partial class Default : System.Web.UI.Page
     {
         public List<Section> sectionList;
         //public List<Product> prodList;

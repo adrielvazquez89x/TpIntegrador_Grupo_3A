@@ -135,9 +135,9 @@
     <Content Include="Global.asax" />
     <Content Include="Images\slider1.jpg" />
     <Content Include="Login.aspx" />
-    <Content Include="MyProfile.aspx" />
+    <Content Include="User\MyProfile.aspx" />
     <Content Include="PassConfig.aspx" />
-    <Content Include="PersonalData.aspx" />
+    <Content Include="User\PersonalData.aspx" />
     <Content Include="Products.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="ResetPassword.aspx" />
@@ -292,11 +292,11 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="MyProfile.aspx.cs">
+    <Compile Include="User\MyProfile.aspx.cs">
       <DependentUpon>MyProfile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="MyProfile.aspx.designer.cs">
+    <Compile Include="User\MyProfile.aspx.designer.cs">
       <DependentUpon>MyProfile.aspx</DependentUpon>
     </Compile>
     <Compile Include="PassConfig.aspx.cs">
@@ -306,11 +306,11 @@
     <Compile Include="PassConfig.aspx.designer.cs">
       <DependentUpon>PassConfig.aspx</DependentUpon>
     </Compile>
-    <Compile Include="PersonalData.aspx.cs">
+    <Compile Include="User\PersonalData.aspx.cs">
       <DependentUpon>PersonalData.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="PersonalData.aspx.designer.cs">
+    <Compile Include="User\PersonalData.aspx.designer.cs">
       <DependentUpon>PersonalData.aspx</DependentUpon>
     </Compile>
     <Compile Include="Products.aspx.cs">

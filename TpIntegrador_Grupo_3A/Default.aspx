@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="TpIntegrador_Grupo_3A._Default" %>
+﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="TpIntegrador_Grupo_3A.Default" %>
 
 <asp:Content ID="BannerContent" ContentPlaceHolderID="BannerContent" runat="server">
     <!-- Carousel de imágenes -->
