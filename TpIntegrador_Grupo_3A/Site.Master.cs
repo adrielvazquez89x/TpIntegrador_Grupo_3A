@@ -34,7 +34,7 @@ namespace TpIntegrador_Grupo_3A
                 Model.User user = (Model.User)Session["user"];
                 lblUser.Text = user.FirstName;
                 if (!string.IsNullOrEmpty(user.ImageUrl))
-                    imgAvatar.ImageUrl = "~/img/" + ((Model.User)Session["user"]).ImageUrl;
+                    imgAvatar.ImageUrl = "~/Images/" + ((Model.User)Session["user"]).ImageUrl;
                 else
                     imgAvatar.ImageUrl = "https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Download-Free-PNG.png";
             }
@@ -83,7 +83,6 @@ namespace TpIntegrador_Grupo_3A
                 link.NavigateUrl = $"/products?IdCategory={hfCategoryId.Value}&IdSubCategory={subCategoryId}";
             }
         }
-
 
         protected void btnExit_Click(object sender, EventArgs e)
         {

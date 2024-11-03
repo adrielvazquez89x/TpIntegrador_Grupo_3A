@@ -69,6 +69,8 @@ namespace Business
                         user.FirstName = (string)(data.Reader["Nombre"]);
                     if (!(data.Reader["Apellido"] is DBNull))
                         user.LastName = (string)(data.Reader["Apellido"]);
+                    if (!(data.Reader["UrlImg"] is DBNull))
+                        user.ImageUrl = (string)(data.Reader["UrlImg"]);
 
                     var hashedPassword = reader["ContraseniaHash"].ToString();
 
