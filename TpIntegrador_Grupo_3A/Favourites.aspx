@@ -7,20 +7,19 @@
 
     <% if (FavIdList.Count != 0)
         {%>
-    <div class="row justify-content-center gap-4">
+    <div class="row justify-content-center">
         <asp:Repeater runat="server" ID="rptFav">
             <ItemTemplate>
-                <div class="card mb-3 col-5" style="max-width: 700px;">
-                    <div class="row g-0">
-                        <div class="col-md-4 favImg py-3">
-                            <a href="Detalle.aspx?id=<%#Eval("Id") %>">
-                                <%--<img src="<%#Eval("Images[0].UrlImage") %>" onerror="this.src='https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg'" class="img-fluid rounded-start">--%>
-                            </a>
-                        </div>
-                        <div class="col-md-4 favImg py-3">
-                            <a href="Details.aspx?id=<%#Eval("Id") %>"></a>
-                        </div>
-                        <div class="col-md-7">
+                <div class="col-md-3">
+
+                    <div class="card h-100">
+
+                         <img style="height: 100px; object-fit:contain;"
+                         src='<%# (Eval("Images") != null && ((List<Model.ImageProduct>)Eval("Images")).Count > 0) ?
+                         ((List<Model.ImageProduct>)Eval("Images"))[0].UrlImage : "https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg" %>'  
+                    </div>
+
+                        <div class="col-md">
                             <div class="card-body">
                                 <a href="Details.aspx?id=<%#Eval("Id") %>">
                                     <h5 class="card-title"><%#Eval("Name")%></h5>
@@ -29,7 +28,6 @@
                                 <p class="card-text"><small class="text-body-secondary">$ <%#Eval("Price") %> </small></p>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </ItemTemplate>
