@@ -68,8 +68,8 @@ namespace TpIntegrador_Grupo_3A
 
         protected void btnDetails_Click(object sender, EventArgs e)
         {
-            IdSelectedProd = int.Parse(((Button)sender).CommandArgument);
-            Response.Redirect($"/Details?id={IdSelectedProd}");
+            CodeSelectedProd = (((Button)sender).CommandArgument).ToString();
+            Response.Redirect($"/Details?Code={CodeSelectedProd}");
         }
 
         protected void bntFav_Click(object sender, EventArgs e)
@@ -94,7 +94,7 @@ namespace TpIntegrador_Grupo_3A
             {
                 CodeSelectedProd = ((Button)sender).CommandArgument.ToString();
                 BusinessFavourite businessFav = new BusinessFavourite();
-                businessFav.Add(user.UserId, CodeSelectedProd);
+                businessFav.Delete(user.UserId, CodeSelectedProd);
             }
             catch (Exception ex)
             {

@@ -71,16 +71,15 @@ namespace Business.ProductAttributes
             }
         }
 
-        public void Delete(int idUser, string code)
+        public void Delete(int idUser, string codeProd)
         {
             try
             {
-                data.setQuery($"DELETE FROM Favoritos WHERE IdUsuario = {idUser} AND CodigoProducto = {code}");
+                data.setQuery($"DELETE FROM Favoritos WHERE IdUsuario = {idUser} AND CodigoProducto = '{codeProd}'");
                 data.executeRead();
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally

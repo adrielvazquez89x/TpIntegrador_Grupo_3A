@@ -12,12 +12,12 @@
 
                              <% if (Security.SessionSecurity.ActiveSession(Session["user"]))
                                {%>
-                            <asp:LinkButton runat="server" ID="btnUndoFav" OnClick="btnUndoFav_Click" CommandArgument='<%# Eval("Code")%>'>
+<%--                            <asp:LinkButton runat="server" ID="btnUndoFav" OnClick="btnUndoFav_Click" CommandArgument='<%# Eval("Code")%>'>
                                 <i class="bi bi-heart-fill"></i>
                             </asp:LinkButton>
                             <asp:LinkButton runat="server" ID="bntFav" OnClick="bntFav_Click" CommandArgument='<%# Eval("Code")%>'>
                                  <i class="bi bi-heart"></i>
-                            </asp:LinkButton>
+                            </asp:LinkButton>--%>
                              <% }%>
 
                             <!-- Carrusel de imágenes -->
@@ -50,7 +50,7 @@
                                 <p class="card-text"><%# Eval("Description") %></p>
                                 <asp:Button
                                     ID="btnDetails" OnClick="btnDetails_Click"
-                                    CommandArgument='<%# Eval("Id")%>'
+                                    CommandArgument='<%# Eval("Code")%>'
                                     runat="server"
                                     Text="Detalles" CssClass="btn btn-primary w-100" />
                             </div>

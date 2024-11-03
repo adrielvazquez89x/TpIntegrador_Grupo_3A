@@ -88,7 +88,7 @@ namespace Business
         }
 
         // Método para listar productos de manera estándar
-        public List<Product> list(int id = 0)
+        public List<Product> list(string code="")
         {
             List<Product> productList = new List<Product>();
 
@@ -115,10 +115,10 @@ namespace Business
                 WHERE P.Activo = 1
             ";
 
-                if (id != 0)
+                if (code != "")
                 {
-                    query += " AND P.Id = @IdProducto";
-                    data.setParameter("@IdProducto", id);
+                    query += " AND P.Codigo = @Codigo";
+                    data.setParameter("@Codigo", code);
                 }
 
                 data.setQuery(query);

@@ -14,25 +14,45 @@ namespace TpIntegrador_Grupo_3A
     public partial class Details : System.Web.UI.Page
     {
         public string CodeSelectedProd;
+        public bool isFavorite;
         public Model.User user { get; set; }
         public List<Product> products { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            int id = Request.QueryString["id"] != null ? int.Parse(Request.QueryString["id"]) : 0;
-            if (id > 0 && !IsPostBack)
+            string code = Request.QueryString["Code"] != null ? (Request.QueryString["Code"]).ToString() : "";
+            if (code !="" && !IsPostBack)
             {
                 BusinessProduct businessProduct = new BusinessProduct();
-                products = businessProduct.list(id);
+                products = businessProduct.list(code);
                 rptProducts.DataSource = products;
                 rptProducts.DataBind();
             }
             if (SessionSecurity.ActiveSession(Session["user"]))
             {
                 user = (Model.User)Session["user"];
+
+                BusinessFavourite businessFav = new BusinessFavourite();
+                string favCodes = businessFav.list(user.UserId).Select(fav => fav.ProductCode).ToList().ToString();
+                Session["favCodes"] = favCodes; // Guardo los favoritos en sesión
+                isFavorite = checkFav(code, user);
             }
         }
 
+        private bool checkFav(string code, Model.User user)
+        {
+            BusinessFavourite businesFav = new BusinessFavourite();
+            List<FavouriteProducts> listFav = businesFav.list();
+
+            foreach (FavouriteProducts fav in listFav)
+            {
+                if (fav.IdUser == user.UserId && fav.ProductCode == code)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         protected void btnAddToCart_Click(object sender, EventArgs e)
         {
             CodeSelectedProd = ((LinkButton)sender).CommandArgument.ToString();
@@ -41,7 +61,7 @@ namespace TpIntegrador_Grupo_3A
 
         protected void rptProducts_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            int id = Request.QueryString["id"] != null ? int.Parse(Request.QueryString["id"]) : 0;
+           // int id = Request.QueryString["id"] != null ? int.Parse(Request.QueryString["id"]) : 0;
 
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
@@ -49,6 +69,13 @@ namespace TpIntegrador_Grupo_3A
                 Repeater rptImagesList = (Repeater)e.Item.FindControl("rptImages"); // Toma el Repeater anidado
                 rptImagesList.DataSource = currentProduct.Images;
                 rptImagesList.DataBind();
+
+
+                // Retomo los Code de los Favoritos del usuario, guardados en sesion:
+                List<string> favCodes = Session["favCodes"] as List<string>;
+
+                //Indico si el producto está en favoritos
+                isFavorite = favCodes != null && favCodes.Contains(currentProduct.Code);
             }
         }
 
@@ -59,7 +86,7 @@ namespace TpIntegrador_Grupo_3A
                 CodeSelectedProd = ((LinkButton)sender).CommandArgument.ToString();
                 BusinessFavourite businessFav = new BusinessFavourite();
                 businessFav.Add(user.UserId, CodeSelectedProd);
-
+                isFavorite = true;
             }
             catch (Exception ex)
             {
@@ -72,9 +99,10 @@ namespace TpIntegrador_Grupo_3A
         {
             try
             {
-                CodeSelectedProd = ((Button)sender).CommandArgument.ToString();
+                CodeSelectedProd = ((LinkButton)sender).CommandArgument.ToString();
                 BusinessFavourite businessFav = new BusinessFavourite();
-                businessFav.Add(user.UserId, CodeSelectedProd);
+                businessFav.Delete(user.UserId, CodeSelectedProd);
+                isFavorite = false;
             }
             catch (Exception ex)
             {

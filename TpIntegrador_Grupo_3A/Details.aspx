@@ -10,15 +10,17 @@
                         <div class="card h-100">
                             <!-- Nombre del producto -->
                             <h3 class="card-title text-center"><%# Eval("Name") %></h3>
-                            <% if (Security.SessionSecurity.ActiveSession(Session["user"]))
-                                {%>
+                            <% if (Security.SessionSecurity.ActiveSession(Session["user"])) {
+                                    if (isFavorite) {%>
                             <asp:LinkButton runat="server" ID="btnUndoFav" OnClick="btnUndoFav_Click" CommandArgument='<%# Eval("Code")%>'>
-    <i class="bi bi-heart-fill"></i>
+                                <i class="bi bi-heart-fill"></i>
                             </asp:LinkButton>
+                                    <%} else { %>
                             <asp:LinkButton runat="server" ID="bntFav" OnClick="bntFav_Click" CssClass="btnFav" CommandArgument='<%# Eval("Code")%>'>
                                   <i class="bi bi-heart"></i>
                             </asp:LinkButton>
-                            <% }%>
+                                    <% }
+                            }%>
                             <!-- Carrusel de imágenes del producto -->
                             <div id="carouselProductImages" class="carousel slide" data-bs-ride="carousel">
 
