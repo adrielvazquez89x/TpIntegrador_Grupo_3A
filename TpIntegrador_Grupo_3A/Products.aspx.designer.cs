@@ -11,7 +11,7 @@ namespace TpIntegrador_Grupo_3A
 {
 
 
-    public partial class Productos
+    public partial class Products
     {
 
         /// <summary>

@@ -85,7 +85,7 @@
                                     </button>
                                 </h2>
                                 <!-- Opciones -->
-                                <div id="collapseUserOptions" class="position-absolute accordion-collapse collapse bg-dark" aria-labelledby ="headingUser" data-bs-parent="#userAccordion">
+                                <div id="collapseUserOptions" class="position-absolute accordion-collapse collapse bg-dark" aria-labelledby="headingUser" data-bs-parent="#userAccordion">
                                     <div class="accordion-body p-2">
                                         <ul class="list-unstyled">
                                             <li>
@@ -115,6 +115,20 @@
                 <%-- Sidebar --%>
                 <div id="sidebar" runat="server" class="col-auto col-md-3 col-lg-2 px-sm-2 px-0 bg-light vh-100">
                     <ul class="nav flex-column nav-pills mb-auto">
+
+                        <!-- Búsqueda rapida-->
+                           <% if (Page is TpIntegrador_Grupo_3A.Products)
+                               { %>
+                        <div class="d-flex flex-column search-container mb-4">
+                            <asp:Label Text="Buscar" runat="server" CssClass="form-label fw-bold mb-2" />
+                            <div class="d-flex input-group">
+                                <asp:TextBox runat="server" ID="txtBuscar" CssClass="form-control" />
+                                <asp:LinkButton runat="server" ID="btnBuscar" OnClick="btnBuscar_Click" CssClass="btn btn-primary search-button"> 
+                                    <i class="bi bi-search-heart"></i>
+                                </asp:LinkButton>
+                            </div>
+                        </div>
+                          <% }%>
                         <div class="accordion" id="accordionSidebar">
                             <%-- Enlaces Categorias  --%>
                             <asp:Repeater ID="RepeaterSidebar" runat="server" OnItemDataBound="RepeaterSidebar_ItemDataBound">

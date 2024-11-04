@@ -15,10 +15,17 @@ namespace TpIntegrador_Grupo_3A
     public partial class SiteMaster : MasterPage
     {
         public List<Category> categList;
+        public List<Product> prodList;
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (!IsPostBack)
             {
+                BusinessProduct businessProduct = new BusinessProduct();
+                prodList = businessProduct.list();
+                //Session.Add("listAllProducts", prodList);
+                Session["listAllProducts"] = prodList;
+
                 BusinessCategory businessCategory = new BusinessCategory();
                 categList = businessCategory.list();
 
@@ -26,8 +33,6 @@ namespace TpIntegrador_Grupo_3A
                 RepeaterSidebar.DataBind();
             }
 
-            // chequeamos si la pag que estoy por cargar no es ninguna de estas 2
-            // si no es quiero que me verifique la seguridad 
 
             if (SessionSecurity.ActiveSession(Session["user"]))
             {
@@ -40,7 +45,7 @@ namespace TpIntegrador_Grupo_3A
             }
             else
             {
-                if (!(Page is Login || Page is Register || Page is Products || Page is Default))
+                if (!(base.Page is Login || base.Page is Register || base.Page is Products || base.Page is Default))
                     Response.Redirect("Login.aspx", false);
             }
 
@@ -87,7 +92,14 @@ namespace TpIntegrador_Grupo_3A
         protected void btnExit_Click(object sender, EventArgs e)
         {
             Session.Clear();
-            Response.Redirect("~/Login.aspx");
+            Response.Redirect("~/Default.aspx");
+        }
+
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            Session["productFilter"] = txtBuscar.Text;
+            Response.Redirect("~/Products.aspx");
         }
     }
 }

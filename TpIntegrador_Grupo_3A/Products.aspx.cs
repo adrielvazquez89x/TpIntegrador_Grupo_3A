@@ -14,7 +14,7 @@ using Security;
 
 namespace TpIntegrador_Grupo_3A
 {
-    public partial class Productos : System.Web.UI.Page
+    public partial class Products : System.Web.UI.Page
     {
         public List<Product> prodList;
         public List<Model.ImageProduct> ImageList;
@@ -40,7 +40,19 @@ namespace TpIntegrador_Grupo_3A
             {
                 if (idCategory == 0)
                 {
-                    prodList = businessProd.list();    //Carga los productos según la categoría
+                    prodList = businessProd.list();    //Carga los productos
+                    //prodList = businessProd.list();    //Carga los productos
+                    string filter = Session["productFilter"] as string;
+                    if (!string.IsNullOrEmpty(filter))
+                    {
+                        prodList = prodList.FindAll(prod => prod.Name.ToUpper().Contains(filter.ToUpper()) ||
+                                                            prod.Description.ToUpper().Contains(filter.ToUpper()) ||
+                                                            prod.Category.Description.ToUpper().Contains(filter.ToUpper()) ||
+                                                            prod.SubCategory.Description.ToUpper().Contains(filter.ToUpper()) ||
+                                                            prod.Season.Description.ToUpper().Contains(filter.ToUpper()) ||
+                                                            prod.Price.ToString().Contains(filter));
+                        Session.Remove("productFilter");
+                    }
                 }
                 else
                 {
