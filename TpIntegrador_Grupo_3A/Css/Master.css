@@ -2,7 +2,7 @@
     position: relative;
     bottom: 0;
     width: 100%;
-    height: 30px;
+    /*height: 30px;*/
 }
 
 /* Botón Rosa Fucsia */
@@ -81,4 +81,62 @@
     .buttonCus {
         padding: 16px 48px;
     }
+}
+
+
+/* contacto */
+#contacto h2,
+#contacto label {
+    color: black;
+    color: black;
+}
+
+h4 {
+    margin: 15px 10px 5px 5px;
+    padding: 0px 0px 15px 15px;
+}
+
+.mapa iframe {
+    width: 80%;
+    aspect-ratio: 1.5;
+}
+
+.subContacto {
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    margin-right: 0;
+}
+
+li {
+    list-style: none;
+}
+
+.iconos-redes-sociales a {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    margin: 10px;
+    border: 2px solid white;
+    border-radius: 50%;
+    background-color: white;
+    transition: all 0.2s ease-in;
+}
+
+.iconos-redes-sociales i {
+    color: black;
+    font-size: 1.5rem;
+    transition: all 0.2s ease-in;
+}
+
+
+.iconos-redes-sociales a:hover {
+    background-color: blue;
+    border: 2px solid blue;
+}
+
+.iconos-redes-sociales a:hover i {
+    color: white;
 }

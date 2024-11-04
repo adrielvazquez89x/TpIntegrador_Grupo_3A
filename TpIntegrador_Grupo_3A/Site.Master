@@ -117,8 +117,8 @@
                     <ul class="nav flex-column nav-pills mb-auto">
 
                         <!-- Búsqueda rapida-->
-                           <% if (Page is TpIntegrador_Grupo_3A.Products)
-                               { %>
+                        <% if (Page is TpIntegrador_Grupo_3A.Products)
+                            { %>
                         <div class="d-flex flex-column search-container mb-4">
                             <asp:Label Text="Buscar" runat="server" CssClass="form-label fw-bold mb-2" />
                             <div class="d-flex input-group">
@@ -128,7 +128,7 @@
                                 </asp:LinkButton>
                             </div>
                         </div>
-                          <% }%>
+                        <% }%>
                         <div class="accordion" id="accordionSidebar">
                             <%-- Enlaces Categorias  --%>
                             <asp:Repeater ID="RepeaterSidebar" runat="server" OnItemDataBound="RepeaterSidebar_ItemDataBound">
@@ -178,11 +178,48 @@
                     <asp:ContentPlaceHolder ID="MainContent" runat="server">
                     </asp:ContentPlaceHolder>
                 </div>
+                <%--fin Contenido Principal--%>
 
-                <%-- Footer --%>
-                <footer class="d-flex container-fluid bg-dark text-bg-dark">
-                    <p>&copy; <%: DateTime.Now.Year %> - Ropa Local</p>
+
+                <%--Footer--%>
+                <footer class="footer d-flex flex-column container-fluid bg-dark text-bg-dark">
+                    <nav class="navbar navbar-expand-lg navbar-dark">
+                        <div class="container">
+                            <ul class="navbar-nav d-flex justify-content-around">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="Products.aspx">SHOP</a>
+                                </li>
+                                <% if (Session["user"] != null)
+                                    { %>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin">ADMIN</a>
+                                </li>
+                                <li class="nav-item">
+                                    <asp:Button Text="Salir" ID="BtnExit1" CssClass="nav-link text-light bg-transparent border-0" OnClick="BtnExit_Click1" runat="server" />
+                                </li>
+                                <% }
+                                    else
+                                    { %>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Register.aspx">REGISTRARSE</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Login.aspx">INGRESAR</a>
+                                </li>
+                                <% } %>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Default">CONTACTO</a>
+                                </li>
+                            </ul>
+                            <picture>
+                                <img src="/Images/iconoPag.png" alt="Icono de la Página" style="height: 50px; object-fit: contain;" class="img-fluid">
+                            </picture>
+                        </div>
+                    </nav>
+                    <p class="footer__copy text-center text-light py-3">All rights reserved <%: DateTime.Now.Year %> - UrbanFashion &copy;</p>
                 </footer>
+                <!-- Fin Footer -->
+
             </div>
         </div>
     </form>

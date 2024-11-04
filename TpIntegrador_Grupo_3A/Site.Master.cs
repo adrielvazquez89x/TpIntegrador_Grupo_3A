@@ -101,5 +101,10 @@ namespace TpIntegrador_Grupo_3A
             Session["productFilter"] = txtBuscar.Text;
             Response.Redirect("~/Products.aspx");
         }
+
+        protected void BtnExit_Click1(object sender, EventArgs e)
+        {
+            btnExit_Click(sender, e);
+        }
     }
 }

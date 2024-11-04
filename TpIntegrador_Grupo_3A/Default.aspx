@@ -83,8 +83,134 @@
         </div>
     </ItemTemplate>
 </asp:Repeater>
-
         </div>
+
+                 <%--seccion contacto--%>
+         <section>
+             <div id="contacto" class="scrool-section container-fluid">
+                 <div class="row">
+                     <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
+                         <h2 class="text-center">Envianos un mensaje</h2>
+                         <form class="row g-1" action="/" method="post">
+                             <div class="col-5">
+                                 <input
+                                     type="text"
+                                     class="form-control"
+                                     id="inputNombre"
+                                     placeholder="Nombre"
+                                     required
+                                     name="nombre" />
+                             </div>
+                             <div class="col-7">
+                                 <input
+                                     type="text"
+                                     class="form-control"
+                                     id="inputAsunto"
+                                     placeholder="Asunto"
+                                     required
+                                     name="asunto" />
+                             </div>
+                             <div class="col-12">
+                                 <label for="inputEmail" class="form-label">Email</label>
+                                 <input
+                                     type="email"
+                                     class="form-control"
+                                     id="inputEmail"
+                                     placeholder="ejemplo@email.com"
+                                     required
+                                     name="email" />
+                             </div>
+                             <div class="col-12">
+                                 <label for="inputMensaje" class="form-label">Mensaje</label>
+                                 <textarea
+                                     class="form-control"
+                                     id="inputMensaje"
+                                     rows="3"
+                                     placeholder="Hola! me gustaría consultar por..."
+                                     required
+                                     name="mensaje"></textarea>
+                             </div>
+                             <div class="col-12 my-3">
+                                 <button type="submit" class="btn btn-primary">Enviar</button>
+                             </div>
+                             
+                         </form>
+                     </div>
+                     <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-1">
+                         <h2 class="text-center">Conocé nuestro Local</h2>
+                         <div class="mapa">
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3289.8864863614817!2d-58.62594872364226!3d-34.455029273007995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bca48d5b47bead%3A0xfe44d520c6eb8125!2sAv.%20Hip%C3%B3lito%20Yrigoyen%20288%2C%20B1617%20Gral.%20Pacheco%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1730736195988!5m2!1ses-419!2sar" width="300" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>                         </div>
+                     </div>
+                 </div>
+             </div>
+
+             <div class="subContacto row container-fluid">
+                 <div class="col">
+                     <h4 class="medios-contacto d-flex align-items-center">MAIL</h4>
+                     <ul class="">
+                         <li class="flex">
+                             <div class="iconos-redes-sociales d-flex align-items-center">
+                                 <a href="mailto:example@email.com" class=""><i
+                                     class="bi bi-at"></i></a>UrbanGlam@email.com
+                             </div>
+                         </li>
+                     </ul>
+                 </div>
+                 <div class="col">
+                     <h4 class="medios-contacto">Telefonos</h4>
+                     <ul class="">
+                         <li class="flex">
+                             <div class="iconos-redes-sociales d-flex align-items-center">
+                                 <a><i class="bi bi-telephone"></i></a>
+                                 011 5555 5555 / 9999
+                             </div>
+                         </li>
+                         <li class="flex">
+                             <div class="iconos-redes-sociales d-flex align-items-center">
+                                 <a href="https://api.whatsapp.com/send?phone=9115555555">
+                                     <i class="bi bi-whatsapp"></i>
+                                 </a>
+                                 WhatsApp
+                             </div>
+                         </li>
+                     </ul>
+                 </div>
+                 <div id="redes-sociales" class="col">
+                     <h4 class="medios-contacto scrool-section">Redes sociales</h4>
+                     <ul class="">
+                         <li class="flex">
+                             <div class="iconos-redes-sociales d-flex align-items-center">
+                                 <a href="https://www.instagram.com/" class="">
+                                     <i class="bi bi-instagram"></i>
+                                 </a>Instagram
+                             </div>
+                         </li>
+                         <li class="flex">
+                             <div class="iconos-redes-sociales d-flex align-items-center">
+                                 <a href="https://www.facebook.com/" class="">
+                                     <i class="bi bi-facebook"></i>
+                                 </a>Facebook
+                             </div>
+                         </li>
+                     </ul>
+                 </div>
+                 <div class="col">
+                     <h4 class="medios-contacto">Direccion</h4>
+                     <ul class="">
+                         <li class="flex">
+                             <div class="iconos-redes-sociales d-flex align-items-center">
+                                 <a
+                                     href="https://www.google.com.ar/maps/place/Av.+Hip%C3%B3lito+Yrigoyen+288,+B1617+Gral.+Pacheco,+Provincia+de+Buenos+Aires/@-34.4550293,-58.6259487,17z/data=!3m1!4b1!4m6!3m5!1s0x95bca48d5b47bead:0xfe44d520c6eb8125!8m2!3d-34.4550293!4d-58.6233738!16s%2Fg%2F11cscs2dxl?entry=ttu&g_ep=EgoyMDI0MTAyOS4wIKXMDSoASAFQAw%3D%3D">
+                                     <i class="bi bi-geo-alt"></i>
+                                 </a>
+                                 Av. Hipólito Yrigoyen 288, B1617 Gral. Pacheco, Provincia de Buenos Aires
+                             </div>
+                         </li>
+                     </ul>
+                 </div>
+             </div>
+         </section>
+         <%--fin seccion contacto--%>
 
     </main>
 </asp:Content>
