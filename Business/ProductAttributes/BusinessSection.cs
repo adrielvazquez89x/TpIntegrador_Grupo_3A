@@ -20,7 +20,7 @@ namespace Business.ProductAttributes
         {
             try
             {
-                string query = "SELECT * FROM Secciones ";
+                string query = "SELECT top 4 * FROM Secciones ";
                 data.setQuery(query);
 
                 if (id != 0)

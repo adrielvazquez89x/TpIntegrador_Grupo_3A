@@ -43,16 +43,5 @@ namespace TpIntegrador_Grupo_3A
                 rptProdList.DataBind();
             }
         }
-
-        protected void rptImages_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-            {
-                Product currentProduct = (Product)e.Item.DataItem;
-                Repeater rptImgList = (Repeater)e.Item.FindControl("rptImages"); // Toma el Repeater anidado
-                rptImgList.DataSource = currentProduct.Images;
-                rptImgList.DataBind();
-            }
-        }
     }
 }
