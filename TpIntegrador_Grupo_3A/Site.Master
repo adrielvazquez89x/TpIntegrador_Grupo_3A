@@ -56,11 +56,20 @@
                         <li class="nav-item"><a class="nav-link" runat="server" href="Products.aspx">Productos</a></li>
                         <% if (Security.SessionSecurity.ActiveSession(Session["user"]))
                             { %>
+
+                                <%if (Security.SessionSecurity.IsAdmin(Session["user"]))
+                                    { %>
+                                <li><a href="Admin/ProductsManagement.aspx" class="nav-link me-2">Admin</a></li>
+                        <%}
+                            else
+                            { %>
+
                         <li><a href="Favourites.aspx" class="nav-link me-2">Favoritos</a></li>
                         <li><a href="Cart.aspx" class="nav-link me-2">Mis compras</a></li>
                         <li><a href="Cart.aspx" class="nav-link me-2">
                             <i class="bi bi-cart"></i>Mi Carrito</a></li>
-                        <% }%>
+                        <% }
+                            }%>
                     </ul>
 
 

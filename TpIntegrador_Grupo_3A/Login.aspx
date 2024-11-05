@@ -10,7 +10,7 @@
                 <asp:Label Text="" ID="lblError" CssClass="error-message" runat="server" />
             </div>
             <div class="mb-3">
-                <label class="form-label">Contrasenia</label>
+                <label class="form-label">Contraseña</label>
                 <asp:TextBox runat="server" CssClass="form-control" ID="txtPassword" TextMode="Password" REQUIRED />
             </div>
             <div class="text-center m-4 d-flex gap-3 text-center justify-content-center">
