@@ -46,7 +46,7 @@ namespace TpIntegrador_Grupo_3A
             else
             {
                 if (!(base.Page is Login || base.Page is Register || base.Page is Products || base.Page is Default))
-                    Response.Redirect("Login.aspx", false);
+                    Response.Redirect("~/Login.aspx", false);
             }
 
             //if (Request.Url.AbsolutePath.Contains("login") || Request.Url.AbsolutePath.Contains("Login"))
