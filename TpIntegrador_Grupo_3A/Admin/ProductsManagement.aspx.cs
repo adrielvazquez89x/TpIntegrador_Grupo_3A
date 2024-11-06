@@ -34,9 +34,9 @@ namespace TpIntegrador_Grupo_3A.Admin
             try
             {
                 BusinessProduct businessProducts = new BusinessProduct();
-                List<Product> categories = businessProducts.listAdmin();
+                List<Product> products = businessProducts.listAdmin();
 
-                dgvProducts.DataSource = categories;
+                dgvProducts.DataSource = products;
                 dgvProducts.DataBind();
             }
             catch (Exception)
@@ -59,6 +59,8 @@ namespace TpIntegrador_Grupo_3A.Admin
         protected void dgvProducts_RowCommand(object sender, GridViewCommandEventArgs e)
         {
 
-        }
+        }       
+
+        
     }
 }
