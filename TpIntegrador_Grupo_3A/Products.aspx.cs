@@ -104,5 +104,29 @@ namespace TpIntegrador_Grupo_3A
             rptProdList.DataSource = prodList;
             rptProdList.DataBind();
         }
+
+        private void filterByPrice()
+        {
+            
+
+        }
+
+        protected void btnFilter_Click(object sender, EventArgs e)
+        {
+            int min, max;
+
+            min = txtPriceMin.Text is null ? 0 : int.Parse(txtPriceMin.Text);  //si no ingresan texto toma el placeHolder y arroja error..
+
+            max = txtPriceMax.Text is null ? 0 : int.Parse(txtPriceMax.Text);
+
+
+            if (max == 0)
+                prodList = prodList.FindAll(x => x.Price >= min);
+            else
+                prodList = prodList.FindAll(x => x.Price >= min && x.Price <= max);
+
+            rptProdList.DataSource = prodList;
+            rptProdList.DataBind();
+        }
     }
 }
