@@ -86,23 +86,23 @@ namespace TpIntegrador_Grupo_3A
 
         protected void ddlOrdenar_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ddlOrdenar.SelectedIndex == 0)
+            switch (ddlOrdenar.SelectedIndex)
             {
-                prodList = prodList.OrderBy(x => x.Name).ToList();
-
+                case 0:
+                    prodList = prodList.OrderBy(x => x.Name).ToList();
+                    break;
+                case 1:
+                    prodList = prodList.OrderByDescending(x => x.Name).ToList();
+                    break;
+                case 2:
+                    prodList = prodList.OrderBy(x => x.Price).ToList();
+                    break;
+                case 3:
+                    prodList = prodList.OrderByDescending(x => x.Price).ToList();
+                    break;
             }
-            else if (ddlOrdenar.SelectedIndex == 1)
-            {
-                prodList = prodList.OrderByDescending(x => x.Name).ToList();
-            }
-            else if (ddlOrdenar.SelectedIndex == 2)
-            {
-                prodList = prodList.OrderBy(x => x.Price).ToList();
-            }
-            else
-            {
-                prodList = prodList.OrderByDescending(x => x.Price).ToList();
-            }
+            rptProdList.DataSource = prodList;
+            rptProdList.DataBind();
         }
     }
 }
