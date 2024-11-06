@@ -35,12 +35,12 @@ namespace TpIntegrador_Grupo_3A
 
             int idSubCategory = Request.QueryString["IdSubCategory"] is null ? 0 : int.Parse(Request.QueryString["IdSubCategory"]);  //validarlo (podrian a mano ponerle algo no entero)
 
+            prodList= prodList is null ? businessProd.list() : prodList;
 
             if (!IsPostBack)
             {
                 if (idCategory == 0)
                 {
-                    prodList = businessProd.list();    //Carga los productos
                     //prodList = businessProd.list();    //Carga los productos
                     string filter = Session["productFilter"] as string;
                     if (!string.IsNullOrEmpty(filter))
@@ -84,34 +84,24 @@ namespace TpIntegrador_Grupo_3A
             Response.Redirect($"/Details?Code={CodeSelectedProd}");
         }
 
-        protected void bntFav_Click(object sender, EventArgs e)
+        protected void ddlOrdenar_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
+            if (ddlOrdenar.SelectedIndex == 0)
             {
-                CodeSelectedProd = ((LinkButton)sender).CommandArgument.ToString();
-                BusinessFavourite businessFav = new BusinessFavourite();
-                businessFav.Add(user.UserId, CodeSelectedProd);
+                prodList = prodList.OrderBy(x => x.Name).ToList();
 
             }
-            catch (Exception ex)
+            else if (ddlOrdenar.SelectedIndex == 1)
             {
-                Session.Add("error", ex.ToString());
-                Response.Redirect("Error.aspx", false);
+                prodList = prodList.OrderByDescending(x => x.Name).ToList();
             }
-        }
-
-        protected void btnUndoFav_Click(object sender, EventArgs e)
-        {
-            try
+            else if (ddlOrdenar.SelectedIndex == 2)
             {
-                CodeSelectedProd = ((Button)sender).CommandArgument.ToString();
-                BusinessFavourite businessFav = new BusinessFavourite();
-                businessFav.Delete(user.UserId, CodeSelectedProd);
+                prodList = prodList.OrderBy(x => x.Price).ToList();
             }
-            catch (Exception ex)
+            else
             {
-                Session.Add("error", ex.ToString());
-                Response.Redirect("Error.aspx", false);
+                prodList = prodList.OrderByDescending(x => x.Price).ToList();
             }
         }
     }

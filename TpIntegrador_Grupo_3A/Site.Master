@@ -44,7 +44,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" runat="server" href="~/">UrbanGlam
-                    <img src="Images/iconoPag.png" alt="Icono" class="me-2" style="height: 40px;" />
+                    <img src="/Images/iconoPag.png" alt="Icono" class="me-2" style="height: 40px;" />
 
                 </a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
@@ -57,9 +57,9 @@
                         <% if (Security.SessionSecurity.ActiveSession(Session["user"]))
                             { %>
 
-                                <%if (Security.SessionSecurity.IsAdmin(Session["user"]))
-                                    { %>
-                                <li><a href="Admin/ProductsManagement.aspx" class="nav-link me-2">Admin</a></li>
+                        <%if (Security.SessionSecurity.IsAdmin(Session["user"]))
+                            { %>
+                        <li><a href="Admin/ProductsManagement.aspx" class="nav-link me-2">Admin</a></li>
                         <%}
                             else
                             { %>
@@ -154,6 +154,10 @@
                                                 <div class="accordion-body">
                                                     <%-- Campo oculto para almacenar el IdCategory que requiero para el link --%>
                                                     <asp:HiddenField ID="hfCategoryId" runat="server" Value='<%# Eval("Id") %>' />
+
+                                                    <a href="/products?IdCategory=<%# Eval("Id")%>" class="text-decoration-none">
+                                                        <span class="d-none d-sm-inline">Ver Todos</span>
+                                                    </a>
 
                                                     <%-- Repeater de subcategorías --%>
                                                     <asp:Repeater ID="rptSubCat" runat="server" OnItemDataBound="rptSubCat_ItemDataBound">

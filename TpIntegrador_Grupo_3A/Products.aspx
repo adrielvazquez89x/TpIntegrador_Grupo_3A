@@ -3,23 +3,57 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2 class="text-center mb-5">Nuestro listado de Prendas</h2>
     <div class="container">
+
+        <!-- Collapse con opciones para filtrar -->
+        <div class="col mb-4">
+            <button class="btn gap-1 btn-deep-purple" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+                <i class="bi bi-funnel"></i>
+            </button>
+
+            <div class="collapse" id="collapseFilter">
+                <div class="card card-body">
+
+                    <!-- Opcion generica "Ordenar por..."-->
+                    <div class="row mb-3">
+                    <div class="col-auto">
+                        <asp:Label Text="Ordenar por:" runat="server" CssClass="form-label" />
+                        <asp:DropDownList runat="server" CssClass="form-control" ID="ddlOrdenar" OnSelectedIndexChanged="ddlOrdenar_SelectedIndexChanged" AutoPostBack="true">
+                            <asp:ListItem Text="A - Z" />
+                            <asp:ListItem Text="Z - A" />
+                            <asp:ListItem Text="Menor precio" />
+                            <asp:ListItem Text="Mayor precio" />
+                        </asp:DropDownList>
+                    </div>
+
+                    <!-- Filtrar Rango de Precio -->
+                    <div class="col-auto">
+                        <asp:Label Text="Precio" runat="server" CssClass="form-label" />
+                        <div class="d-flex gap-2">
+                            <div>
+                                <asp:TextBox runat="server" ID="txtMinPrecio" CssClass="form-control form-control-sm" TextMode="Number" Placeholder="mínimo" />
+                            </div>
+                            <div>
+                                <asp:TextBox runat="server" ID="txtMaxPrecio" CssClass="form-control form-control-sm" TextMode="Number" Placeholder="máximo" />
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
         <div class="row justify-content-center">
             <asp:Repeater ID="rptProdList" runat="server" OnItemDataBound="rptProdList_ItemDataBound">
                 <ItemTemplate>
                     <div class="col-md-4 mb-4">
 
                         <div class="card h-100" style="width: 18rem;">
-
-                             <% if (Security.SessionSecurity.ActiveSession(Session["user"]))
-                               {%>
-<%--                            <asp:LinkButton runat="server" ID="btnUndoFav" OnClick="btnUndoFav_Click" CommandArgument='<%# Eval("Code")%>'>
-                                <i class="bi bi-heart-fill"></i>
-                            </asp:LinkButton>
-                            <asp:LinkButton runat="server" ID="bntFav" OnClick="bntFav_Click" CommandArgument='<%# Eval("Code")%>'>
-                                 <i class="bi bi-heart"></i>
-                            </asp:LinkButton>--%>
-                             <% }%>
-
                             <!-- Carrusel de imágenes -->
                             <div id="carouselExample<%# Eval("Id") %>" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
