@@ -344,5 +344,52 @@ namespace Business
             }
         }
 
+        public bool Add(Product product)
+        {
+            try
+            {
+                data.BeginTransaction();
+                data.setQuery(@"INSERT INTO Productos 
+                                (Codigo, Nombre, Precio, Descripcion, FechaCreacion, IdCategoria, IdSubCategoria, IdTemporada, Activo) 
+                                 VALUES (@Codigo, @Nombre, @Precio, @Descripcion, @FechaCreacion, @IdCategoria, @IdSubCategoria, @IdTemporada, 1)");
+
+                data.setParameter("@Codigo", product.Code);
+                data.setParameter("@Nombre", product.Name);
+                data.setParameter("@Precio", product.Price);
+                data.setParameter("@Descripcion", product.Description);
+                data.setParameter("@FechaCreacion", product.CreationDate);
+                data.setParameter("@IdCategoria", product.Category.Id);
+                data.setParameter("@IdSubCategoria", product.SubCategory.Id);
+                data.setParameter("@IdTemporada", product.Season.Id);
+
+                //var result = data.ActionScalar();
+                data.executeAction();
+
+                foreach(ImageProduct imgUrl in product.Images)
+                {
+                    data.clearParams();
+                    data.setQuery(@"INSERT INTO ImagenesProductos
+                                    (Url, CodigoProducto) VALUES 
+                                    (@Url, @CodigoProducto)");
+                    data.setParameter("@Url", imgUrl.UrlImage);
+                    data.setParameter("@CodigoProducto", product.Code);
+                    data.executeAction();
+
+                }
+
+                data.CommitTransaction();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                data.RollbackTransaction();
+                throw ex;
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
+
     }
 }
