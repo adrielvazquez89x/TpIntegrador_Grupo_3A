@@ -359,7 +359,15 @@ namespace Business
                 data.setParameter("@Descripcion", product.Description);
                 data.setParameter("@FechaCreacion", product.CreationDate);
                 data.setParameter("@IdCategoria", product.Category.Id);
-                data.setParameter("@IdSubCategoria", product.SubCategory.Id);
+                if (product.SubCategory.Id == 0)
+                {
+                    data.setParameter("@IdSubCategoria", null);
+                }
+                else
+                {
+                    data.setParameter("@IdSubCategoria", product.SubCategory.Id);
+                }
+                
                 data.setParameter("@IdTemporada", product.Season.Id);
 
                 //var result = data.ActionScalar();

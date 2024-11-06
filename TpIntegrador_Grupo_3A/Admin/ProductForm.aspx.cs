@@ -64,6 +64,8 @@ namespace TpIntegrador_Grupo_3A.Admin
                 product.Category.Id = int.Parse(ddlCategory.SelectedValue);
 
                 product.SubCategory = new SubCategory();
+
+                product.SubCategory.Id = int.Parse(ddlSubCategory.SelectedValue);
                 product.SubCategory.CategoryId = int.Parse(ddlCategory.SelectedValue);
 
                 product.Season = new Season();
