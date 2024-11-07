@@ -110,6 +110,7 @@
     <Content Include="Admin\UserControl_Buttons.ascx" />
     <Content Include="Admin\ProductsManagement.aspx" />
     <Content Include="Admin\UserControl_Toast.ascx" />
+    <Content Include="Admin\UserForm.aspx" />
     <Content Include="Admin\UsersManagement.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -261,6 +262,13 @@
     </Compile>
     <Compile Include="Admin\UserControl_Toast.ascx.designer.cs">
       <DependentUpon>UserControl_Toast.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\UserForm.aspx.cs">
+      <DependentUpon>UserForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\UserForm.aspx.designer.cs">
+      <DependentUpon>UserForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\UsersManagement.aspx.cs">
       <DependentUpon>UsersManagement.aspx</DependentUpon>

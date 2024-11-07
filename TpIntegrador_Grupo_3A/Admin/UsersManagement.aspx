@@ -1,76 +1,109 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UsersManagement.aspx.cs" Inherits="TpIntegrador_Grupo_3A.Admin.UsersManagement" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-<%@ Register Src="~/Admin/UserControl_Buttons.ascx" TagPrefix="uc1" TagName="UserControl_Buttons" %>
-<%@ Register Src="~/Admin/UserControl_Toast.ascx" TagPrefix="uc1" TagName="UserControl_Toast" %>
+    <%@ Register Src="~/Admin/UserControl_Toast.ascx" TagPrefix="uc1" TagName="UserControl_Toast" %>
+    <%@ Register Src="~/Admin/UserControl_ButtonBack.ascx" TagPrefix="uc1" TagName="UserControl_ButtonBack" %>
 
-
-
-    <h2 class="text-center my-5">Gestión de Usuarios</h2>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <h2 class="my-5 text-center">Usuarios existentes</h2>
-            <asp:GridView
-                ID="dgvUsers"
-                runat="server"
-                AutoGenerateColumns="False"
-                CssClass="table table-striped"
-                OnPageIndexChanging="dgvUsers_PageIndexChanging"
-                AllowPaging="true"
-                PageSize="5"
-                PagerSettings-Visible="true"
-                PagerSettings-Mode="NumericFirstLast"
-                PagerSettings-FirstPageText="<<"
-                PagerSettings-LastPageText=">>"
-                PagerSettings-NextPageText=">"
-                PagerSettings-PreviousPageText="<"
-                PagerStyle-HorizontalAlign="Center"
-                OnRowCommand="dgvUsers_RowCommand"
-                >
-                <Columns>
-                 
-                    
-                    <asp:BoundField DataField="FirstName" HeaderText="Nombre" />
-                    <asp:BoundField DataField="LastName" HeaderText="Apellido" />
-                    <asp:BoundField DataField="Email" HeaderText="Email" />
+            <%-- Contenedor principal --%>
+            <div class="container my-4">
+                <%-- Título de la página --%>
+                <h2 class="text-center mb-4">Gestión de Usuarios</h2>
 
-                    <asp:BoundField DataField="RegistrationDate" HeaderText="Fecha Alta" DataFormatString="{0:dd/MM/yyyy}" HtmlEncode="False" />
+                <%-- Botón para volver --%>
+                <div class="mb-3">
+                    <uc1:UserControl_ButtonBack runat="server" ID="UserControl_ButtonBack" />
+                </div>
 
-                    
-                    <asp:TemplateField HeaderText="Acciones">
-                        <ItemTemplate>
-                            
-                            <asp:LinkButton
-                                ID="btnView"
-                                runat="server"
-                                CommandName="View"
-                                CommandArgument='<%# Eval("UserId") %>'
-                                CssClass="btn btn-link text-primary">
-                                <i class="bi bi-search"></i> 
-                            </asp:LinkButton>
-
-                            
-                            <asp:LinkButton
-                                ID="btnEdit"
-                                runat="server"
-                                CommandName="EditProduct"
-                                CommandArgument='<%# Eval("UserId") %>'
-                                CssClass="btn btn-link text-warning">
-                                <i class="bi bi-pencil-square"></i> 
-                            </asp:LinkButton>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                </Columns>
-            </asp:GridView>
+                <%-- Sección de Categorías --%>
+                <div class="row">
+                    <%-- Formulario de Categorías --%>
 
 
-            <asp:LinkButton ID="btnAddUser" runat="server" CssClass="buttonCus btn-electric-blue" OnClick="btnAddUser_Click">
+                    <%-- Lista de Usuarios --%>
+                    <div class="col-md-8">
+                        <asp:GridView
+                            ID="dgvUsers"
+                            runat="server"
+                            CssClass="table table-striped table-bordered"
+                            HeaderStyle-CssClass="table-dark"
+                            DataKeyNames="UserId"
+                            AutoGenerateColumns="false"
+                            OnPageIndexChanging="dgvUsers_PageIndexChanging"
+                            AllowPaging="true"
+                            PageSize="5">
+                            <Columns>
+                                <%-- Nombre de la Categoría --%>
+                                <asp:BoundField DataField="FirstName" HeaderText="Nombre" ItemStyle-CssClass="align-middle" />
+                                <asp:BoundField DataField="LastName" HeaderText="Apellido" ItemStyle-CssClass="align-middle" />
+                                <asp:BoundField DataField="Email" HeaderText="Email" ItemStyle-CssClass="align-middle" />
 
-                Agregar Usuario
-            </asp:LinkButton>
 
-            <uc1:UserControl_Toast runat="server" ID="UserControl_Toast" />
+                                <%-- Estado Activo/Inactivo --%>
+                                <asp:TemplateField HeaderText="Activo">
+                                    <ItemTemplate>
+                                        <div class="text-center">
+                                            <%# Convert.ToBoolean(Eval("Active")) ? 
+                                                "<i class='bi bi-check-circle-fill text-success'></i>" : 
+                                                "<i class='bi bi-x-circle-fill text-danger'></i>" %>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
 
+                                <%-- Acciones --%>
+                                <asp:TemplateField HeaderText="Estado">
+                                    <ItemTemplate>
+                                        <div class="d-flex justify-content-center">
+
+
+                                            <%-- Botón Editar --%>
+                                            <asp:LinkButton
+                                                ID="btnEditUser"
+                                                runat="server"
+                                                CommandArgument='<%# Eval("UserId") %>'
+                                                CssClass="btn btn-sm btn-outline-primary me-2"
+                                                OnClick="btnEditUser_Click">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </asp:LinkButton>
+
+                                            <%-- Botón Eliminar --%>
+                                            <asp:LinkButton
+                                                ID="btnDeleteUser"
+                                                runat="server"
+                                                CssClass="btn btn-sm btn-outline-danger me-2"
+                                                OnClick="btnDeleteUser_Click"
+                                                CommandArgument='<%# Eval("UserId") + "|" + Eval("Active") %>'
+                                                Visible='<%# Convert.ToBoolean(Eval("Active")) %>'
+                                                ToolTip="Desactivar">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </asp:LinkButton>
+
+                                            <%-- Botón Activar --%>
+                                            <asp:LinkButton
+                                                ID="btnActivateUser"
+                                                runat="server"
+                                                CssClass="btn btn-sm btn-outline-success"
+                                                OnClick="btnActivateUser_Click"
+                                                CommandArgument='<%# Eval("UserId") + "|" + Eval("Active") %>'
+                                                Visible='<%# !Convert.ToBoolean(Eval("Active")) %>'
+                                                ToolTip="Activar">
+                                                <i class="bi bi-check-circle"></i>
+                                            </asp:LinkButton>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+                    </div>
+                </div>
+
+                <asp:Button ID="btnAddUser" runat="server" CssClass="btn btn-primary mb-3" Text="Agregar Nuevo Usuario" OnClick="btnAddUser_Click" />
+
+                <%-- Toast de Notificaciones --%>
+                <uc1:UserControl_Toast runat="server" ID="UserControl_Toast" />
+            </div>
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

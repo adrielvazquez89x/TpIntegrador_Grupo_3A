@@ -27,5 +27,13 @@ namespace Security
             return user.Admin;
             //return user != null ? user.Admin : false;
         }
+
+        public static bool isOwner(object obj)
+        {
+            User user = obj != null ? (User)obj : null;
+            return user != null ? user.Owner : false; 
+        }
+
+
     }
 }

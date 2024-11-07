@@ -44,6 +44,48 @@ namespace Business
 
         }
 
+        public void CreateAdmin(User user)
+        {
+
+            try
+            {
+
+                var passwordHasher = new PasswordHasher();
+                string hashedPassword = passwordHasher.HashPassword(user.PasswordHash); // hasheo la contraseña
+
+
+                string securityStamp = Guid.NewGuid().ToString();
+                user.SecurityStamp = securityStamp;
+
+                data.setQuery(@"
+            INSERT INTO Usuarios 
+                (Dni, Nombre, Apellido, Email, Celular, FechaAlta, ContraseniaHash, SeguridadStamp, EsAdmin, EsOwner, Active)
+            VALUES 
+                (@dni, @nombre, @apellido, @email, @celular, @fechaAlta, @pass, @stamp, @admin, @owner, @active);");
+
+
+                data.setParameter("@dni", user.Dni);
+                data.setParameter("@nombre", user.FirstName);
+                data.setParameter("@apellido", user.LastName);
+                data.setParameter("@email", user.Email);
+                data.setParameter("@celular", user.Mobile);
+                data.setParameter("@fechaAlta", user.RegistrationDate);
+                data.setParameter("@pass", user.PasswordHash); // Contraseña ya hasheada
+                data.setParameter("@stamp", user.SecurityStamp); // Security Stamp
+                data.setParameter("@admin", user.Admin); // Admin: true
+                data.setParameter("@owner", user.Owner); // Owner: false
+                data.setParameter("@active", user.Active); // Active: true
+
+                data.executeAction();
+                //user.UserId = data.ActionScalar();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public bool Login(User user)
         {
             DataAccess data = new DataAccess();
@@ -170,19 +212,37 @@ namespace Business
             DataAccess data = new DataAccess();
             try
             {
-                data.setQuery("Update Usuarios set Nombre = @nombre, Apellido = @apellido, UrlImg = @imagen, Email =@email Where IdUsuario = @id");
-                data.setParameter("@nombre", user.FirstName);
-                data.setParameter("@apellido", user.LastName);
-                data.setParameter("@email", user.Email);
-                data.setParameter("@imagen", user.ImageUrl != null ? user.ImageUrl : "");
-                data.setParameter("@id", user.UserId);
-                data.executeAction();
+                string query = @"
+            UPDATE Usuarios 
+            SET 
+                Dni = @Dni,
+                Nombre = @Nombre,
+                Apellido = @Apellido,
+                Email = @Email,
+                Celular = @Celular,
+                FechaAlta = @FechaAlta
+                
+               
+            WHERE IdUsuario = @IdUsuario";
 
+                // Asignar los parámetros a la consulta
+                data.setQuery(query);
+                data.setParameter("@Dni", user.Dni);
+                data.setParameter("@Nombre", user.FirstName);
+                data.setParameter("@Apellido", user.LastName);
+                data.setParameter("@Email", user.Email);
+                data.setParameter("@Celular", user.Mobile);
+                data.setParameter("@FechaAlta", user.RegistrationDate);
+              
+               
+                data.setParameter("@IdUsuario", user.UserId);
+
+                // Ejecutar la acción
+                data.executeAction();
             }
             catch (Exception ex)
             {
-
-                throw ex;
+                throw new Exception("Error al actualizar el usuario: " + ex.Message);
             }
             finally
             {
@@ -273,23 +333,30 @@ namespace Business
             }
         }
 
-        public List<User> ListUsers()
+        public List<User> ListUsers(string id = "")
         {
             DataAccess data = new DataAccess();
             List<User> userList = new List<User>();
 
             try
             {
-                string queryUser = @"
-                SELECT 
-            U.IdUsuario,
-            U.Nombre,
-            U.Apellido,
-            U.FechaAlta,
-            U.Email
-        FROM Usuarios U";
+                string query = "SELECT U.IdUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Celular, U.FechaAlta, U.Active, U.ContraseniaHash FROM Usuarios U";
 
-                data.setQuery(queryUser);
+                // Si se pasa un id, agrega la condición WHERE
+                if (!string.IsNullOrEmpty(id))
+                {
+                    query += " WHERE U.IdUsuario = @UserId";
+                }
+
+                // Establecer la consulta
+                data.setQuery(query);
+
+                // Si el id se pasa, añade el parámetro para evitar SQL Injection
+                if (!string.IsNullOrEmpty(id))
+                {
+                    data.setParameter("@UserId", id); // Usamos setParameter aquí para pasar el valor
+                }
+
                 data.executeRead();
 
                 while (data.Reader.Read())
@@ -297,10 +364,14 @@ namespace Business
                     User user = new User
                     {
                         UserId = (int)data.Reader["IdUsuario"],
+                        Dni = data.Reader["Dni"] != DBNull.Value ? (string)data.Reader["Dni"] : string.Empty,
                         FirstName = data.Reader["Nombre"] != DBNull.Value ? (string)data.Reader["Nombre"] : string.Empty,
                         LastName = data.Reader["Apellido"] != DBNull.Value ? (string)data.Reader["Apellido"] : string.Empty,
                         Email = data.Reader["Email"] != DBNull.Value ? (string)data.Reader["Email"] : string.Empty,
-                        RegistrationDate = (DateTime)data.Reader["FechaAlta"]
+                        Mobile = data.Reader["Celular"] != DBNull.Value ? (string)data.Reader["Celular"] : string.Empty,
+                        RegistrationDate = (DateTime)data.Reader["FechaAlta"],
+                        Active = (bool)data.Reader["Active"],
+                        PasswordHash = data.Reader["ContraseniaHash"] != DBNull.Value ? (string)data.Reader["ContraseniaHash"] : string.Empty
                     };
 
                     userList.Add(user);
@@ -319,7 +390,42 @@ namespace Business
         }
 
 
+        public string Activate(int id)
+        {
+            try
+            {
+                data.setQuery($"Update Usuarios SET Active = 1 where IdUsuario = {id}");
+                data.executeAction();
+                return "ok";
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
 
+
+        public string Delete(int id)
+        {
+            try
+            {
+                data.setQuery($"Update Usuarios SET Active = 0 where IdUsuario = {id}");
+                data.executeAction();
+                return "ok";
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
     }
 }
 //public User userById(int id)

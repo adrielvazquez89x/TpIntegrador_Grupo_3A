@@ -25,5 +25,9 @@ namespace Model
 
         public string ResetToken { get; set; }
         public DateTime TokenExpiration { get; set; }
+
+        public bool Active { get; set; }
+
+        public bool Owner { get; set; }
     }
 }
