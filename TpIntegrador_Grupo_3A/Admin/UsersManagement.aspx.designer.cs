@@ -24,6 +24,15 @@ namespace TpIntegrador_Grupo_3A.Admin
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
+        /// UserControl_ButtonBack control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::TpIntegrador_Grupo_3A.Admin.UserControl_ButtonBack UserControl_ButtonBack;
+
+        /// <summary>
         /// dgvUsers control.
         /// </summary>
         /// <remarks>
@@ -39,7 +48,7 @@ namespace TpIntegrador_Grupo_3A.Admin
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnAddUser;
+        protected global::System.Web.UI.WebControls.Button btnAddUser;
 
         /// <summary>
         /// UserControl_Toast control.
