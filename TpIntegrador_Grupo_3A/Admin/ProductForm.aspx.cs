@@ -74,18 +74,31 @@ namespace TpIntegrador_Grupo_3A.Admin
                 product.CreationDate = DateTime.Now;
 
 
-                List<ImageProduct> imageUrls = new List<ImageProduct>();
+                product.Images = new List<ImageProduct>();
 
                 foreach(string imageUrl in ViewState[ImagesViewStateKey] as List<string>)
                 {
                     var imgAux = new ImageProduct();
                     imgAux.UrlImage = imageUrl;
                     imgAux.CodProd = product.Code;
+
+                    product.Images.Add(imgAux);
                 }
 
-                product.Images = imageUrls;
+                
                 BusinessProduct businessProduct = new BusinessProduct();
                 var result = businessProduct.Add(product);
+
+                if(result)
+                {
+                    UserControl_Toast.ShowToast("Producto agregado correctamente", true);
+                    ClearForm();
+                }
+                else
+                {
+
+                   UserControl_Toast.ShowToast("Error al agregar el producto", false);
+                }
 
             }
             catch (Exception)
@@ -121,6 +134,24 @@ namespace TpIntegrador_Grupo_3A.Admin
             }
         }
 
+        private void ClearForm()
+        {
+            txtCode.Text = "";
+            txtName.Text = "";
+            txtPrice.Text = "";
+            txtDescription.Text = "";
+            ddlCategory.SelectedIndex = 0;
+            ddlSubCategory.SelectedIndex = 0;
+            ddlSeason.SelectedIndex = 0;
+            //ddlSection.SelectedIndex = 0;
+
+            // Limpiar la lista de imágenes en el ViewState y actualizar el ListBox
+            ViewState[ImagesViewStateKey] = new List<string>();
+            BindImagesListBox();
+
+            // Ocultar la imagen de previsualización
+            imgPreview.Visible = false;
+        }
 
         //IMAGENES
 

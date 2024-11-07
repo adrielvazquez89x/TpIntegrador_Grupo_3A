@@ -22,7 +22,7 @@ namespace DataAccessService
 
             public DataAccess()
             {
-                _connection = new SqlConnection($"server=.\\SQLEXPRESS04; database = LocalRopa_DB; integrated security = true");
+                _connection = new SqlConnection($"server=.\\SQLEXPRESS; database = LocalRopa_DB; integrated security = true");
                 _command = new SqlCommand { Connection = _connection };
             }
 
@@ -64,7 +64,11 @@ namespace DataAccessService
                 }
                 finally
                 {
-                    _connection.Close();
+                    // Solo cerrar la conexión si no hay una transacción activa
+                    if (_transaction == null && _connection.State == ConnectionState.Open)
+                    {
+                        _connection.Close();
+                    }
                 }
             }
 

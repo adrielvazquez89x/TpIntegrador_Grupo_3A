@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProductForm.aspx.cs" Inherits="TpIntegrador_Grupo_3A.Admin.ProductForm" %>
 
 <%@ Register Src="~/Admin/UserControl_ButtonBack.ascx" TagPrefix="uc1" TagName="UserControl_ButtonBack" %>
+<%@ Register Src="~/Admin/UserControl_Toast.ascx" TagPrefix="uc1" TagName="UserControl_Toast" %>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -112,6 +114,8 @@
                     </div>
                 </div>
             </div>
+
+            <uc1:UserControl_Toast runat="server" ID="UserControl_Toast" />
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

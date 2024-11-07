@@ -377,7 +377,7 @@ namespace Business
                 {
                     data.clearParams();
                     data.setQuery(@"INSERT INTO ImagenesProductos
-                                    (Url, CodigoProducto) VALUES 
+                                    (UrlImagen, CodigoProducto) VALUES 
                                     (@Url, @CodigoProducto)");
                     data.setParameter("@Url", imgUrl.UrlImage);
                     data.setParameter("@CodigoProducto", product.Code);
