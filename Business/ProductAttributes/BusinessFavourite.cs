@@ -21,7 +21,7 @@ namespace Business.ProductAttributes
 
                 if (id != 0)
                 {
-                    query += " WHERE IdUser = " + id;
+                    query += " WHERE IdUsuario = " + id;
                 }
 
                 data.setQuery(query);
@@ -33,11 +33,12 @@ namespace Business.ProductAttributes
 
                     aux.Id = (int)data.Reader["Id"];
                     aux.IdUser = (int)data.Reader["IdUsuario"];
-                    aux.ProductCode = (int)data.Reader["CodigoProducto"];
+                    aux.ProductCode = (string)data.Reader["CodigoProducto"];
 
                     favList.Add(aux);
 
                 }
+
                 return favList;
             }
 
@@ -52,11 +53,11 @@ namespace Business.ProductAttributes
             }
         }
 
-        public void Add(int idUser, int idProduct)
+        public void Add(int idUser, string codeProd)
         {
             try
             {
-                data.setQuery($"INSERT INTO Favoritos (IdUsuario, CodigoProducto) VALUES ({idUser},{idProduct})");
+                data.setQuery($"INSERT INTO Favoritos (IdUsuario, CodigoProducto) VALUES ({idUser},'{codeProd}')");
                 data.executeRead();
             }
             catch (Exception ex)
@@ -70,16 +71,15 @@ namespace Business.ProductAttributes
             }
         }
 
-        public void Delete(int idUser, int idProduct)
+        public void Delete(int idUser, string codeProd)
         {
             try
             {
-                data.setQuery($"DELETE FROM Favoritos WHERE IdUsuario = {idUser} AND CodigoProducto = {idProduct}");
+                data.setQuery($"DELETE FROM Favoritos WHERE IdUsuario = {idUser} AND CodigoProducto = '{codeProd}'");
                 data.executeRead();
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally

@@ -10,6 +10,6 @@ namespace Model
     {
         public int Id { get; set; }
         public int IdUser { get; set; }
-        public int ProductCode { get; set; }
+        public string ProductCode { get; set; }
     }
 }

@@ -86,15 +86,7 @@ namespace Business.ProductAttributes
             }
             catch (SqlException ex)
             {
-                if (ex.Number == 2627)
-                {
-                    return "El talle ya existe.";
-                }
-                else
-                {
-                    return "Error al agregar el talle: " + ex.Message;
-                }
-
+                return "Error al actualizar el stock. Info de error: " + ex.Message;
             }
             catch (Exception ex)
             {

@@ -22,15 +22,8 @@
                 OnPageIndexChanging="dgvProducts_PageIndexChanging"
                 AllowPaging="true"
                 PageSize="5"
-                PagerSettings-Visible="true"
-                PagerSettings-Mode="NumericFirstLast"
-                PagerSettings-FirstPageText="<<"
-                PagerSettings-LastPageText=">>"
-                PagerSettings-NextPageText=">"
-                PagerSettings-PreviousPageText="<"
                 PagerStyle-HorizontalAlign="Center"
-                OnRowCommand="dgvProducts_RowCommand"
-                >
+                OnRowCommand="dgvProducts_RowCommand">
                 <Columns>
                     <asp:BoundField DataField="Id" HeaderText="Id" />
                     <asp:BoundField DataField="Code" HeaderText="Código" />
@@ -41,35 +34,76 @@
                             <%# Eval("Category.Description") %>
                         </ItemTemplate>
                     </asp:TemplateField>
-
                     <asp:BoundField DataField="CreationDate" HeaderText="Fecha creación" DataFormatString="{0:dd/MM/yyyy}" HtmlEncode="False" />
 
-                    
                     <asp:TemplateField HeaderText="Acciones">
                         <ItemTemplate>
-                            
                             <asp:LinkButton
                                 ID="btnView"
                                 runat="server"
                                 CommandName="View"
                                 CommandArgument='<%# Eval("Id") %>'
                                 CssClass="btn btn-link text-primary">
-                                <i class="bi bi-search"></i> 
+                    <i class="bi bi-search"></i> 
                             </asp:LinkButton>
-
-                            
                             <asp:LinkButton
                                 ID="btnEdit"
                                 runat="server"
                                 CommandName="EditProduct"
                                 CommandArgument='<%# Eval("Id") %>'
                                 CssClass="btn btn-link text-warning">
-                                <i class="bi bi-pencil-square"></i> 
+                    <i class="bi bi-pencil-square"></i> 
                             </asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
+
+                
+                <PagerTemplate>
+                    <div class="d-flex justify-content-center align-items-center">
+                        
+                        <asp:LinkButton
+                            ID="lnkFirst"
+                            runat="server"
+                            CommandName="Page"
+                            CommandArgument="First"
+                            CssClass="btn btn-link">
+                <i class="bi bi-skip-start-fill"></i>
+                        </asp:LinkButton>
+
+                        
+                        <asp:LinkButton
+                            ID="lnkPrevious"
+                            runat="server"
+                            CommandName="Page"
+                            CommandArgument="Prev"
+                            CssClass="btn btn-link">
+                <i class="bi bi-chevron-left"></i>
+                        </asp:LinkButton>
+                    
+                        
+                        <asp:LinkButton
+                            ID="lnkNext"
+                            runat="server"
+                            CommandName="Page"
+                            CommandArgument="Next"
+                            CssClass="btn btn-link">
+                <i class="bi bi-chevron-right"></i>
+                        </asp:LinkButton>
+
+                        
+                        <asp:LinkButton
+                            ID="lnkLast"
+                            runat="server"
+                            CommandName="Page"
+                            CommandArgument="Last"
+                            CssClass="btn btn-link">
+                            <i class="bi bi-skip-end-fill"></i>
+                        </asp:LinkButton>
+                    </div>
+                </PagerTemplate>
             </asp:GridView>
+
 
 
             <asp:LinkButton ID="btnAddProduct" runat="server" CssClass="buttonCus btn-electric-blue" OnClick="btnAddProduct_Click">

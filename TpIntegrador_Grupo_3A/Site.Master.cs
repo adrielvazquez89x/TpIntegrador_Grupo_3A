@@ -1,22 +1,31 @@
 ﻿using Business;
 using Microsoft.AspNet.Identity;
 using Model;
+using Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using TpIntegrador_Grupo_3A.Admin;
 
 namespace TpIntegrador_Grupo_3A
 {
     public partial class SiteMaster : MasterPage
     {
         public List<Category> categList;
+        public List<Product> prodList;
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (!IsPostBack)
             {
+                BusinessProduct businessProduct = new BusinessProduct();
+                prodList = businessProduct.list();
+                //Session.Add("listAllProducts", prodList);
+                Session["listAllProducts"] = prodList;
+
                 BusinessCategory businessCategory = new BusinessCategory();
                 categList = businessCategory.list();
 
@@ -24,15 +33,21 @@ namespace TpIntegrador_Grupo_3A
                 RepeaterSidebar.DataBind();
             }
 
-            // chequeamos si la pag que estoy por cargar no es ninguna de estas 2
-            // si no es quiero que me verifique la seguridad 
-            if (!(Page is Login  || Page is Register  ))
-              
-                if (Security.ActiveSession(Session["user"]))
-                {
-                    User user = (User)Session["user"];
-                    lblUser.Text = user.FirstName;
-                }
+
+            if (SessionSecurity.ActiveSession(Session["user"]))
+            {
+                Model.User user = (Model.User)Session["user"];
+                lblUser.Text = user.FirstName;
+                if (!string.IsNullOrEmpty(user.ImageUrl))
+                    imgAvatar.ImageUrl = "~/Images/" + ((Model.User)Session["user"]).ImageUrl;
+                else
+                    imgAvatar.ImageUrl = "https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Download-Free-PNG.png";
+            }
+            else
+            {
+                if (!(base.Page is Login || base.Page is Register || base.Page is Products || base.Page is Default))
+                    Response.Redirect("~/Login.aspx", false);
+            }
 
             //if (Request.Url.AbsolutePath.Contains("login") || Request.Url.AbsolutePath.Contains("Login"))
             //{
@@ -74,11 +89,22 @@ namespace TpIntegrador_Grupo_3A
             }
         }
 
-
         protected void btnExit_Click(object sender, EventArgs e)
         {
             Session.Clear();
-            Response.Redirect("~/Login.aspx");
+            Response.Redirect("~/Default.aspx");
+        }
+
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            Session["productFilter"] = txtBuscar.Text;
+            Response.Redirect("~/Products.aspx");
+        }
+
+        protected void BtnExit_Click1(object sender, EventArgs e)
+        {
+            btnExit_Click(sender, e);
         }
     }
 }

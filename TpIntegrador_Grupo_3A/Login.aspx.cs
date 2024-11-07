@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Model;
+using Security;
 
 namespace TpIntegrador_Grupo_3A
 {
@@ -21,7 +22,7 @@ namespace TpIntegrador_Grupo_3A
             try
             {
                 BusinessUser businessUser = new BusinessUser();
-                User user = new User();
+                Model.User user = new Model.User();
 
                  user.Email = txtEmail.Text;
                  user.PasswordHash = txtPassword.Text;
@@ -30,7 +31,7 @@ namespace TpIntegrador_Grupo_3A
                 if (businessUser.Login(user))
                 {
                     Session.Add("user", user);
-                    if (Security.isAdmin(Session["user"]))
+                    if (SessionSecurity.IsAdmin(Session["user"]))
                     {
                        
                         Response.Redirect("Admin/ProductsManagement.aspx");

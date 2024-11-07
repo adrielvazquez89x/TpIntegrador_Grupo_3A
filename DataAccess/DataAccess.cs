@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -14,6 +16,7 @@ namespace DataAccessService
             private SqlConnection _connection;
             private SqlCommand _command;
             private SqlDataReader _reader;
+            private SqlTransaction _transaction;
 
             public SqlDataReader Reader => _reader;
 
@@ -48,7 +51,10 @@ namespace DataAccessService
             {
                 try
                 {
-                    _connection.Open();
+                    if (_connection.State != ConnectionState.Open)
+                    {
+                        _connection.Open();
+                    }
                     _command.ExecuteNonQuery();
                 }
                 catch (Exception ex)
@@ -58,7 +64,11 @@ namespace DataAccessService
                 }
                 finally
                 {
-                    _connection.Close();
+                    // Solo cerrar la conexión si no hay una transacción activa
+                    if (_transaction == null && _connection.State == ConnectionState.Open)
+                    {
+                        _connection.Close();
+                    }
                 }
             }
 
@@ -66,7 +76,10 @@ namespace DataAccessService
             {
                 try
                 {
-                    _connection.Open();
+                    if(_connection.State != ConnectionState.Open)
+                    {
+                        _connection.Open();
+                    }
                     return (int)_command.ExecuteScalar();
                 }
                 catch (Exception ex)
@@ -103,6 +116,45 @@ namespace DataAccessService
                 _command.Dispose();
                 _connection.Dispose();
             }
+
+            public void BeginTransaction()
+            {
+                if (_connection.State != ConnectionState.Open)
+                    _connection.Open();
+
+                _transaction = _connection.BeginTransaction();
+                _command.Transaction = _transaction;
+            }
+
+            
+            public void CommitTransaction()
+            {
+                if (_transaction != null)
+                {
+                    _transaction.Commit();
+                    _transaction = null;
+                    _command.Transaction = null;
+                }
+
+                if (_connection.State == ConnectionState.Open)
+                    _connection.Close();
+            }
+
+            
+            public void RollbackTransaction()
+            {
+                if (_transaction != null)
+                {
+                    _transaction.Rollback();
+                    _transaction = null;
+                    _command.Transaction = null;
+                }
+
+                if (_connection.State == ConnectionState.Open)
+                    _connection.Close();
+            }
+
+
         }
     }
 

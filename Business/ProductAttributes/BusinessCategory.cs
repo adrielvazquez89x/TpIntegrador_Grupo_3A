@@ -77,7 +77,7 @@ namespace Business
             }
             catch (SqlException ex)
             {
-                if (ex.Number == 2627) // Vien de la base de datos
+                if (ex.Number == 2627) // Viene de la base de datos
                 {
                     return "La categoría ya existe.";
                 }
@@ -107,15 +107,7 @@ namespace Business
             }
             catch (SqlException ex)
             {
-                if (ex.Number == 2627)
-                {
-                    return "La categoría ya existe.";
-                }
-                else
-                {
-                    return "Error al agregar la categoría: " + ex.Message;
-                }
-
+                return "Error al actualizar la categoria. Info de error: " + ex.Message;
             }
             catch (Exception ex)
             {

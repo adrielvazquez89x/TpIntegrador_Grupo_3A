@@ -10,17 +10,19 @@ using Business.ProductAttributes;
 using Microsoft.Ajax.Utilities;
 using Model;
 using Model.ProductAttributes;
+using Security;
 
 namespace TpIntegrador_Grupo_3A
 {
-    public partial class Productos : System.Web.UI.Page
+    public partial class Products : System.Web.UI.Page
     {
         public List<Product> prodList;
         public List<Model.ImageProduct> ImageList;
 
+        public string CodeSelectedProd;
         public int IdSelectedProd;
         public bool SessionOn { get; set; }
-        public User user {  get; set; }
+        public Model.User user {  get; set; }
         public bool ProdIsFav { get; set; }
 
         public Product selectedProd = new Product();
@@ -33,15 +35,36 @@ namespace TpIntegrador_Grupo_3A
 
             int idSubCategory = Request.QueryString["IdSubCategory"] is null ? 0 : int.Parse(Request.QueryString["IdSubCategory"]);  //validarlo (podrian a mano ponerle algo no entero)
 
+            prodList= prodList is null ? businessProd.list() : prodList;
 
             if (!IsPostBack)
             {
-                prodList = businessProd.listByCategory(idCategory, idSubCategory);    //Carga los productos según la categoría
-
+                if (idCategory == 0)
+                {
+                    //prodList = businessProd.list();    //Carga los productos
+                    string filter = Session["productFilter"] as string;
+                    if (!string.IsNullOrEmpty(filter))
+                    {
+                        prodList = prodList.FindAll(prod => prod.Name.ToUpper().Contains(filter.ToUpper()) ||
+                                                            prod.Description.ToUpper().Contains(filter.ToUpper()) ||
+                                                            prod.Category.Description.ToUpper().Contains(filter.ToUpper()) ||
+                                                            prod.SubCategory.Description.ToUpper().Contains(filter.ToUpper()) ||
+                                                            prod.Season.Description.ToUpper().Contains(filter.ToUpper()) ||
+                                                            prod.Price.ToString().Contains(filter));
+                        Session.Remove("productFilter");
+                    }
+                }
+                else
+                {
+                    prodList = businessProd.listByCategory(idCategory, idSubCategory);    //Carga los productos según la categoría
+                }
                 rptProdList.DataSource = prodList;
                 rptProdList.DataBind();
             }
-
+            if (SessionSecurity.ActiveSession(Session["user"]))
+            {
+                user = (Model.User)Session["user"];
+            }
         }
 
         protected void rptProdList_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -57,37 +80,53 @@ namespace TpIntegrador_Grupo_3A
 
         protected void btnDetails_Click(object sender, EventArgs e)
         {
-            IdSelectedProd = int.Parse(((Button)sender).CommandArgument);
-            Response.Redirect($"/Details?id={IdSelectedProd}");
+            CodeSelectedProd = (((Button)sender).CommandArgument).ToString();
+            Response.Redirect($"/Details?Code={CodeSelectedProd}");
         }
 
-        protected void bntFav_Click(object sender, EventArgs e)
+        protected void ddlOrdenar_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
+            switch (ddlOrdenar.SelectedIndex)
             {
-                BusinessFavourite businessFav = new BusinessFavourite();
-                businessFav.Add(user.UserId, IdSelectedProd);
-
+                case 0:
+                    prodList = prodList.OrderBy(x => x.Name).ToList();
+                    break;
+                case 1:
+                    prodList = prodList.OrderByDescending(x => x.Name).ToList();
+                    break;
+                case 2:
+                    prodList = prodList.OrderBy(x => x.Price).ToList();
+                    break;
+                case 3:
+                    prodList = prodList.OrderByDescending(x => x.Price).ToList();
+                    break;
             }
-            catch (Exception ex)
-            {
-                Session.Add("error", ex.ToString());
-                Response.Redirect("Error.aspx", false);
-            }
+            rptProdList.DataSource = prodList;
+            rptProdList.DataBind();
         }
 
-        protected void btnUndoFav_Click(object sender, EventArgs e)
+        private void filterByPrice()
         {
-            try
-            {
-                BusinessFavourite businessFav = new BusinessFavourite();
-                businessFav.Delete(user.UserId, IdSelectedProd);
-            }
-            catch (Exception ex)
-            {
-                Session.Add("error", ex.ToString());
-                Response.Redirect("Error.aspx", false);
-            }
+            
+
+        }
+
+        protected void btnFilter_Click(object sender, EventArgs e)
+        {
+            int min, max;
+
+            min = txtPriceMin.Text is null ? 0 : int.Parse(txtPriceMin.Text);  //si no ingresan texto toma el placeHolder y arroja error..
+
+            max = txtPriceMax.Text is null ? 0 : int.Parse(txtPriceMax.Text);
+
+
+            if (max == 0)
+                prodList = prodList.FindAll(x => x.Price >= min);
+            else
+                prodList = prodList.FindAll(x => x.Price >= min && x.Price <= max);
+
+            rptProdList.DataSource = prodList;
+            rptProdList.DataBind();
         }
     }
 }

@@ -10,9 +10,10 @@ using System.Web.UI.WebControls;
 
 namespace TpIntegrador_Grupo_3A
 {
-    public partial class _Default : Page
+    public partial class Default : System.Web.UI.Page
     {
         public List<Section> sectionList;
+        //public List<Product> prodList;
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Title = "UrbanGlam";
@@ -23,6 +24,12 @@ namespace TpIntegrador_Grupo_3A
 
                 RptSecciones.DataSource = sectionList;
                 RptSecciones.DataBind();
+
+                //BusinessProduct businessProd = new BusinessProduct();
+                //prodList = businessProd.list();
+
+                //rptProdList.DataSource = prodList;
+                //rptProdList.DataBind();
             }
         }
 
@@ -34,17 +41,6 @@ namespace TpIntegrador_Grupo_3A
                 Repeater rptProdList = (Repeater)e.Item.FindControl("rptProdList"); // Toma el Repeater anidado
                 rptProdList.DataSource = currentSection.Products;
                 rptProdList.DataBind();
-            }
-        }
-
-        protected void rptImages_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-            {
-                Product currentProduct = (Product)e.Item.DataItem;
-                Repeater rptImgList = (Repeater)e.Item.FindControl("rptImgages"); // Toma el Repeater anidado
-                rptImgList.DataSource = currentProduct.Images;
-                rptImgList.DataBind();
             }
         }
     }

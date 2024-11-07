@@ -95,15 +95,7 @@ namespace Business
             }
             catch (SqlException ex)
             {
-                if (ex.Number == 2627)
-                {
-                    return "La temporada ya existe.";
-                }
-                else
-                {
-                    return "Error al agregar la temporada: " + ex.Message;
-                }
-
+                return "Error al actualizar la temporada. Info de error: " + ex.Message;
             }
             catch (Exception ex)
             {

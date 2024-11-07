@@ -20,7 +20,7 @@ namespace Business.ProductAttributes
         {
             try
             {
-                string query = "SELECT * FROM Secciones ";
+                string query = "SELECT top 4 * FROM Secciones ";
                 data.setQuery(query);
 
                 if (id != 0)
@@ -101,15 +101,7 @@ namespace Business.ProductAttributes
             }
             catch (SqlException ex)
             {
-                if (ex.Number == 2627)
-                {
-                    return "La sección ya existe.";
-                }
-                else
-                {
-                    return "Error al agregar la sección: " + ex.Message;
-                }
-
+                return "Error al actualizar la seccion. Info de error: " + ex.Message;
             }
             catch (Exception ex)
             {
