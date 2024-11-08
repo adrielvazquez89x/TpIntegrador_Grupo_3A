@@ -18,7 +18,7 @@ namespace TpIntegrador_Grupo_3A.Admin
         {
             BusinessCategory businessCategory = new BusinessCategory();
             BusinessSeason businessSeason = new BusinessSeason();
-//            BusinessSection businessSection = new BusinessSection();
+            //BusinessSection businessSection = new BusinessSection();
             
 
             int categoryId;
@@ -42,7 +42,12 @@ namespace TpIntegrador_Grupo_3A.Admin
                 //ddlSection.DataTextField = "Description";
                 //ddlSection.DataBind();
 
+                string code = Request.QueryString["code"] != null ? Request.QueryString["code"] : "";
 
+                if(code != "")
+                {
+                    FillForm(code);
+                }
 
                 BindSubCategories(categoryId);
                 InitializeImages();
@@ -53,7 +58,6 @@ namespace TpIntegrador_Grupo_3A.Admin
         {
             try
             {
-
                 Product product = new Product();
                 product.Code = txtCode.Text;
                 product.Name = txtName.Text;
@@ -84,9 +88,11 @@ namespace TpIntegrador_Grupo_3A.Admin
 
                     product.Images.Add(imgAux);
                 }
-
-                
+                                
                 BusinessProduct businessProduct = new BusinessProduct();
+
+                //Hay que ver si usamos el ID para poder identificar una edición o un alta
+
                 var result = businessProduct.Add(product);
 
                 if(result)
@@ -153,6 +159,38 @@ namespace TpIntegrador_Grupo_3A.Admin
             imgPreview.Visible = false;
         }
 
+        private void FillForm(string code)
+        {
+            BusinessProduct businessProduct = new BusinessProduct();
+
+            try
+            {
+                List<Product> product = businessProduct.list(code);
+
+                if (product.Count > 0)
+                {
+                    txtCode.Text = product[0].Code;
+                    txtName.Text = product[0].Name;
+                    txtPrice.Text = product[0].Price.ToString();
+                    txtDescription.Text = product[0].Description;
+
+                    ddlCategory.SelectedValue = product[0].Category.Id.ToString();
+                    BindSubCategories(product[0].Category.Id);
+                    ddlSubCategory.SelectedValue = product[0].SubCategory.Id.ToString();
+                    ddlSeason.SelectedValue = product[0].Season.Id.ToString();
+
+                    //ddlSection.SelectedValue = product[0].Section.Id.ToString();
+
+                    ViewState[ImagesViewStateKey] = product[0].Images.Select(i => i.UrlImage).ToList();
+                    BindImagesListBox();
+                }
+            }
+            catch (Exception ex )
+            {
+
+                throw ex ;
+            }
+        }
         //IMAGENES
 
         private void InitializeImages()

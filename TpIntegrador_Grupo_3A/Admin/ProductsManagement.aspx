@@ -43,16 +43,21 @@
                                 runat="server"
                                 CommandName="View"
                                 CommandArgument='<%# Eval("Id") %>'
-                                CssClass="btn btn-link text-primary">
-                    <i class="bi bi-search"></i> 
+                                CssClass="btn btn-link text-primary"
+                                OnClick="btnView_Click"
+                                >
+                                <i class="bi bi-search"></i> 
+
                             </asp:LinkButton>
                             <asp:LinkButton
                                 ID="btnEdit"
                                 runat="server"
                                 CommandName="EditProduct"
-                                CommandArgument='<%# Eval("Id") %>'
-                                CssClass="btn btn-link text-warning">
-                    <i class="bi bi-pencil-square"></i> 
+                                CommandArgument='<%# Eval("Code") %>'
+                                CssClass="btn btn-link text-warning"
+                                OnClick="btnEdit_Click"
+                                >
+                                <i class="bi bi-pencil-square"></i> 
                             </asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>

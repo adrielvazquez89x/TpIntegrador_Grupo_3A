@@ -59,8 +59,19 @@ namespace TpIntegrador_Grupo_3A.Admin
         protected void dgvProducts_RowCommand(object sender, GridViewCommandEventArgs e)
         {
 
-        }       
+        }
 
-        
+        protected void btnView_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnEdit_Click(object sender, EventArgs e)
+        {
+            var btn = (LinkButton)sender;
+            string arg = btn.CommandArgument;
+
+            Response.Redirect("ProductForm.aspx?code=" + arg);
+        }
     }
 }
