@@ -55,7 +55,17 @@ namespace TpIntegrador_Grupo_3A
         }
         protected void btnAddToCart_Click(object sender, EventArgs e)
         {
-            CodeSelectedProd = ((LinkButton)sender).CommandArgument.ToString();
+            CodeSelectedProd = ((Button)sender).CommandArgument.ToString();
+            BusinessProduct businessProduct = new BusinessProduct();
+            Product selectedProd = businessProduct.listByCode(CodeSelectedProd);
+
+            int number = 1; //number se saca de un .text segun la cant elegida por el usuario
+
+            Model.User user = (Model.User)Session["user"];
+            user.Cart.AddProduct(selectedProd, number);
+
+            Session["user"] = user;
+            Response.Redirect(Request.RawUrl); // Redirige a la misma página para actualizar la vista
         }
 
 
@@ -109,6 +119,27 @@ namespace TpIntegrador_Grupo_3A
                 Session.Add("error", ex.ToString());
                 Response.Redirect("Error.aspx", false);
             }
+        }
+
+        //protected void btnSubtract_Click(object sender, EventArgs e)
+        //{
+        //}
+
+        //protected void btnAdd_Click(object sender, EventArgs e)
+        //{
+           
+        //    txtQuantity.Text=
+            
+        //}
+
+        protected void btnSubtract_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        protected void btnAdd_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

@@ -49,12 +49,24 @@
                                 <p class="card-text"><b>Modelo:</b> <%# Eval("SubCategory.Description") %></p>
                                 <p class="card-text"><b>Precio:</b> $<%# Eval("Price") %></p>
                                 <p class="card-text"><b>Cod.Art:</b> <%# Eval("Code") %></p>
-                                <!-- Botón para añadir al carrito -->
+                                
+                                <asp:Button ID="btnSubtract" runat="server" Text="-" OnClick="btnSubtract_Click" CssClass="btn btn-primary w-100 mt-3"/>
+                                <asp:TextBox ID="txtQuantity" runat="server" CssClass="form-control form-control-sm w-50" TextMode="Number" Placeholder="0"></asp:TextBox>
+                                <asp:Button ID="btnAdd" runat="server" Text="+" OnClick="btnAdd_Click" CssClass="btn btn-primary w-100 mt-3" />
+                             <!-- Botón para añadir al carrito -->
+         <asp:Button
+             ID="btnAddToCart" OnClick="btnAddToCart_Click"
+             CommandArgument='<%# Eval("Code")%>'
+             runat="server"
+             Text="Añadir al carrito" CssClass="btn btn-primary w-100 mt-3"/>
+                                
+                                
+                       <%--         <!-- Botón para añadir al carrito -->
                                 <asp:Button
                                     ID="btnAddToCart" OnClick="btnAddToCart_Click"
-                                    CommandArgument='<%# Eval("Id")%>'
+                                    CommandArgument='<%# Eval("Code")%>'
                                     runat="server"
-                                    Text="Añadir al carrito" CssClass="btn btn-primary w-100 mt-3" />
+                                    Text="Añadir al carrito" CssClass="btn btn-primary w-100 mt-3" />--%>
 
                             </div>
                         </div>

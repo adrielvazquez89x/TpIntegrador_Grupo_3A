@@ -285,7 +285,7 @@ namespace Business
         }
 
 
-        public Product listByCode(string code) //lista todos los productos de cierta categoria o filtra tambien por SubCat
+        public Product listByCode(string code)
         {
             Product aux = new Product();
             try
