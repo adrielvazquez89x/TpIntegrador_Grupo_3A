@@ -21,7 +21,7 @@ namespace TpIntegrador_Grupo_3A
         protected void Page_Load(object sender, EventArgs e)
         {
             string code = Request.QueryString["Code"] != null ? (Request.QueryString["Code"]).ToString() : "";
-            if (code !="" && !IsPostBack)
+            if (code != "" && !IsPostBack)
             {
                 BusinessProduct businessProduct = new BusinessProduct();
                 products = businessProduct.list(code);
@@ -61,7 +61,7 @@ namespace TpIntegrador_Grupo_3A
 
         protected void rptProducts_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-           // int id = Request.QueryString["id"] != null ? int.Parse(Request.QueryString["id"]) : 0;
+            // int id = Request.QueryString["id"] != null ? int.Parse(Request.QueryString["id"]) : 0;
 
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
@@ -109,6 +109,27 @@ namespace TpIntegrador_Grupo_3A
                 Session.Add("error", ex.ToString());
                 Response.Redirect("Error.aspx", false);
             }
+        }
+
+        protected void btnSubtract_Click(object sender, EventArgs e)
+        {
+            int quantity = int.Parse(txtQuantity.Text);
+
+            if (quantity > 0)
+            {
+                quantity--;
+
+                txtQuantity.Text = quantity.ToString();
+            }
+        }
+
+        protected void btnAdd_Click(object sender, EventArgs e)
+        {
+            int quantity = int.Parse(txtQuantity.Text);
+
+            quantity++;
+
+            txtQuantity.Text = quantity.ToString();
         }
     }
 }
