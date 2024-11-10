@@ -184,6 +184,44 @@ namespace Business
             }
         }
 
+        public User GetUserById(int userId)
+        {
+            DataAccess data = new DataAccess();
+            User user = new User();
+
+            try
+            {
+                // Realizamos la consulta para obtener los detalles del usuario por ID
+                data.setQuery("SELECT * FROM Usuarios WHERE IdUsuario = @IdUsuario;");
+                data.setParameter("@IdUsuario", userId);
+                data.executeRead();
+
+                var reader = data.Reader;
+
+                if (reader.Read())
+                {
+                    // Mapeamos los valores del lector al objeto User
+                    user.UserId = (int)reader["IdUsuario"];
+                    user.Email = (string)reader["Email"];
+                    user.FirstName = reader["Nombre"] != DBNull.Value ? (string)reader["Nombre"] : string.Empty;
+                    user.LastName = reader["Apellido"] != DBNull.Value ? (string)reader["Apellido"] : string.Empty;
+                    user.Active = (bool)reader["Active"];
+                    user.PasswordHash = reader["ContraseniaHash"] != DBNull.Value ? (string)reader["ContraseniaHash"] : string.Empty;
+                    // Puedes agregar más propiedades si las tienes en la base de datos.
+                }
+
+                return user;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
+
 
         public bool emailExists(string email)
         {
@@ -426,6 +464,7 @@ namespace Business
                 data.closeConnection();
             }
         }
+
     }
 }
 //public User userById(int id)

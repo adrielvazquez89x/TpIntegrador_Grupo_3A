@@ -14,6 +14,7 @@ namespace TpIntegrador_Grupo_3A
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+         
 
         }
 
@@ -32,9 +33,11 @@ namespace TpIntegrador_Grupo_3A
                 {
                     Session.Add("user", user);
 
-                    if(!user.Active)
-                    {
-                        UserControl_Toast.ShowToast("Tu cuenta está inactiva. Contacta con el administrador.",false);
+                    if (!user.Active)
+                    { 
+                        //quedaria mejor implementar el toast no pude por el momento 
+                        //UserControl_Toast.ShowToast("Tu cuenta está inactiva. Contacta con el administrador.",false);
+                        lblError.Text = "Tu cuenta está inactiva. Contacta con el administrador.";
                         return;  // Detener el proceso de redirección
                     }
 
@@ -55,6 +58,7 @@ namespace TpIntegrador_Grupo_3A
                         // Redirigir a la página principal
                         Response.Redirect("Default.aspx", false);
                     }
+                   
                 }
                 else
                 {
