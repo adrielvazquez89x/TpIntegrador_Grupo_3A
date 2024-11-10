@@ -37,11 +37,11 @@ namespace TpIntegrador_Grupo_3A
 
             prodList= prodList is null ? businessProd.list() : prodList;
 
+            
             if (!IsPostBack)
             {
                 if (idCategory == 0)
                 {
-                    //prodList = businessProd.list();    //Carga los productos
                     string filter = Session["productFilter"] as string;
                     if (!string.IsNullOrEmpty(filter))
                     {
@@ -58,6 +58,9 @@ namespace TpIntegrador_Grupo_3A
                 {
                     prodList = businessProd.listByCategory(idCategory, idSubCategory);    //Carga los productos según la categoría
                 }
+
+                Session.Add("AllProducts", prodList);
+
                 rptProdList.DataSource = prodList;
                 rptProdList.DataBind();
             }
@@ -84,7 +87,7 @@ namespace TpIntegrador_Grupo_3A
             Response.Redirect($"/Details?Code={CodeSelectedProd}");
         }
 
-        protected void ddlOrdenar_SelectedIndexChanged(object sender, EventArgs e)
+        protected void OrderByCriteria()
         {
             switch (ddlOrdenar.SelectedIndex)
             {
@@ -101,23 +104,38 @@ namespace TpIntegrador_Grupo_3A
                     prodList = prodList.OrderByDescending(x => x.Price).ToList();
                     break;
             }
-            rptProdList.DataSource = prodList;
-            rptProdList.DataBind();
         }
 
-        protected void btnFilter_Click(object sender, EventArgs e)
+        private void filterByPrice() 
         {
-            int min=0, max=0;
+            int min = 0, max = 0;
 
-            min = txtPriceMin.Text is null ? 0 : int.Parse(txtPriceMin.Text);
+            string.IsNullOrEmpty(txtPriceMin.Text);
+            min = string.IsNullOrEmpty(txtPriceMin.Text) ? 0 : int.Parse(txtPriceMin.Text);
 
-            max = txtPriceMax.Text is null ? 0 : int.Parse(txtPriceMax.Text);
+            max = string.IsNullOrEmpty(txtPriceMax.Text) ? 0 : int.Parse(txtPriceMax.Text);
 
 
             if (max == 0)
                 prodList = prodList.FindAll(x => x.Price >= min);
             else
                 prodList = prodList.FindAll(x => x.Price >= min && x.Price <= max);
+
+        }
+
+        protected void btnFilter_Click(object sender, EventArgs e)
+        {
+            filterByPrice();
+            OrderByCriteria();
+            rptProdList.DataSource = prodList;
+            rptProdList.DataBind();
+        }
+
+        protected void btnClearFilter_Click(object sender, EventArgs e)
+        {
+            prodList = (List<Product>)Session["AllProducts"];
+            txtPriceMax.Text = null;
+            txtPriceMin.Text = null;
 
             rptProdList.DataSource = prodList;
             rptProdList.DataBind();

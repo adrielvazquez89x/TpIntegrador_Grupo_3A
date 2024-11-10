@@ -89,7 +89,7 @@ namespace TpIntegrador_Grupo_3A
             }
         }
 
-        protected void bntFav_Click(object sender, EventArgs e)
+        protected void btnFav_Click(object sender, EventArgs e)
         {
             try
             {

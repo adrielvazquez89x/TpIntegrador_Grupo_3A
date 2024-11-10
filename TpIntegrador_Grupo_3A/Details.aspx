@@ -23,7 +23,7 @@
                                     <%}
                                         else
                                         { %>
-                                    <asp:LinkButton runat="server" ID="bntFav" OnClick="bntFav_Click" CssClass="btnFav" CommandArgument='<%# Eval("Code")%>'>
+                                    <asp:LinkButton runat="server" ID="btnFav" OnClick="btnFav_Click" CssClass="" CommandArgument='<%# Eval("Code")%>'>
               <i class="bi bi-heart"></i>
                                     </asp:LinkButton>
                                     <% }
@@ -31,7 +31,7 @@
                                 </ContentTemplate>
                                 <Triggers>
                                     <asp:AsyncPostBackTrigger ControlID="btnUndoFav" EventName="Click" />
-                                    <asp:AsyncPostBackTrigger ControlID="bntFav" EventName="Click" />
+                                    <asp:AsyncPostBackTrigger ControlID="btnFav" EventName="Click" />
                                 </Triggers>
                             </asp:UpdatePanel>
                             <!-- Carrusel de imágenes del producto -->
