@@ -68,8 +68,8 @@ namespace TpIntegrador_Grupo_3A.Admin
                 };
 
                 if (string.IsNullOrWhiteSpace(user.FirstName) || string.IsNullOrWhiteSpace(user.LastName) ||
-           string.IsNullOrWhiteSpace(user.Dni) || string.IsNullOrWhiteSpace(user.Email) ||
-           string.IsNullOrWhiteSpace(user.Mobile))
+                    string.IsNullOrWhiteSpace(user.Dni) || string.IsNullOrWhiteSpace(user.Email) ||
+                    string.IsNullOrWhiteSpace(user.Mobile))
                 {
                     UserControl_Toast.ShowToast("Por favor, complete todos los campos.", false);
                     return;
@@ -102,7 +102,7 @@ namespace TpIntegrador_Grupo_3A.Admin
                 Response.Write($"Error al crear el usuario: {ex.Message}");
             }
         }
-        
+
 
         protected void btnExit_Click(object sender, EventArgs e)
         {

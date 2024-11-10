@@ -38,7 +38,7 @@
                                 <asp:BoundField DataField="LastName" HeaderText="Apellido" ItemStyle-CssClass="align-middle" />
                                 <asp:BoundField DataField="Email" HeaderText="Email" ItemStyle-CssClass="align-middle" />
                                 <asp:BoundField DataField="Mobile" HeaderText="Celular" ItemStyle-CssClass="align-middle" />
-
+                                <asp:BoundField DataField="RegistrationDate" HeaderText="Fecha de Alta" ItemStyle-CssClass="align-middle" DataFormatString="{0:dd/MM/yyyy}" />
 
                                 <%-- Estado Activo/Inactivo --%>
                                 <asp:TemplateField HeaderText="Activo">

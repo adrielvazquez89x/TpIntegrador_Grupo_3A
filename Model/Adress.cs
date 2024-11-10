@@ -15,7 +15,7 @@ namespace Model
         public string Street { get; set; }
         public int Number { get; set; }
         public string CP { get; set; }
-        public int Floor { get; set; }
+        public string Floor { get; set; }
         public string Unit { get; set; }
     }
 }

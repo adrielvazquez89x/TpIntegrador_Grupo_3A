@@ -35,18 +35,11 @@ namespace TpIntegrador_Grupo_3A
                     return;
                 }
 
-                if ( txtPassword.Text.Length <8 )
+                if (txtPassword.Text.Length < 8)
                 {
                     //lblError.Text = "La contraseña debe tener entre 3 y 9 caracteres.";
                     return;
                 }
-
-
-                //if (!IsValidEmail(txtEmail.Text))
-                //{
-                //    lblError.Text = "El correo electrónico no tiene un formato válido.";
-                //    return;
-                //}
 
                 Model.User user = new Model.User
                 {

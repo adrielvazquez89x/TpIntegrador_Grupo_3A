@@ -24,10 +24,11 @@ namespace Business
             try
             {
 
-                data.setQuery("INSERT INTO Usuarios (Email, ContraseniaHash, SeguridadStamp) OUTPUT INSERTED.IdUsuario values (@email, @pass, @security);");
+                data.setQuery("INSERT INTO Usuarios (Email, ContraseniaHash, SeguridadStamp, FechaAlta) OUTPUT INSERTED.IdUsuario values (@email, @pass, @security, GETDATE());");
                 data.setParameter("@email", user.Email);
                 data.setParameter("@pass", user.PasswordHash);
-                data.setParameter("security", user.SecurityStamp);
+                data.setParameter("@security", user.SecurityStamp); //no tenia el @
+                //data.setParameter("@fechaAlta", getdate());
 
                 user.UserId = data.ActionScalar();
 
@@ -61,7 +62,7 @@ namespace Business
             INSERT INTO Usuarios 
                 (Dni, Nombre, Apellido, Email, Celular, FechaAlta, ContraseniaHash, SeguridadStamp, EsAdmin, EsOwner, Active)
             VALUES 
-                (@dni, @nombre, @apellido, @email, @celular, @fechaAlta, @pass, @stamp, @admin, @owner, @active);");
+                (@dni, @nombre, @apellido, @email, @celular, GETDATE(), @pass, @stamp, @admin, @owner, @active);");
 
 
                 data.setParameter("@dni", user.Dni);
@@ -258,7 +259,8 @@ namespace Business
                 Apellido = @Apellido,
                 Email = @Email,
                 Celular = @Celular,
-                FechaAlta = @FechaAlta
+                FechaNac = @FechaNacimiento,
+                IdDireccion = @IdDireccion
                 
                
             WHERE IdUsuario = @IdUsuario";
@@ -270,7 +272,8 @@ namespace Business
                 data.setParameter("@Apellido", user.LastName);
                 data.setParameter("@Email", user.Email);
                 data.setParameter("@Celular", user.Mobile);
-                data.setParameter("@FechaAlta", user.RegistrationDate);
+                data.setParameter("@FechaNacimiento", user.BirthDate);
+                data.setParameter("@IdDireccion", user.AddressId);
               
                
                 data.setParameter("@IdUsuario", user.UserId);
@@ -378,7 +381,7 @@ namespace Business
 
             try
             {
-                string query = "SELECT U.IdUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Celular, U.FechaAlta, U.Active, U.ContraseniaHash FROM Usuarios U";
+                string query = "SELECT U.IdUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Celular, U.FechaAlta, U.Active, U.ContraseniaHash FROM Usuarios U WHERE U.EsAdmin = 1";
 
                 // Si se pasa un id, agrega la condición WHERE
                 if (!string.IsNullOrEmpty(id))

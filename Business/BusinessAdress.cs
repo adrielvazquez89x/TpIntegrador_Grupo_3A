@@ -8,10 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccessService.DataAccessService;
+using System.Threading;
+using System.Data;
 
 namespace Business
 {
-    internal class BusinessAdress
+    public class BusinessAdress
     {
         List<Adress> adressList = new List<Adress>();
         DataAccess data = new DataAccess();
@@ -44,7 +46,7 @@ namespace Business
                         Street = (string)reader["Calle"],
                         Number = (int)reader["Numero"],
                         CP = (string)reader["CP"],
-                        Floor = (int)reader["Piso"],
+                        Floor = (string)reader["Piso"],
                         Unit = (string)reader["Unidad"]
                     };
 
@@ -66,14 +68,20 @@ namespace Business
         {
             try
             {
-                data.setQuery("INSERT INTO Direcciones (Provincia, Ciudad, ..." +
-                    "...) OUTPUT INSERTED.Id " +
-                    "VALUES (@Provincia, @Ciudad, ...);");
+                data.setQuery("INSERT INTO Direcciones (Provincia,Ciudad,Barrio,Calle,Numero,CP,Piso,Unidad) OUTPUT INSERTED.Id VALUES (@Provincia, @Ciudad, @Barrio, @Calle, @Numero, @CP, @Piso, @Unidad)");
 
                 data.setParameter("@Provincia", adress.Province);
                 data.setParameter("@Ciudad", adress.Town);
-                //ETC, igual esto se va a ir modificando...
+                data.setParameter("@Barrio", adress.District);
+                data.setParameter("@Calle", adress.Street);
+                data.setParameter("@Numero", adress.Number);
+                data.setParameter("CP", adress.CP);
+                data.setParameter("Piso", adress.Floor);
+                data.setParameter("Unidad", adress.Unit);
+                data.setParameter("Activo", 1);
 
+                //ETC, igual esto se va a ir modificando...
+                //data.executeAction();
                 adress.Id = data.ActionScalar();
 
             }
