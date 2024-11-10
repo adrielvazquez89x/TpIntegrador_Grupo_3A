@@ -27,17 +27,14 @@
                                 <p class="card-text"><%#Eval("Description") %></p>
                                 <p class="card-text"><small class="text-body-secondary">$ <%#Eval("Price") %> </small></p>
                             
-                                            <div class="d-flex col-md-1 justify-content-center align-items-center">
-<asp:LinkButton runat="server" ID="bntDeleteFav" onclick="bntDeleteFav_Click" CssClass=" "
-     CommandArgument='<%#Eval("Code") %>' CommandName="ProdCode">
-        <i class="bi bi-trash3" aria-hidden="true"></i>
-</asp:LinkButton>
-                                                </div>
+                                <div class="d-flex col-md-1 justify-content-center align-items-center">
+                                    <asp:LinkButton runat="server" ID="bntDeleteFav" onclick="bntDeleteFav_Click" CssClass=" " CommandArgument='<%#Eval("Code") %>' CommandName="ProdCode">
+                                        <i class="bi bi-trash3" aria-hidden="true"></i>
+                                    </asp:LinkButton>
+                                </div>
                             
                             </div>
                         </div>
-
-                                        
 
                     </div>
                 </div>

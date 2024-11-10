@@ -20,7 +20,7 @@ namespace Model
             var itemOnCart = Items.FirstOrDefault(i => i.Product.Code == prod.Code);
             if (itemOnCart != null)
             {
-               itemOnCart.Number =number;
+               itemOnCart.Number +=number;
             }
             else
             {
