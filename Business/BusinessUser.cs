@@ -105,6 +105,8 @@ namespace Business
                 {
                     user.UserId = (int)data.Reader["IdUsuario"];
                     user.Admin = (bool)(data.Reader["EsAdmin"]);
+                    user.Owner = (bool)(data.Reader["EsOwner"]);
+                    user.Active = (bool)(data.Reader["Active"]);    
                     //if (!(data.Reader["urlImagenPerfil"] is DBNull))
                     //    user.ImagenPerfil = (string)(data.Reader["urlImagenPerfil"]);
                     if (!(data.Reader["Nombre"] is DBNull))
@@ -122,8 +124,6 @@ namespace Business
 
                     if (verificationResult == PasswordVerificationResult.Success)
                     {
-
-
                         // El inicio de sesión fue exitoso
                         return true;
                     }

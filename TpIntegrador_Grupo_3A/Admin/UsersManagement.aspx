@@ -10,7 +10,7 @@
             <%-- Contenedor principal --%>
             <div class="container my-4">
                 <%-- Título de la página --%>
-                <h2 class="text-center mb-4">Gestión de Usuarios</h2>
+                <h2 class="text-center mb-4">Gestión de Administradores</h2>
 
                 <%-- Botón para volver --%>
                 <div class="mb-3">

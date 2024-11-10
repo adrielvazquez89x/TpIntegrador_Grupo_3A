@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="TpIntegrador_Grupo_3A.Login" %>
-
+<%@ Register Src="~/Admin/UserControl_Toast.ascx" TagPrefix="uc1" TagName="UserControl_Toast" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="row d-flex align-items-center justify-content-center mt-5 border border-3 shadow p-3 bg-body-tertiary rounded " style="height: 600px; border-radius: 10px">
         <div class="col-6">
@@ -22,5 +22,6 @@
                 <a href="ResetPassword.aspx" class="link-primary">¿Olvidaste tu contraseña?</a>
             </div>
         </div>
+        <uc1:UserControl_Toast runat="server" ID="UserControl_Toast" />
     </div>
 </asp:Content>
