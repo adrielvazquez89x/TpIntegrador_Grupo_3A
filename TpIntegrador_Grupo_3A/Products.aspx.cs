@@ -105,17 +105,11 @@ namespace TpIntegrador_Grupo_3A
             rptProdList.DataBind();
         }
 
-        private void filterByPrice()
-        {
-            
-
-        }
-
         protected void btnFilter_Click(object sender, EventArgs e)
         {
-            int min, max;
+            int min=0, max=0;
 
-            min = txtPriceMin.Text is null ? 0 : int.Parse(txtPriceMin.Text);  //si no ingresan texto toma el placeHolder y arroja error..
+            min = txtPriceMin.Text is null ? 0 : int.Parse(txtPriceMin.Text);
 
             max = txtPriceMax.Text is null ? 0 : int.Parse(txtPriceMax.Text);
 

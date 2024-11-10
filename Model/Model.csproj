@@ -45,7 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adress.cs" />
+    <Compile Include="Cart.cs" />
     <Compile Include="FavouriteProducts.cs" />
+    <Compile Include="ItemCart.cs" />
     <Compile Include="ProductAttributes\Category.cs" />
     <Compile Include="ProductAttributes\Colour.cs" />
     <Compile Include="ImageProduct.cs" />

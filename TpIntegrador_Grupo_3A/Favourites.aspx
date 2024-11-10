@@ -21,13 +21,24 @@
 
                         <div class="col-md">
                             <div class="card-body">
-                                <a href="Details.aspx?id=<%#Eval("Id") %>">
+                                <a href="Details.aspx?Code=<%#Eval("Code") %>">
                                     <h5 class="card-title"><%#Eval("Name")%></h5>
                                 </a>
                                 <p class="card-text"><%#Eval("Description") %></p>
                                 <p class="card-text"><small class="text-body-secondary">$ <%#Eval("Price") %> </small></p>
+                            
+                                            <div class="d-flex col-md-1 justify-content-center align-items-center">
+<asp:LinkButton runat="server" ID="bntDeleteFav" onclick="bntDeleteFav_Click" CssClass=" "
+     CommandArgument='<%#Eval("Code") %>' CommandName="ProdCode">
+        <i class="bi bi-trash3" aria-hidden="true"></i>
+</asp:LinkButton>
+                                                </div>
+                            
                             </div>
                         </div>
+
+                                        
+
                     </div>
                 </div>
             </ItemTemplate>
