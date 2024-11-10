@@ -4,6 +4,8 @@
     <h2 class="text-center mb-5">Nuestro listado de Prendas</h2>
     <div class="container">
 
+        <asp:UpdatePanel runat="server" UpdateMode="Conditional">
+    <ContentTemplate>
         <!-- Collapse con opciones para filtrar -->
         <div class="col mb-4">
             <button class="btn gap-1 btn-deep-purple" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
@@ -58,6 +60,11 @@
                 </div>
             </div>
         </div>
+                    </ContentTemplate>
+            <Triggers>
+                <asp:AsyncPostBackTrigger ControlID="btnClearFilter" EventName="Click" />
+            </Triggers>
+        </asp:UpdatePanel>
 
 
         <asp:UpdatePanel runat="server" UpdateMode="Conditional">

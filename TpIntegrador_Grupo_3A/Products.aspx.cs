@@ -125,6 +125,7 @@ namespace TpIntegrador_Grupo_3A
 
         protected void btnFilter_Click(object sender, EventArgs e)
         {
+            prodList = (List<Product>)Session["AllProducts"];
             filterByPrice();
             OrderByCriteria();
             rptProdList.DataSource = prodList;
@@ -134,8 +135,9 @@ namespace TpIntegrador_Grupo_3A
         protected void btnClearFilter_Click(object sender, EventArgs e)
         {
             prodList = (List<Product>)Session["AllProducts"];
-            txtPriceMax.Text = null;
-            txtPriceMin.Text = null;
+            txtPriceMax.Text = "";
+            txtPriceMin.Text = "";
+            ddlOrdenar.SelectedIndex = 0;
 
             rptProdList.DataSource = prodList;
             rptProdList.DataBind();
