@@ -136,6 +136,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\slider1.jpg" />
+    <Content Include="Images\trash-icon.png" />
     <Content Include="Login.aspx" />
     <Content Include="Cart.aspx" />
     <Content Include="Favourites.aspx" />

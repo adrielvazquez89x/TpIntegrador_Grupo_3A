@@ -71,7 +71,7 @@ namespace TpIntegrador_Grupo_3A.Admin
             var btn = (LinkButton)sender;
             string arg = btn.CommandArgument;
 
-            Response.Redirect("ProductForm.aspx?code=" + arg);
+            Response.Redirect("ProductForm.aspx?id=" + arg);
         }
     }
 }

@@ -53,7 +53,7 @@
                                 ID="btnEdit"
                                 runat="server"
                                 CommandName="EditProduct"
-                                CommandArgument='<%# Eval("Code") %>'
+                                CommandArgument='<%# Eval("Id") %>'
                                 CssClass="btn btn-link text-warning"
                                 OnClick="btnEdit_Click"
                                 >

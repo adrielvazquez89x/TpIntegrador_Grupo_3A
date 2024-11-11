@@ -3,6 +3,7 @@ using Business.ProductAttributes;
 using Model;
 using Model.ProductAttributes;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,12 +15,18 @@ namespace TpIntegrador_Grupo_3A.Admin
     public partial class ProductForm : System.Web.UI.Page
     {
         private const string ImagesViewStateKey = "ProductImages";
+        private const string NewImagesViewStateKey = "NewProductImages";
+
+        protected int currentProductId;
+        private string currentProductCode = "";
+        List<int> imagesToDelete;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             BusinessCategory businessCategory = new BusinessCategory();
             BusinessSeason businessSeason = new BusinessSeason();
             //BusinessSection businessSection = new BusinessSection();
-            
+          
 
             int categoryId;
 
@@ -31,7 +38,6 @@ namespace TpIntegrador_Grupo_3A.Admin
                 ddlCategory.DataBind();
                 categoryId = int.Parse(ddlCategory.Items[0].Value);
 
-
                 ddlSeason.DataSource = businessSeason.list(false);
                 ddlSeason.DataValueField = "Id";
                 ddlSeason.DataTextField = "Description";
@@ -42,15 +48,30 @@ namespace TpIntegrador_Grupo_3A.Admin
                 //ddlSection.DataTextField = "Description";
                 //ddlSection.DataBind();
 
-                string code = Request.QueryString["code"] != null ? Request.QueryString["code"] : "";
+                currentProductId = Request.QueryString["id"] != null ? int.Parse(Request.QueryString["id"]) : 0;
+                
+                Session["idCurrentItem"] = currentProductId;
 
-                if(code != "")
+                if(currentProductId != 0)
                 {
-                    FillForm(code);
+                    FillForm(currentProductId);
                 }
 
                 BindSubCategories(categoryId);
+                BindImagesRepeater();
                 InitializeImages();
+            }
+            else
+            {
+                // Recuperar currentProductId desde Session en postbacks
+                currentProductId = Session["idCurrentItem"] != null ? (int)Session["idCurrentItem"] : 0;
+                currentProductCode = Session["CurrentProductCode"] != null ? (string)Session["CurrentProductCode"] : "";
+
+                // Si es edición, asegurar que el Repeater esté actualizado
+                if (currentProductId != 0)
+                {
+                    BindImagesRepeater();
+                }
             }
         }
 
@@ -77,42 +98,73 @@ namespace TpIntegrador_Grupo_3A.Admin
 
                 product.CreationDate = DateTime.Now;
 
+                // Lista para almacenar las nuevas imágenes
+                List<ImageProduct> newImagesList = new List<ImageProduct>();
 
-                product.Images = new List<ImageProduct>();
-
-                foreach(string imageUrl in ViewState[ImagesViewStateKey] as List<string>)
+                // Obtener las nuevas imágenes desde el ViewState
+                List<string> newImages = ViewState[NewImagesViewStateKey] as List<string>;
+                if (newImages != null && newImages.Count > 0)
                 {
-                    var imgAux = new ImageProduct();
-                    imgAux.UrlImage = imageUrl;
-                    imgAux.CodProd = product.Code;
+                    foreach (string imageUrl in newImages)
+                    {
+                        ImageProduct imgAux = new ImageProduct();
+                        imgAux.UrlImage = imageUrl;
+                        imgAux.CodProd = product.Code;
 
-                    product.Images.Add(imgAux);
+                        newImagesList.Add(imgAux);
+                    }
                 }
-                                
+
+                // Asignar las nuevas imágenes al producto
+                product.Images = newImagesList;
+
                 BusinessProduct businessProduct = new BusinessProduct();
+                currentProductId = Session["idCurrentItem"] != null ? (int)Session["idCurrentItem"] : 0;
 
-                //Hay que ver si usamos el ID para poder identificar una edición o un alta
-
-                var result = businessProduct.Add(product);
-
-                if(result)
+                if (currentProductId != 0)
                 {
-                    UserControl_Toast.ShowToast("Producto agregado correctamente", true);
-                    ClearForm();
+                    product.Id = currentProductId;
+
+                    // Obtener la lista de IDs de imágenes a eliminar
+                    List<int> imagesToDelete = GetImagesToDelete();
+
+                    // Llamar al método Edit con las imágenes a eliminar y las nuevas imágenes
+                    bool result = businessProduct.Edit(product, imagesToDelete);
+
+                    if (result)
+                    {
+                        UserControl_Toast.ShowToast("Producto editado correctamente", true);
+                        ClearForm();
+                    }
+                    else
+                    {
+                        UserControl_Toast.ShowToast("Error al editar el producto", false);
+                    }
+                    return;
                 }
                 else
                 {
 
-                   UserControl_Toast.ShowToast("Error al agregar el producto", false);
+                    bool result = businessProduct.Add(product);
+                    if (result)
+                    {
+                        UserControl_Toast.ShowToast("Producto agregado correctamente", true);
+                        ClearForm();
+                    }
+                    else
+                    {
+                        UserControl_Toast.ShowToast("Error al agregar el producto", false);
+                    }
                 }
-
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                // Manejar la excepción adecuadamente
+                lblMessage.Text = "Ocurrió un error: " + ex.Message;
+                lblMessage.CssClass = "text-danger";
             }
         }
+
 
         protected void ddlCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -159,16 +211,18 @@ namespace TpIntegrador_Grupo_3A.Admin
             imgPreview.Visible = false;
         }
 
-        private void FillForm(string code)
+        private void FillForm(int id)
         {
             BusinessProduct businessProduct = new BusinessProduct();
 
             try
             {
-                List<Product> product = businessProduct.list(code);
+                List<Product> product = businessProduct.listAdmin(id);
 
                 if (product.Count > 0)
                 {
+                    currentProductCode = product[0].Code;
+
                     txtCode.Text = product[0].Code;
                     txtName.Text = product[0].Name;
                     txtPrice.Text = product[0].Price.ToString();
@@ -179,29 +233,26 @@ namespace TpIntegrador_Grupo_3A.Admin
                     ddlSubCategory.SelectedValue = product[0].SubCategory.Id.ToString();
                     ddlSeason.SelectedValue = product[0].Season.Id.ToString();
 
-                    //ddlSection.SelectedValue = product[0].Section.Id.ToString();
-
-                    ViewState[ImagesViewStateKey] = product[0].Images.Select(i => i.UrlImage).ToList();
-                    BindImagesListBox();
+                    // No asignar las imágenes existentes al ViewState de nuevas imágenes
+                    // ViewState[NewImagesViewStateKey] = product[0].Images.Select(i => i.UrlImage).ToList();
                 }
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
-
-                throw ex ;
+                throw ex;
             }
         }
+
+
         //IMAGENES
 
         private void InitializeImages()
         {
-            // Inicializa la lista de imágenes en ViewState si está vacía
-            if (ViewState[ImagesViewStateKey] == null)
+            // Inicializa la lista de nuevas imágenes en ViewState si está vacía
+            if (ViewState[NewImagesViewStateKey] == null)
             {
-                ViewState[ImagesViewStateKey] = new List<string>();
+                ViewState[NewImagesViewStateKey] = new List<string>();
             }
-
-            BindImagesListBox();
         }
         protected void btnAddImage_Click(object sender, EventArgs e)
         {
@@ -209,28 +260,58 @@ namespace TpIntegrador_Grupo_3A.Admin
 
             if (string.IsNullOrEmpty(imgUrl))
             {
-
                 return;
             }
 
-            List<string> images = ViewState[ImagesViewStateKey] as List<string>;
+            List<string> newImages = ViewState[NewImagesViewStateKey] as List<string>;
 
-            images.Add(imgUrl);
+            newImages.Add(imgUrl);
+            ViewState[NewImagesViewStateKey] = newImages;
+
             BindImagesListBox();
 
             txtImageUrl.Text = "";
             lblMessage.Text = "";
         }
 
+
         private void BindImagesListBox()
         {
-            List<string> images = ViewState[ImagesViewStateKey] as List<string>;
+            List<string> newImages = ViewState[NewImagesViewStateKey] as List<string>;
             lstImages.Items.Clear();
-            foreach (string imageUrl in images)
+            foreach (string imageUrl in newImages)
             {
                 lstImages.Items.Add(new ListItem(imageUrl));
             }
         }
+
+
+        private void BindImagesRepeater()
+        {
+            BusinessImageProduct businessImageProduct = new BusinessImageProduct();
+
+            currentProductId = Session["idCurrentItem"] != null ? (int)Session["idCurrentItem"] : 0;
+
+            if (currentProductId != 0)
+            {
+                // Usar currentProductId para obtener el código del producto si no está disponible
+                if (string.IsNullOrEmpty(currentProductCode))
+                {
+                    // Cargar el producto para obtener el código
+                    BusinessProduct businessProduct = new BusinessProduct();
+                    List<Product> product = businessProduct.listAdmin(currentProductId);
+                    if (product.Count > 0)
+                    {
+                        currentProductCode = product[0].Code;
+                    }
+                }
+
+                List<ImageProduct> images = businessImageProduct.list(currentProductCode);
+                rptExistingImages.DataSource = images;
+                rptExistingImages.DataBind();
+            }
+        }
+
 
         protected void lstImages_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -253,7 +334,7 @@ namespace TpIntegrador_Grupo_3A.Admin
 
         protected void btnRemoveSelected_Click(object sender, EventArgs e)
         {
-            List<string> images = ViewState[ImagesViewStateKey] as List<string>;
+            List<string> images = ViewState[NewImagesViewStateKey] as List<string>;
 
             if(images == null)
             {
@@ -283,7 +364,7 @@ namespace TpIntegrador_Grupo_3A.Admin
             }
 
             
-            ViewState[ImagesViewStateKey] = images;
+            ViewState[NewImagesViewStateKey] = images;
 
             
             BindImagesListBox();
@@ -293,5 +374,27 @@ namespace TpIntegrador_Grupo_3A.Admin
             imgPreview.Visible = false;
 
         }
+
+        private List<int> GetImagesToDelete()
+        {
+            List<int> imagesToDelete = new List<int>();
+            string imagesToDeleteValue = hfImagesToDelete.Value;
+
+            if (!string.IsNullOrEmpty(imagesToDeleteValue))
+            {
+                // Separar los IDs por comas y convertirlos a enteros
+                string[] ids = imagesToDeleteValue.Split(',');
+                foreach (string idStr in ids)
+                {
+                    if (int.TryParse(idStr, out int id))
+                    {
+                        imagesToDelete.Add(id);
+                    }
+                }
+            }
+
+            return imagesToDelete;
+        }
+
     }
 }
