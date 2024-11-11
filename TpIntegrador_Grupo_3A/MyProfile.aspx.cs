@@ -28,12 +28,11 @@ namespace TpIntegrador_Grupo_3A
                             txtNombre.Text = user.FirstName;
                         if (user.LastName != null) 
                             txtApellido.Text = user.LastName;
-                        if (user.ImageUrl != null)
-                            imgNuevoPerfil.ImageUrl = "~/Images/"+user.ImageUrl;
-                        else
-                            imgNuevoPerfil.ImageUrl = "https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg";
+                        //if (user.ImageUrl != null)
+                        //    imgNuevoPerfil.ImageUrl = "~/Images/"+user.ImageUrl;
+                        //else
+                        //    imgNuevoPerfil.ImageUrl = "https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg";
 
-                        //imgNuevoPerfil.ImageUrl = "~/images/" + user.ImageUrl;
                     }
                     else
                     {
@@ -68,7 +67,7 @@ namespace TpIntegrador_Grupo_3A
             user.ImageUrl = imgName;
 
             // Actualiza la URL de la imagen mostrada en la página
-            imgNuevoPerfil.ImageUrl = "~/Images/" + imgName;
+            //imgNuevoPerfil.ImageUrl = "~/Images/" + imgName;
         }
         else
         {

@@ -233,8 +233,7 @@ namespace Business
                 data.setParameter("@Email", user.Email);
                 data.setParameter("@Celular", user.Mobile);
                 data.setParameter("@FechaAlta", user.RegistrationDate);
-              
-               
+
                 data.setParameter("@IdUsuario", user.UserId);
 
                 // Ejecutar la acción

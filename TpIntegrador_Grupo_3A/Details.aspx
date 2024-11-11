@@ -68,35 +68,40 @@
                     </div>
                 </ItemTemplate>
             </asp:Repeater>
+   <% if (Security.SessionSecurity.ActiveSession(Session["user"])) { %>
+                <!-- Opciones de Talle, Color, y Cantidad -->
+                <div class="col-md-6 mt-4">
+                    <div class="card p-4 shadow-sm">
+                        <h5 class="text-center mb-3">Opciones de compra</h5>
 
-             <% if (Security.SessionSecurity.ActiveSession(Session["user"])) 
-                 { %>
-            <div class="col-md-4 mb-1">
-                <asp:UpdatePanel runat="server" UpdateMode="Conditional">
-                    <ContentTemplate>
-                        <div class="row align-items-center">
-                            <div class="col-md-4">
-                                <asp:TextBox ID="txtQuantity" runat="server" CssClass="form-control form-control-sm text-center w-50" Text="0" ReadOnly="true" />
-                            </div>
-                            <div class="col-auto d-flex flex-column p-0 m-0">
-                                <asp:Button ID="btnAdd" Text="+" OnClick="btnAdd_Click" CssClass="btn btn-primary btn-sm mb-1" runat="server" />
-                                <asp:Button ID="btnSubtract" Text="-" OnClick="btnSubtract_Click" CssClass="btn btn-primary btn-sm" runat="server" />
-                            </div>
+                        <div class="mb-3">
+                            <asp:Label ID="lblSize" runat="server" CssClass="form-label">Talle</asp:Label>
+                            <asp:DropDownList ID="ddlSize" runat="server" CssClass="form-select" />
                         </div>
-                    </ContentTemplate>
-                    <Triggers>
-                        <asp:AsyncPostBackTrigger ControlID="btnAdd" EventName="Click" />
-                        <asp:AsyncPostBackTrigger ControlID="btnSubtract" EventName="Click" />
-                    </Triggers>
-                </asp:UpdatePanel>
+                        
+                        <div class="mb-3">
+                            <asp:Label ID="lblColour" runat="server" CssClass="form-label">Color</asp:Label>
+                            <asp:DropDownList ID="ddlColour" runat="server" CssClass="form-select" />
+                        </div>
 
-                <div class="row mt-3">
-                    <div class="col">
-                        <asp:Button ID="btnAddToCart" Text="Añadir al carrito" OnClick="btnAddToCart_Click" CommandArgument='<%# Eval("Code") %>' CssClass="btn btn-primary btn-sm mb-1" runat="server" />
+                        <!-- Controles de Cantidad -->
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Cantidad</span>
+                            <asp:TextBox ID="txtQuantity" runat="server" CssClass="form-control text-center" Text="1" ReadOnly="true" />
+                            <button class="btn btn-outline-secondary" onclick="btnSubtract_Click"><i class="bi bi-dash"></i></button>
+                            <button class="btn btn-outline-secondary" onclick="btnAdd_Click"><i class="bi bi-plus"></i></button>
+                        </div>
+
+                        <!-- Botón Añadir al Carrito -->
+                        <div class="d-grid">
+                            <asp:Button ID="btnAddToCart" Text="Añadir al carrito" OnClick="btnAddToCart_Click" CssClass="btn btn-primary" runat="server" />
+                        </div>
+                        
+                        <!-- Mensaje de Error -->
+                        <asp:Label ID="lblError" Text="" CssClass="text-danger mt-3" Visible="false" runat="server" />
                     </div>
                 </div>
-            </div>
-                                      <% } %>
+            <% } %>
 
         </div>
     </div>

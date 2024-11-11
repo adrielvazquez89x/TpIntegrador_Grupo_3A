@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Products.aspx.cs" Inherits="TpIntegrador_Grupo_3A.Products" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h2 class="text-center mb-5">Nuestro listado de Prendas</h2>
-    <div class="container">
+<asp:Label ID="Titulo" Text="Nuestro listado de Prendas" runat="server" CssClass="h2 mb-5 d-flex justify-content-center" />
+<div class="container">
 
         <asp:UpdatePanel runat="server" UpdateMode="Conditional">
     <ContentTemplate>

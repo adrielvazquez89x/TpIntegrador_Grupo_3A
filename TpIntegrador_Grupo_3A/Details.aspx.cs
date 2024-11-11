@@ -20,14 +20,22 @@ namespace TpIntegrador_Grupo_3A
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            string code = Request.QueryString["Code"] != null ? (Request.QueryString["Code"]).ToString() : "";
-            if (code != "" && !IsPostBack)
+            CodeSelectedProd = Request.QueryString["Code"] != null ? (Request.QueryString["Code"]).ToString() : "";
+
+            if (!IsPostBack)
             {
-                BusinessProduct businessProduct = new BusinessProduct();
-                products = businessProduct.list(code);
-                rptProducts.DataSource = products;
-                rptProducts.DataBind();
+                LoadSizes();
+                LoadColours();
+                if (CodeSelectedProd != "")
+                {
+                    BusinessProduct businessProduct = new BusinessProduct();
+                    products = businessProduct.list(CodeSelectedProd);
+                    rptProducts.DataSource = products;
+                    rptProducts.DataBind();
+                }
             }
+
+           
             if (SessionSecurity.ActiveSession(Session["user"]))
             {
                 user = (Model.User)Session["user"];
@@ -35,8 +43,34 @@ namespace TpIntegrador_Grupo_3A
                 BusinessFavourite businessFav = new BusinessFavourite();
                 string favCodes = businessFav.list(user.UserId).Select(fav => fav.ProductCode).ToList().ToString();
                 Session["favCodes"] = favCodes; // Guardo los favoritos en sesión
-                isFavorite = checkFav(code, user);
+                isFavorite = checkFav(CodeSelectedProd, user);
             }
+        }
+
+        private void LoadSizes()
+        {
+            BusinessSize businessSize = new BusinessSize();
+            List<Size> sizes = businessSize.list();
+
+            ddlSize.DataSource = sizes;
+            ddlSize.DataTextField = "Description";
+            ddlSize.DataValueField = "Id";
+            ddlSize.DataBind();
+
+            ddlSize.Items.Insert(0, new ListItem("Seleccione un talle", "0")); // Opción por defecto
+        }
+
+        private void LoadColours()
+        {
+            BusinessColour businessColour = new BusinessColour();
+            List<Colour> colours = businessColour.list();
+
+            ddlColour.DataSource = colours;
+            ddlColour.DataTextField = "Description";
+            ddlColour.DataValueField = "Id";
+            ddlColour.DataBind();
+
+            ddlColour.Items.Insert(0, new ListItem("Seleccione un color", "0"));
         }
 
         private bool checkFav(string code, Model.User user)
@@ -55,11 +89,24 @@ namespace TpIntegrador_Grupo_3A
         }
         protected void btnAddToCart_Click(object sender, EventArgs e)
         {
-            CodeSelectedProd = ((Button)sender).CommandArgument.ToString();
+            lblError.Visible = false;
+           // CodeSelectedProd = ((Button)sender).CommandArgument.ToString();
             BusinessProduct businessProduct = new BusinessProduct();
             Product selectedProd = businessProduct.listByCode(CodeSelectedProd);
+            int number = int.Parse(txtQuantity.Text);
 
-            int number = 1; //number se saca de un .text segun la cant elegida por el usuario
+            // Obtener el talle y color seleccionados
+            int selectedSizeId = int.Parse(ddlSize.SelectedValue);
+            int selectedColourId = int.Parse(ddlColour.SelectedValue);
+
+            // Validar selección
+            if (selectedSizeId == 0 || selectedColourId == 0)
+            {
+                lblError.Visible = true;
+                lblError.Text = "Por favor, selecciona un talle y un color.";
+                return;
+            }
+
 
             Model.User user = (Model.User)Session["user"];
             user.Cart.AddProduct(selectedProd, number);
