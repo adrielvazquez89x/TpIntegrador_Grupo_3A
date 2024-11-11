@@ -35,23 +35,32 @@ namespace TpIntegrador_Grupo_3A
 
             int idSubCategory = Request.QueryString["IdSubCategory"] is null ? 0 : int.Parse(Request.QueryString["IdSubCategory"]);  //validarlo (podrian a mano ponerle algo no entero)
 
-            prodList= prodList is null ? businessProd.list() : prodList;
+            int idSection = Request.QueryString["IdSection"] is null ? 0 : int.Parse(Request.QueryString["IdSection"]);  //validarlo (podrian a mano ponerle algo no entero)
+
+            prodList = prodList is null ? businessProd.list() : prodList;
 
             
             if (!IsPostBack)
             {
                 if (idCategory == 0)
                 {
-                    string filter = Session["productFilter"] as string;
-                    if (!string.IsNullOrEmpty(filter))
+                    if (idSection == 0) 
                     {
-                        prodList = prodList.FindAll(prod => prod.Name.ToUpper().Contains(filter.ToUpper()) ||
-                                                            prod.Description.ToUpper().Contains(filter.ToUpper()) ||
-                                                            prod.Category.Description.ToUpper().Contains(filter.ToUpper()) ||
-                                                            prod.SubCategory.Description.ToUpper().Contains(filter.ToUpper()) ||
-                                                            prod.Season.Description.ToUpper().Contains(filter.ToUpper()) ||
-                                                            prod.Price.ToString().Contains(filter));
-                        Session.Remove("productFilter");
+                        string filter = Session["productFilter"] as string;
+                        if (!string.IsNullOrEmpty(filter))
+                        {
+                            prodList = prodList.FindAll(prod => prod.Name.ToUpper().Contains(filter.ToUpper()) ||
+                                                                prod.Description.ToUpper().Contains(filter.ToUpper()) ||
+                                                                prod.Category.Description.ToUpper().Contains(filter.ToUpper()) ||
+                                                                prod.SubCategory.Description.ToUpper().Contains(filter.ToUpper()) ||
+                                                                prod.Season.Description.ToUpper().Contains(filter.ToUpper()) ||
+                                                                prod.Price.ToString().Contains(filter));
+                            Session.Remove("productFilter");
+                        }
+                    }
+                    else
+                    {
+                        prodList = businessProd.listBySection(idSection);    //Carga los productos según la seccion
                     }
                 }
                 else
