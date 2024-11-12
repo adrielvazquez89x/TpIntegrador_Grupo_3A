@@ -46,6 +46,7 @@ namespace Business
                     aux.Code = data.Reader["Codigo"] != DBNull.Value ? (string)data.Reader["Codigo"] : string.Empty;
                     aux.Name = data.Reader["Nombre"] != DBNull.Value ? (string)data.Reader["Nombre"] : string.Empty;
                     aux.Price = data.Reader["Precio"] != DBNull.Value ? Math.Round((decimal)data.Reader["Precio"], 2) : 0;
+                    aux.Description = data.Reader["Descripcion"] != DBNull.Value ? (string)data.Reader["Descripcion"] : string.Empty;
                     aux.CreationDate = data.Reader["FechaCreacion"] != DBNull.Value ? (DateTime)data.Reader["FechaCreacion"] : DateTime.MinValue;
 
                     aux.Category = new Category
@@ -346,6 +347,7 @@ namespace Business
 
         public bool Add(Product product)
         {
+            BusinessImageProduct businesImgProduct = new BusinessImageProduct();
             try
             {
                 data.BeginTransaction();
@@ -375,14 +377,7 @@ namespace Business
 
                 foreach(ImageProduct imgUrl in product.Images)
                 {
-                    data.clearParams();
-                    data.setQuery(@"INSERT INTO ImagenesProductos
-                                    (UrlImagen, CodigoProducto) VALUES 
-                                    (@Url, @CodigoProducto)");
-                    data.setParameter("@Url", imgUrl.UrlImage);
-                    data.setParameter("@CodigoProducto", product.Code);
-                    data.executeAction();
-
+                    businesImgProduct.Add(imgUrl.UrlImage, product.Code, data);
                 }
 
                 data.CommitTransaction();
@@ -399,5 +394,63 @@ namespace Business
             }
         }
 
+        public bool Edit(Product product, List<int> imgToDelete)
+        {
+            BusinessImageProduct businesImgProduct = new BusinessImageProduct();
+            try
+            {
+                data.BeginTransaction();
+                data.setQuery(@"update Productos set  
+                            Nombre = @Nombre, Precio = @Precio, Descripcion = @Descripcion,
+                            FechaCreacion  = GETDATE(),
+                            IdCategoria = @IdCategoria, IdSubCategoria = @IdSubCategoria,
+                            IdTemporada = @IdTemporada, Activo = @Activo
+                            WHERE Id = @Id");
+                data.setParameter("@Id", product.Id);
+                data.setParameter("@Nombre", product.Name);
+                data.setParameter("@Precio", product.Price);
+                data.setParameter("@Descripcion", product.Description);
+                data.setParameter("@IdCategoria", product.Category.Id);
+
+                if (product.SubCategory.Id == 0)
+                {
+                    data.setParameter("@IdSubCategoria", null);
+                }
+                else
+                {
+                    data.setParameter("@IdSubCategoria", product.SubCategory.Id);
+                }
+
+                data.setParameter("@IdTemporada", product.Season.Id);
+                data.setParameter("@Activo", product.IsActive);
+                
+                data.executeAction();
+
+                foreach (ImageProduct imgUrl in product.Images)
+                {
+                    businesImgProduct.Add(imgUrl.UrlImage, product.Code, data);
+                }
+
+                foreach (int i in imgToDelete)
+                {
+                    businesImgProduct.delete(i);
+                }
+
+
+
+                data.CommitTransaction();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                data.RollbackTransaction();
+                throw ex;
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+
+        }
     }
 }

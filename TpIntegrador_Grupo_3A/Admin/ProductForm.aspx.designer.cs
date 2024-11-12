@@ -159,6 +159,24 @@ namespace TpIntegrador_Grupo_3A.Admin
         protected global::System.Web.UI.WebControls.Label lblMessage;
 
         /// <summary>
+        /// Control rptExistingImages.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptExistingImages;
+
+        /// <summary>
+        /// Control hfImagesToDelete.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfImagesToDelete;
+
+        /// <summary>
         /// Control UserControl_Toast.
         /// </summary>
         /// <remarks>
