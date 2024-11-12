@@ -10,19 +10,26 @@
             <tr>
                 <th scope="col"> </th>
                 <th scope="col">PRODUCTO</th>
-                <th scope="col">TALLE</th>
                 <th scope="col">COLOR</th>
+                <th scope="col">TALLE</th>
                 <th scope="col">CANTIDAD</th>
                 <th scope="col">SUBTOTAL</th>
-                <th scope="col"> </th>
             </tr>
         </thead>
         <tbody>
             <asp:Repeater runat="server" ID="repeater">
                 <ItemTemplate>
                     <tr>
-                        <th scope="row"><%  %></th>
+                         <td>
+   <img style="height: 100px; object-fit:contain;"
+src='<%# (Eval("Product.Images") != null && ((List<Model.ImageProduct>)Eval("Product.Images")).Count > 0) ?
+((List<Model.ImageProduct>)Eval("Product.Images"))[0].UrlImage : "https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg" %>'  
+ </td>
                         <td><%#Eval("Product.Description") %></td>
+                         <td><%#Eval("Stock.Colour.Description") %></td>
+                         <td><%#Eval("Stock.Size.Description") %></td>
+                        <td><%#Eval("Number") %></td>
+                        <td>$<%#Eval("Subtotal") %></td>
                     </tr>
                 </ItemTemplate>
             </asp:Repeater>

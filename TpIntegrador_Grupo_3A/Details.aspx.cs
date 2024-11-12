@@ -182,12 +182,13 @@ namespace TpIntegrador_Grupo_3A
                 return;
             }
 
+            Model.User user = (Model.User)Session["user"];
+
             bool validateStock = ValidateStock(selectedColourId, selectedSizeId, number);
             if (validateStock)
             {
+                user.Cart.AddProduct(selectedProd, stock, number);
             }
-            Model.User user = (Model.User)Session["user"];
-            user.Cart.AddProduct(selectedProd, stock, number);
 
             Session["user"] = user;
             Response.Redirect(Request.RawUrl); // Redirige a la misma página para actualizar la vista

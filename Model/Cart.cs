@@ -9,20 +9,16 @@ namespace Model
 {
     public class Cart
     {
-        public List<ItemCart> Items { get; set; }
+        public List<ItemCart> Items = new List<ItemCart>();
         public decimal Total => Items.Sum(item => item.Subtotal);
         public void AddProduct(Product prod, Stock stock, int number)
         {
-            if (Items == null)
-            {
-                Items = new List<ItemCart>();
-            }
-
-            //var itemOnCart = Items.FirstOrDefault(i => i.Product.Code == stock.ProdCode && i.stock.Id==stock.Id);
             var itemOnCart = Items.FirstOrDefault(i => i.Stock.Id == stock.Id);
             if (itemOnCart != null)
             {
                itemOnCart.Number +=number;
+                itemOnCart.Product= prod;
+                itemOnCart.Stock = stock;
             }
             else
             {
