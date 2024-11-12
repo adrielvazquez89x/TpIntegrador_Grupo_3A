@@ -53,6 +53,7 @@ namespace Business
         {
             try
             {
+                data.clearParams();
                 string query = "DELETE FROM ImagenesProductos WHERE Id = @Id";
                 data.setQuery(query);
                 data.setParameter("@Id", id);

@@ -9,7 +9,7 @@
         <ContentTemplate>
             <div class="container">
 
-                <h2 class="text-center my-5">Agregar Nuevo Producto</h2>
+                <h2 class="text-center my-5">Gestión de Producto</h2>
 
                 <uc1:UserControl_ButtonBack runat="server" ID="UserControl_ButtonBack" />
 

@@ -46,6 +46,7 @@ namespace Business
                     aux.Code = data.Reader["Codigo"] != DBNull.Value ? (string)data.Reader["Codigo"] : string.Empty;
                     aux.Name = data.Reader["Nombre"] != DBNull.Value ? (string)data.Reader["Nombre"] : string.Empty;
                     aux.Price = data.Reader["Precio"] != DBNull.Value ? Math.Round((decimal)data.Reader["Precio"], 2) : 0;
+                    aux.Description = data.Reader["Descripcion"] != DBNull.Value ? (string)data.Reader["Descripcion"] : string.Empty;
                     aux.CreationDate = data.Reader["FechaCreacion"] != DBNull.Value ? (DateTime)data.Reader["FechaCreacion"] : DateTime.MinValue;
 
                     aux.Category = new Category
@@ -422,6 +423,8 @@ namespace Business
 
                 data.setParameter("@IdTemporada", product.Season.Id);
                 data.setParameter("@Activo", product.IsActive);
+                
+                data.executeAction();
 
                 foreach (ImageProduct imgUrl in product.Images)
                 {
@@ -434,7 +437,6 @@ namespace Business
                 }
 
 
-                data.executeAction();
 
                 data.CommitTransaction();
                 return true;
