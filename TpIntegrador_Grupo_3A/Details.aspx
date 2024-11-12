@@ -1,12 +1,16 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Details.aspx.cs" Inherits="TpIntegrador_Grupo_3A.Details" %>
 
+<%@ Register Src="~/Admin/UserControl_Toast.ascx" TagPrefix="uc1" TagName="UserControl_Toast" %>
+
+
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2 class="text-center mb-5">Detalles del Producto</h2>
     <div class="container">
         <div class="row justify-content-center">
+             <uc1:UserControl_Toast runat="server" ID="UserControl_Toast" />
             <asp:Repeater ID="rptProducts" runat="server" OnItemDataBound="rptProducts_ItemDataBound">
                 <ItemTemplate>
-
+                   
                     <div class="col-md-4 mb-1">
                         <div class="card h-100">
                             <!-- Nombre del producto -->
@@ -70,8 +74,7 @@
             </asp:Repeater>
    <% if (Security.SessionSecurity.ActiveSession(Session["user"])) { %>
                 <!-- Opciones de Talle, Color, y Cantidad -->
-                <div class="col-md-6 mt-4">
-                    <div class="card p-4 shadow-sm">
+                <div class="col-md-3">
                         <h5 class="text-center mb-3">Opciones de compra</h5>
 
                         <div class="mb-3">
@@ -87,19 +90,27 @@
                         <!-- Controles de Cantidad -->
                         <div class="input-group mb-3">
                             <span class="input-group-text">Cantidad</span>
-                            <asp:TextBox ID="txtQuantity" runat="server" CssClass="form-control text-center" Text="1" ReadOnly="true" />
-                            <button class="btn btn-outline-secondary" onclick="btnSubtract_Click"><i class="bi bi-dash"></i></button>
-                            <button class="btn btn-outline-secondary" onclick="btnAdd_Click"><i class="bi bi-plus"></i></button>
+                            <asp:UpdatePanel runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <asp:TextBox ID="txtQuantity" runat="server" CssClass="form-control text-center" style="width: 60px;" Text="1" ReadOnly="true" />
+                    </ContentTemplate>
+                                <Triggers>
+                                    <asp:AsyncPostBackTrigger ControlID="btnAdd" EventName="Click" />
+                                    <asp:AsyncPostBackTrigger ControlID="btnSubtract" EventName="Click" />
+                                </Triggers>
+                            </asp:UpdatePanel>
+                            <asp:Button class="btn btn-outline-secondary" Text="-" runat="server" ID="btnSubtract" onclick="btnSubtract_Click" />
+                            <asp:Button class="btn btn-outline-secondary" Text="+" runat="server" ID="btnAdd" onclick="btnAdd_Click" />
+                                            
                         </div>
-
                         <!-- Botón Añadir al Carrito -->
                         <div class="d-grid">
-                            <asp:Button ID="btnAddToCart" Text="Añadir al carrito" OnClick="btnAddToCart_Click" CssClass="btn btn-primary" runat="server" />
+                            <asp:Button ID="btnAddToCart" Text="Añadir al carrito" OnClick="btnAddToCart_Click" CssClass="btn btn-primary" runat="server" CommandArgument='<%# Eval("Code")%>'/>
                         </div>
                         
                         <!-- Mensaje de Error -->
                         <asp:Label ID="lblError" Text="" CssClass="text-danger mt-3" Visible="false" runat="server" />
-                    </div>
+                    
                 </div>
             <% } %>
 

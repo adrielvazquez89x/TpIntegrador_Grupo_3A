@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.ProductAttributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace Model
     public class ItemCart
     {
         public Product Product { get; set; }
+        public Stock Stock { get; set; }
         public int Number { get; set; }
         public decimal Subtotal
         {

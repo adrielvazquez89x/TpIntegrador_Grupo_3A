@@ -19,7 +19,7 @@ namespace Business.ProductAttributes
         {
             try
             {
-                data.setQuery("SELECT * FROM Stock WHERE AND Id = " + id);
+                data.setQuery("SELECT * FROM Stock WHERE Id = " + id);
                 data.executeRead();
 
                 Stock aux = new Stock();
@@ -45,6 +45,36 @@ namespace Business.ProductAttributes
             }
         }
 
+        public Stock getStock(string prodCode, int idColor, int idSize)
+        {
+            try
+            {
+                data.setQuery($"SELECT * FROM Stock WHERE CodigoProducto ='{prodCode}' AND IdColor={idColor} AND IdTalle={idSize}");
+                data.executeRead();
+
+                Stock aux = new Stock();
+                aux.Amount = 0;
+                while (data.Reader.Read())
+                {
+                    aux.Id = (int)data.Reader["Id"];
+                    aux.ProdCode = (string)data.Reader["CodigoProducto"];
+                    aux.IdColour = (int)data.Reader["IdColor"];
+                    aux.IdSize = (int)data.Reader["IdTalle"];
+                    aux.Amount = (int)data.Reader["Stock"];
+                }
+
+                return aux;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
         public string Add(Stock stock)
         {
             try

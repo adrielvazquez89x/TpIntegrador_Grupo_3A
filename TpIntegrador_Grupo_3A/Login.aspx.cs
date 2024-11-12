@@ -31,6 +31,12 @@ namespace TpIntegrador_Grupo_3A
                 if (businessUser.Login(user))
                 {
                     Session.Add("user", user);
+                    if (Session["Cart"] == null)
+                    {
+                        Cart cart = new Cart(); // Si no existe, creamos un nuevo carrito
+                        Session["Cart"] = cart;
+                        user.Cart = cart;
+                    }
                     if (SessionSecurity.IsAdmin(Session["user"]))
                     {
                        
