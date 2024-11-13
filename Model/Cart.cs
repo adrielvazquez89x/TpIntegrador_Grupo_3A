@@ -1,5 +1,6 @@
 ﻿using Model.ProductAttributes;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,6 +45,24 @@ namespace Model
             }
         }
 
+        public bool UpdateProduct(Stock stock, int a)
+        {
+            ItemCart itemOnCart = Items.FirstOrDefault(i => i.Stock.Id == stock.Id);
+            if (a == 1) //si recibe un 1 diminuir, sino, aumentar
+            {
+                itemOnCart.Number--;
+            }
+            else 
+            {
+                if (itemOnCart.Number + 1 > stock.Amount)  //hay que chequear si al sumar un item alcanza el stock
+                    return false;
+                itemOnCart.Number++;
+            }
+            
+
+            //Items.Update(itemOnCart);
+            return true;
+        }
         public void ClearCart()
         {
             Items.Clear();

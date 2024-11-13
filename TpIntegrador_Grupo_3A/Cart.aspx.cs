@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using TpIntegrador_Grupo_3A.Admin;
 
 namespace TpIntegrador_Grupo_3A
 {
@@ -44,12 +45,42 @@ namespace TpIntegrador_Grupo_3A
 
         protected void btnMore_Click(object sender, EventArgs e)
         {
+            Model.User user = (Model.User)Session["user"];
+            int stockId = int.Parse(((LinkButton)sender).CommandArgument);
+            Items = user.Cart.Items;
+            ItemCart selectedItem = Items.Find(item => item.Stock.Id == stockId);
 
+            bool edited=user.Cart.UpdateProduct(selectedItem.Stock, 0); //envio un 1 para disminuir, un 0 para aumentar
+            if (!edited)
+            {
+                //Control_Toast.ShowToast($"No es posible. El pedido de este producto llegó al límite de stock disponible", false);
+            }
+            else
+            {
+                Session["user"] = user;
+                Response.Redirect(Request.RawUrl);
+            }
         }
 
         protected void btnLess_Click(object sender, EventArgs e)
         {
+            Model.User user = (Model.User)Session["user"];
+            int stockId = int.Parse(((LinkButton)sender).CommandArgument);
+            Items = user.Cart.Items;
+            ItemCart selectedItem = Items.Find(item => item.Stock.Id == stockId);
 
+            if (selectedItem.Number > 1)
+            {
+                user.Cart.UpdateProduct(selectedItem.Stock, 1); //envio un 1 para disminuir, un 0 para aumentar
+            }
+            else
+            {
+                //Items.Remove(selectedItem);
+                user.Cart.DeleteProduct(stockId);
+            }
+
+            Session["user"] = user;
+            Response.Redirect(Request.RawUrl);
         }
 
         protected void btnDelete_Click(object sender, EventArgs e)
@@ -58,7 +89,7 @@ namespace TpIntegrador_Grupo_3A
             int stockId = int.Parse(((LinkButton)sender).CommandArgument);
             ItemCart selectedItem =Items.Find(item => item.Stock.Id == stockId);
 
-            Items.Remove(selectedItem);
+            //Items.Remove(selectedItem);
             user.Cart.DeleteProduct(stockId);
 
             Session["user"] = user;
@@ -72,7 +103,7 @@ namespace TpIntegrador_Grupo_3A
         protected void btnEmptyCart_Click(object sender, EventArgs e)
         {
             Model.User user = (Model.User)Session["user"];
-            Items.Clear();
+            //Items.Clear();
             user.Cart.ClearCart();
 
             Session["user"] = user;
