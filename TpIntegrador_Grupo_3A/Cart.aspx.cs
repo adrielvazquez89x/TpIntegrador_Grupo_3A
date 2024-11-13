@@ -1,4 +1,6 @@
-﻿using Model;
+﻿using Microsoft.Ajax.Utilities;
+using Model;
+using Model.ProductAttributes;
 using Security;
 using System;
 using System.Collections.Generic;
@@ -11,7 +13,7 @@ namespace TpIntegrador_Grupo_3A
 {
     public partial class Cart : System.Web.UI.Page
     {
-        public List<ItemCart> Items = new List<ItemCart>();
+        public new List<ItemCart> Items = new List<ItemCart>();
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -38,6 +40,43 @@ namespace TpIntegrador_Grupo_3A
                 Session.Add("error", ex.ToString());
             }
 
+        }
+
+        protected void btnMore_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnLess_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            Model.User user = (Model.User)Session["user"];
+            int stockId = int.Parse(((LinkButton)sender).CommandArgument);
+            ItemCart selectedItem =Items.Find(item => item.Stock.Id == stockId);
+
+            Items.Remove(selectedItem);
+            user.Cart.DeleteProduct(stockId);
+
+            Session["user"] = user;
+            Response.Redirect(Request.RawUrl);
+        }
+        protected void btnBuy_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnEmptyCart_Click(object sender, EventArgs e)
+        {
+            Model.User user = (Model.User)Session["user"];
+            Items.Clear();
+            user.Cart.ClearCart();
+
+            Session["user"] = user;
+            Response.Redirect(Request.RawUrl);
         }
     }
 }

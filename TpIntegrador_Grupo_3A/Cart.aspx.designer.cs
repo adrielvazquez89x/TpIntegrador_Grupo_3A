@@ -24,12 +24,21 @@ namespace TpIntegrador_Grupo_3A
         protected global::System.Web.UI.WebControls.Repeater repeater;
 
         /// <summary>
-        /// Control btnVaciarCarrito.
+        /// Control btnEmptyCart.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnVaciarCarrito;
+        protected global::System.Web.UI.WebControls.Button btnEmptyCart;
+
+        /// <summary>
+        /// Control btnBuy.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnBuy;
     }
 }

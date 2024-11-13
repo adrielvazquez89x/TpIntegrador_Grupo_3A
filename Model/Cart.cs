@@ -35,9 +35,9 @@ namespace Model
             return true;
         }
 
-        public void DeleteProduct(string code)
+        public void DeleteProduct(int stockId)
         {
-            var item = Items.FirstOrDefault(i => i.Product.Code== code);
+            var item = Items.FirstOrDefault((i => i.Stock.Id == stockId));
             if (item != null)
             {
                 Items.Remove(item);
