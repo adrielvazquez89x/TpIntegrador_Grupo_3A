@@ -33,7 +33,7 @@ namespace TpIntegrador_Grupo_3A
                     Session.Add("user", user);
                     if (Session["Cart"] == null)
                     {
-                        Cart cart = new Cart(); // Si no existe, creamos un nuevo carrito
+                        Model.Cart cart = new Model.Cart(); // Si no existe, creamos un nuevo carrito
                         Session["Cart"] = cart;
                         user.Cart = cart;
                     }

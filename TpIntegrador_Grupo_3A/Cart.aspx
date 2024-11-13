@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="TpIntegrador_Grupo_3A.User.Cart" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="TpIntegrador_Grupo_3A.Cart" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="BannerContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -21,16 +21,38 @@
                 <ItemTemplate>
                     <tr>
                          <td>
-   <img style="height: 100px; object-fit:contain;"
-src='<%# (Eval("Product.Images") != null && ((List<Model.ImageProduct>)Eval("Product.Images")).Count > 0) ?
-((List<Model.ImageProduct>)Eval("Product.Images"))[0].UrlImage : "https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg" %>'  
+   <img style="height: 100px; object-fit:contain;" src='<%# (Eval("Product.Images") != null && ((List<Model.ImageProduct>)Eval("Product.Images")).Count > 0) ?
+((List<Model.ImageProduct>)Eval("Product.Images"))[0].UrlImage : "https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg" %>'  />
  </td>
                         <td><%#Eval("Product.Description") %></td>
                          <td><%#Eval("Stock.Colour.Description") %></td>
                          <td><%#Eval("Stock.Size.Description") %></td>
                         <td><%#Eval("Number") %></td>
                         <td>$<%#Eval("Subtotal") %></td>
-                    </tr>
+                        <td>
+                                                <div>
+    <!-- Botonera de acciones -->
+    <div class="d-flex justify-content-around px-3">
+        <!-- Agregar o disminuir cantidad -->
+        <!-- Btn Aumentar -->
+        <asp:LinkButton Text="text" runat="server" ID="btnMore" CommandArgument='<%#Eval("Stock.Id")%>' CssClass="text-secondary">
+    <i class="bi bi-plus-lg" aria-hidden="true"></i>
+        </asp:LinkButton>
+        <!-- Btn Disminuir -->
+        <asp:LinkButton Text="text" runat="server" ID="btnLess" CommandArgument='<%#Eval("Stock.Id")%>' CssClass="text-secondary">
+      <i class="bi bi-dash-lg" aria-hidden="true"></i>
+        </asp:LinkButton>
+    </div>
+    <!-- Eliminar producto del carrito -->
+    <div class="d-flex justify-content-center px-3 mt-5">
+        <asp:LinkButton Text="text" runat="server" ID="btnDelete" CommandArgument='<%#Eval("Stock.Id")%>' CssClass="text-danger">
+           <i class="bi bi-trash" aria-hidden="true"></i>
+        </asp:LinkButton>
+    </div>
+
+</div>
+                        </td>
+      
                 </ItemTemplate>
             </asp:Repeater>
            

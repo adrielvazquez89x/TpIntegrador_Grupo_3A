@@ -21,6 +21,21 @@ namespace TpIntegrador_Grupo_3A
 
             if (!IsPostBack)
             {
+                if (SessionSecurity.ActiveSession(Session["user"]))
+                {
+                    Model.User user = (Model.User)Session["user"];
+                    lblUser.Text = user.FirstName;
+                    if (!string.IsNullOrEmpty(user.ImageUrl))
+                        imgAvatar.ImageUrl = "~/Images/" + ((Model.User)Session["user"]).ImageUrl;
+                    else
+                        imgAvatar.ImageUrl = "https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Download-Free-PNG.png";
+                }
+                else
+                {
+                    if (!(base.Page is Login || base.Page is Register || base.Page is ResetPassword || base.Page is ResetPasswordConfirm || base.Page is Products || base.Page is Default || base.Page is Details || base.Page is Error) && (Session["error"] == null))
+                        Response.Redirect("~/Login.aspx", false);
+                }
+
                 BusinessProduct businessProduct = new BusinessProduct();
                 prodList = businessProduct.list();
                 //Session.Add("listAllProducts", prodList);
@@ -31,22 +46,6 @@ namespace TpIntegrador_Grupo_3A
 
                 RepeaterSidebar.DataSource = categList;
                 RepeaterSidebar.DataBind();
-            }
-
-
-            if (SessionSecurity.ActiveSession(Session["user"]))
-            {
-                Model.User user = (Model.User)Session["user"];
-                lblUser.Text = user.FirstName;
-                if (!string.IsNullOrEmpty(user.ImageUrl))
-                    imgAvatar.ImageUrl = "~/Images/" + ((Model.User)Session["user"]).ImageUrl;
-                else
-                    imgAvatar.ImageUrl = "https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Download-Free-PNG.png";
-            }
-            else
-            {
-                if (!(base.Page is Login || base.Page is Register || base.Page is ResetPassword || base.Page is ResetPasswordConfirm || base.Page is Products || base.Page is Default || base.Page is Details))
-                    Response.Redirect("~/Login.aspx", false);
             }
 
             //if (Request.Url.AbsolutePath.Contains("login") || Request.Url.AbsolutePath.Contains("Login"))

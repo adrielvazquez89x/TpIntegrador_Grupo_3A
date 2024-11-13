@@ -1,13 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Details.aspx.cs" Inherits="TpIntegrador_Grupo_3A.Details" %>
-
-<%@ Register Src="~/Admin/UserControl_Toast.ascx" TagPrefix="uc1" TagName="UserControl_Toast" %>
-
+<%@ Register Src="~/Control_Toast.ascx" TagPrefix="uc1" TagName="Control_Toast" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2 class="text-center mb-5">Detalles del Producto</h2>
     <div class="container">
         <div class="row justify-content-center">
-             <uc1:UserControl_Toast runat="server" ID="UserControl_Toast" />
+            <uc1:Control_Toast runat="server" id="Control_Toast" />
+
             <asp:Repeater ID="rptProducts" runat="server" OnItemDataBound="rptProducts_ItemDataBound">
                 <ItemTemplate>
                    

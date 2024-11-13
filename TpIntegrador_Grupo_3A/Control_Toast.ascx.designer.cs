@@ -11,25 +11,25 @@ namespace TpIntegrador_Grupo_3A
 {
 
 
-    public partial class Cart
+    public partial class Control_Toast
     {
 
         /// <summary>
-        /// Control repeater.
+        /// Control toastDiv.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repeater;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl toastDiv;
 
         /// <summary>
-        /// Control btnVaciarCarrito.
+        /// Control ltlToastMessage.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnVaciarCarrito;
+        protected global::System.Web.UI.WebControls.Literal ltlToastMessage;
     }
 }

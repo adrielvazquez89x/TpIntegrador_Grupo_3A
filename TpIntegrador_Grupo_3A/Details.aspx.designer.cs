@@ -15,13 +15,13 @@ namespace TpIntegrador_Grupo_3A
     {
 
         /// <summary>
-        /// Control UserControl_Toast.
+        /// Control Control_Toast.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::TpIntegrador_Grupo_3A.Admin.UserControl_Toast UserControl_Toast;
+        protected global::TpIntegrador_Grupo_3A.Control_Toast Control_Toast;
 
         /// <summary>
         /// Control rptProducts.

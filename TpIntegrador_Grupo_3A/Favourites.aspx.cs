@@ -32,13 +32,17 @@ namespace TpIntegrador_Grupo_3A
                         rptFav.DataSource = ProdList;
                         rptFav.DataBind();
                     }
+                    else
+                    {
+                        Session.Add("error", "Debes estar logueado para ingresar a esta seccion");
+                        Response.Redirect("Error.aspx", false);
+                    }
                 }
-
+               
             }
             catch (Exception ex)
             {
                 Session.Add("error", ex.ToString());
-                Response.Redirect("Error.aspx", false);
             }
         }
 

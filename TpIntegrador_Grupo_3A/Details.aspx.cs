@@ -25,6 +25,8 @@ namespace TpIntegrador_Grupo_3A
         protected void Page_Load(object sender, EventArgs e)
         {
             CodeSelectedProd = Request.QueryString["Code"] != null ? (Request.QueryString["Code"]).ToString() : "";
+            if(CodeSelectedProd=="")
+                Response.Redirect("~/Default.aspx", false);
 
             if (!IsPostBack)
             {
@@ -184,14 +186,22 @@ namespace TpIntegrador_Grupo_3A
 
             Model.User user = (Model.User)Session["user"];
 
+            //aca habria primero que sumar number con la cant en carrito si es que ya existe !
             bool validateStock = ValidateStock(selectedColourId, selectedSizeId, number);
+            bool added=false;
             if (validateStock)
             {
-                user.Cart.AddProduct(selectedProd, stock, number);
+               added = user.Cart.AddProduct(selectedProd, stock, number);
             }
-
-            Session["user"] = user;
-            Response.Redirect(Request.RawUrl); // Redirige a la misma página para actualizar la vista
+            if (!added)
+            {
+                Control_Toast.ShowToast($"Este pedido no se sumo. Al agregar esto se excede el stock disponible", false);
+            }
+            else 
+            {
+                Session["user"] = user;
+                Response.Redirect(Request.RawUrl); // Redirige a la misma página para actualizar la vista
+            }            
         }
         protected bool ValidateStock(int selectedColourId, int selectedSizeId, int number)
         {
@@ -199,12 +209,12 @@ namespace TpIntegrador_Grupo_3A
             stock = businessStock.getStock(CodeSelectedProd, selectedColourId, selectedSizeId);
             if (number > stock.Amount)
             {
-                UserControl_Toast.ShowToast($"No es posible añadirlo al carrito. \n El producto con el talle y color seleccionados cuenta con un stock de {stock.Amount} prendas", false);
+                Control_Toast.ShowToast($"No es posible añadirlo al carrito. \n El producto con el talle y color seleccionados cuenta con un stock de {stock.Amount} prendas", false);
                 return false;
             }
             else
             {
-                UserControl_Toast.ShowToast("Articulo Añadido exitosamente", true);
+                Control_Toast.ShowToast("Articulo Añadido exitosamente", true);
                 //todavia no se resta del stock, eso recien al confirmar la compra se vuelve a ver
                 return true;
             }
