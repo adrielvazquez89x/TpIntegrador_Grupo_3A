@@ -24,20 +24,28 @@ namespace TpIntegrador_Grupo_3A
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            CodeSelectedProd = Request.QueryString["Code"] != null ? (Request.QueryString["Code"]).ToString() : "";
-            if(CodeSelectedProd=="")
-                Response.Redirect("~/Default.aspx", false);
-
             if (!IsPostBack)
             {
-                LoadSizes();
-                LoadColours();
+                CodeSelectedProd = Request.QueryString["Code"] != null ? (Request.QueryString["Code"]).ToString() : "";
+                if (CodeSelectedProd == "")
+                    Response.Redirect("~/Default.aspx", false);
+
                 if (CodeSelectedProd != "")
                 {
                     BusinessProduct businessProduct = new BusinessProduct();
                     products = businessProduct.list(CodeSelectedProd);
-                    rptProducts.DataSource = products;
-                    rptProducts.DataBind();
+                    if (products.Count >0)
+                    {
+                        LoadSizes();
+                        LoadColours();
+                        rptProducts.DataSource = products;
+                        rptProducts.DataBind();
+                    }
+                    else
+                    {
+                        Response.Redirect("~/Default.aspx", false);
+                    }
+                    
                 }
             }
 
