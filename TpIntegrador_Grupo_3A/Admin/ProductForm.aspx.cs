@@ -7,6 +7,7 @@ using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Services.Description;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -37,6 +38,7 @@ namespace TpIntegrador_Grupo_3A.Admin
                 // Obtener el ID del producto actual
                 currentProductId = Request.QueryString["id"] != null ? int.Parse(Request.QueryString["id"]) : 0;
                 Session["idCurrentItem"] = currentProductId;
+                
 
                 if (currentProductId != 0)
                 {
@@ -245,6 +247,8 @@ namespace TpIntegrador_Grupo_3A.Admin
                     txtPrice.Text = product[0].Price.ToString();
                     txtDescription.Text = product[0].Description;
 
+                    Session["isActive"] = product[0].IsActive;
+
                     ddlCategory.SelectedValue = product[0].Category.Id.ToString();
                     BindSubCategories(product[0].Category.Id);
 
@@ -263,6 +267,9 @@ namespace TpIntegrador_Grupo_3A.Admin
                     }
 
                     ddlSeason.SelectedValue = product[0].Season.Id.ToString();
+
+
+                    HandleToggleStateButton(product[0].IsActive);
                 }
             }
             catch (Exception ex)
@@ -271,6 +278,14 @@ namespace TpIntegrador_Grupo_3A.Admin
                 lblMessage.Text = "Error al cargar el producto: " + ex.Message;
                 lblMessage.CssClass = "text-danger";
             }
+        }
+
+        private void HandleToggleStateButton(bool product)
+        {
+            btnToggleEstado.Text = product ? "Desactivar" : "Activar";
+            btnToggleEstado.CssClass = "";
+            btnToggleEstado.CssClass = product ? "btn btn-danger" : "btn btn-success";
+            
         }
 
 
@@ -427,5 +442,35 @@ namespace TpIntegrador_Grupo_3A.Admin
             return imagesToDelete;
         }
 
+        protected void btnToggleEstado_Click(object sender, EventArgs e)
+        {
+
+            bool state = (bool)Session["isActive"] ? false : true;
+
+            BusinessProduct businnesProduct = new BusinessProduct();
+            try
+            {
+                bool result = businnesProduct.ToggleActivation(currentProductId, state);
+                string message = state ? "activado" : "desactivado";
+
+                if(result)
+                {
+                    UserControl_Toast.ShowToast($"El producto ha sido {message} correctamente", true);
+                    HandleToggleStateButton(state);
+                    Session["isActive"] = state;
+
+                   
+                }
+                else
+                {
+                   UserControl_Toast.ShowToast("Error al cambiar el producto", false);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }
