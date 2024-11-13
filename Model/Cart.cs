@@ -67,5 +67,15 @@ namespace Model
         {
             Items.Clear();
         }
+
+        public decimal SumTotal()
+        {
+            decimal total = 0;
+            foreach (ItemCart item in Items)
+            {
+                total += item.Subtotal;
+            }
+            return total;
+        }
     }
 }

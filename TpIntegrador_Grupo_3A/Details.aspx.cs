@@ -24,9 +24,9 @@ namespace TpIntegrador_Grupo_3A
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            CodeSelectedProd = Request.QueryString["Code"] != null ? (Request.QueryString["Code"]).ToString() : "";
             if (!IsPostBack)
             {
-                CodeSelectedProd = Request.QueryString["Code"] != null ? (Request.QueryString["Code"]).ToString() : "";
                 if (CodeSelectedProd == "")
                     Response.Redirect("~/Default.aspx", false);
 
@@ -175,7 +175,6 @@ namespace TpIntegrador_Grupo_3A
         protected void btnAddToCart_Click(object sender, EventArgs e)
         {
             lblError.Visible = false;
-            //CodeSelectedProd = ((Button)sender).CommandArgument.ToString();
             BusinessProduct businessProduct = new BusinessProduct();
             Product selectedProd = businessProduct.listByCode(CodeSelectedProd);
             int number = int.Parse(txtQuantity.Text);

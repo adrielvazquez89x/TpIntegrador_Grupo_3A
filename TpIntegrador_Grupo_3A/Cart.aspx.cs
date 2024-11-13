@@ -15,6 +15,7 @@ namespace TpIntegrador_Grupo_3A
     public partial class Cart : System.Web.UI.Page
     {
         public new List<ItemCart> Items = new List<ItemCart>();
+        public decimal Total;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -25,7 +26,7 @@ namespace TpIntegrador_Grupo_3A
                     {
                         Model.User user = (Model.User)Session["user"];
                         Items = user.Cart.Items;
-
+                        Total= user.Cart.SumTotal();
                         repeater.DataSource = Items;
                         repeater.DataBind();
                     }
@@ -47,7 +48,8 @@ namespace TpIntegrador_Grupo_3A
         {
             Model.User user = (Model.User)Session["user"];
             int stockId = int.Parse(((LinkButton)sender).CommandArgument);
-            Items = user.Cart.Items;
+            Items = user.Cart.Items; //lo tuve que agregar porque sino quedaba Items==null
+            Total = user.Cart.SumTotal();
             ItemCart selectedItem = Items.Find(item => item.Stock.Id == stockId);
 
             bool edited=user.Cart.UpdateProduct(selectedItem.Stock, 0); //envio un 1 para disminuir, un 0 para aumentar
@@ -66,7 +68,8 @@ namespace TpIntegrador_Grupo_3A
         {
             Model.User user = (Model.User)Session["user"];
             int stockId = int.Parse(((LinkButton)sender).CommandArgument);
-            Items = user.Cart.Items;
+            Items = user.Cart.Items; //lo tuve que agregar porque sino quedaba Items==null
+            Total = user.Cart.SumTotal();
             ItemCart selectedItem = Items.Find(item => item.Stock.Id == stockId);
 
             if (selectedItem.Number > 1)
@@ -89,7 +92,7 @@ namespace TpIntegrador_Grupo_3A
             int stockId = int.Parse(((LinkButton)sender).CommandArgument);
             ItemCart selectedItem =Items.Find(item => item.Stock.Id == stockId);
 
-            //Items.Remove(selectedItem);
+            Total = user.Cart.SumTotal();
             user.Cart.DeleteProduct(stockId);
 
             Session["user"] = user;
@@ -103,7 +106,7 @@ namespace TpIntegrador_Grupo_3A
         protected void btnEmptyCart_Click(object sender, EventArgs e)
         {
             Model.User user = (Model.User)Session["user"];
-            //Items.Clear();
+            Total = user.Cart.SumTotal();
             user.Cart.ClearCart();
 
             Session["user"] = user;
