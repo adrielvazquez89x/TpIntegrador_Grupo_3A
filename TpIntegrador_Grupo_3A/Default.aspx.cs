@@ -43,5 +43,14 @@ namespace TpIntegrador_Grupo_3A
                 rptProdList.DataBind();
             }
         }
+
+        protected void rptProdList_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "ViewProduct")
+            {
+                string productCode = e.CommandArgument.ToString();
+                Response.Redirect($"Details.aspx?Code={productCode}");
+            }
+        }
     }
 }

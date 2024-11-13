@@ -5,6 +5,9 @@
     /*height: 30px;*/
 }
 
+a{
+    text-decoration: none;
+}
 /* Botón Rosa Fucsia */
 .btn-fuchsia {
     background: linear-gradient(45deg, #ff0080, #ff77b4);

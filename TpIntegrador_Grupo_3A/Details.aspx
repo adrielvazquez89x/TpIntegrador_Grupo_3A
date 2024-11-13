@@ -5,6 +5,7 @@
     <h2 class="text-center mb-5">Detalles del Producto</h2>
     <div class="container">
         <div class="row justify-content-center">
+            
             <uc1:Control_Toast runat="server" id="Control_Toast" />
 
             <asp:Repeater ID="rptProducts" runat="server" OnItemDataBound="rptProducts_ItemDataBound">

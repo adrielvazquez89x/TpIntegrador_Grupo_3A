@@ -43,22 +43,25 @@
                     <!-- Slider de Productos -->
                                 <div class="row row-cols-1 row-cols-md-4 g-3">
                                     <!-- Repeater anidado para los productos -->
-                                    <asp:Repeater ID="rptProdList" runat="server">
-                                        <ItemTemplate>
-                                            <div class="col">
-                                                <div class="card h-100">
-                                                    <div class="card-body">
-                                                        <img style="height: 100px; object-fit:contain;"
-                                                        src='<%# (Eval("Images") != null && ((List<Model.ImageProduct>)Eval("Images")).Count > 0) ?
-                                                        ((List<Model.ImageProduct>)Eval("Images"))[0].UrlImage : "https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg" %>'  
+                                    <asp:Repeater ID="rptProdList" runat="server" OnItemCommand="rptProdList_ItemCommand">
+    <ItemTemplate>
+        <div class="col">
+            <!-- LinkButton para hacer clic en la tarjeta completa -->
+            <asp:LinkButton runat="server" CommandName="ViewProduct" CommandArgument='<%# Eval("Code") %>' CssClass="text-decoration-none">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <img style="height: 100px; object-fit: contain;"
+                             src='<%# (Eval("Images") != null && ((List<Model.ImageProduct>)Eval("Images")).Count > 0) ? ((List<Model.ImageProduct>)Eval("Images"))[0].UrlImage : "https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg" %>' />
 
-                                                        <p class="card-text d-block"><%# Eval("Description") %></p>                                                    
-                                                        <asp:HiddenField ID="hfProdId" runat="server" Value='<%# Eval("Id") %>' />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
+                        <p class="card-text d-block"><%# Eval("Description") %></p>
+                        <asp:HiddenField ID="hfProdId" runat="server" Value='<%# Eval("Id") %>' />
+                    </div>
+                </div>
+            </asp:LinkButton>
+        </div>
+    </ItemTemplate>
+</asp:Repeater>
+
                                  </div>
                     <a href='/products?IdSection=<%# Eval("Id") %>' class="btn btn-primary mt-3">Ver todos</a>
                 </div>
@@ -74,50 +77,56 @@
                  <div class="row">
                      <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
                          <h2 class="text-center">Envianos un mensaje</h2>
-                         <form class="row g-1" action="/" method="post">
-                             <div class="col-5">
-                                 <input
-                                     type="text"
-                                     class="form-control"
-                                     id="inputNombre"
-                                     placeholder="Nombre"
-                                     required
-                                     name="nombre" />
-                             </div>
-                             <div class="col-7">
-                                 <input
-                                     type="text"
-                                     class="form-control"
-                                     id="inputAsunto"
-                                     placeholder="Asunto"
-                                     required
-                                     name="asunto" />
-                             </div>
-                             <div class="col-12">
-                                 <label for="inputEmail" class="form-label">Email</label>
-                                 <input
-                                     type="email"
-                                     class="form-control"
-                                     id="inputEmail"
-                                     placeholder="ejemplo@email.com"
-                                     required
-                                     name="email" />
-                             </div>
-                             <div class="col-12">
-                                 <label for="inputMensaje" class="form-label">Mensaje</label>
-                                 <textarea
-                                     class="form-control"
-                                     id="inputMensaje"
-                                     rows="3"
-                                     placeholder="Hola! me gustaría consultar por..."
-                                     required
-                                     name="mensaje"></textarea>
-                             </div>
-                             <div class="col-12 my-3">
-                                 <button type="submit" class="btn btn-primary">Enviar</button>
-                             </div>
-                             
-                         </form>
+                         <form class="row g-3 p-4 shadow-sm bg-white rounded" action="/" method="post" style="max-width: 600px; margin: auto;">
+    <div class="col-md-6 mb-3">
+        <label for="inputNombre" class="form-label visually-hidden">Nombre</label>
+        <input
+            type="text"
+            class="form-control border-primary"
+            id="inputNombre"
+            placeholder="Nombre"
+            required
+            name="nombre" />
+    </div>
+    
+    <div class="col-md-6 mb-3">
+        <label for="inputAsunto" class="form-label visually-hidden">Asunto</label>
+        <input
+            type="text"
+            class="form-control border-primary"
+            id="inputAsunto"
+            placeholder="Asunto"
+            required
+            name="asunto" />
+    </div>
+    
+    <div class="col-12">
+        <label for="inputEmail" class="form-label text-muted">Correo Electrónico</label>
+        <input
+            type="email"
+            class="form-control border-primary"
+            id="inputEmail"
+            placeholder="ejemplo@email.com"
+            required
+            name="email" />
+    </div>
+    
+    <div class="col-12">
+        <label for="inputMensaje" class="form-label text-muted">Mensaje</label>
+        <textarea
+            class="form-control border-primary"
+            id="inputMensaje"
+            rows="4"
+            placeholder="Escribe tu mensaje aquí..."
+            required
+            name="mensaje"></textarea>
+    </div>
+    
+    <div class="col-12 d-grid mt-3">
+        <button type="submit" class="btn btn-primary btn-lg w-50">Enviar Mensaje</button>
+    </div>
+</form>
+
                      </div>
                      <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-1">
                          <h2 class="text-center">Conocé nuestro Local</h2>
