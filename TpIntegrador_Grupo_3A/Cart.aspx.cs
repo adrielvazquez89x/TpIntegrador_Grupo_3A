@@ -98,11 +98,6 @@ namespace TpIntegrador_Grupo_3A
             Session["user"] = user;
             Response.Redirect(Request.RawUrl);
         }
-        protected void btnBuy_Click(object sender, EventArgs e)
-        {
-
-        }
-
         protected void btnEmptyCart_Click(object sender, EventArgs e)
         {
             Model.User user = (Model.User)Session["user"];
@@ -111,6 +106,10 @@ namespace TpIntegrador_Grupo_3A
 
             Session["user"] = user;
             Response.Redirect(Request.RawUrl);
+        }
+        protected void btnBuy_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Checkout.aspx", false);
         }
 
     }

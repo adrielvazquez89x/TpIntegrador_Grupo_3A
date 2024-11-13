@@ -112,6 +112,7 @@
     <Content Include="Admin\UserControl_Toast.ascx" />
     <Content Include="Admin\UserForm.aspx" />
     <Content Include="Admin\UsersManagement.aspx" />
+    <Content Include="Checkout.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -280,6 +281,13 @@
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Checkout.aspx.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Checkout.aspx.designer.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Control_Toast.ascx.cs">
       <DependentUpon>Control_Toast.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
