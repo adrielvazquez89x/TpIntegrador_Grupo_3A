@@ -113,6 +113,8 @@
 
         <div class="col-lg-4 ">
 
+            <asp:TextBox runat="server" CssClass="form-control" ID="txtIdAdress" Visible="false" />
+
             <div class="mb-3">
                 <label class="form-label">Provincia</label>
                 <asp:TextBox runat="server" CssClass="form-control" ID="txtProvincia" />

@@ -169,6 +169,8 @@ namespace Business
                     // aux.Mobile = (string)reader["Celular"];
                     // aux.BirthDate = (DateTime)reader["FechaNac"];
                     //aux.RegistrationDate = (DateTime)reader["FechaAlta"];
+                    aux.AddressId = reader["IdDireccion"] != DBNull.Value ? (int)reader["IdDireccion"] : 0;  // Asegúrate de capturar el AddressId
+
                 }
                 return aux;
 
@@ -189,11 +191,12 @@ namespace Business
         {
             DataAccess data = new DataAccess();
             User user = new User();
+            BusinessAdress businessAdress = new BusinessAdress();
 
             try
             {
                 // Realizamos la consulta para obtener los detalles del usuario por ID
-                data.setQuery("SELECT * FROM Usuarios WHERE IdUsuario = @IdUsuario;");
+                data.setQuery("SELECT * FROM Usuarios U WHERE IdUsuario = @IdUsuario;");
                 data.setParameter("@IdUsuario", userId);
                 data.executeRead();
 
@@ -201,17 +204,31 @@ namespace Business
 
                 if (reader.Read())
                 {
-                    // Mapeamos los valores del lector al objeto User
-                    user.UserId = (int)reader["IdUsuario"];
-                    user.Email = (string)reader["Email"];
-                    user.FirstName = reader["Nombre"] != DBNull.Value ? (string)reader["Nombre"] : string.Empty;
-                    user.LastName = reader["Apellido"] != DBNull.Value ? (string)reader["Apellido"] : string.Empty;
-                    user.Active = (bool)reader["Active"];
-                    user.PasswordHash = reader["ContraseniaHash"] != DBNull.Value ? (string)reader["ContraseniaHash"] : string.Empty;
-                    // Puedes agregar más propiedades si las tienes en la base de datos.
+
+                    user.UserId = (int)data.Reader["IdUsuario"];
+                    user.Dni = data.Reader["Dni"] != DBNull.Value ? (string)data.Reader["Dni"] : string.Empty;
+                    user.FirstName = data.Reader["Nombre"] != DBNull.Value ? (string)data.Reader["Nombre"] : string.Empty;
+                    user.LastName = data.Reader["Apellido"] != DBNull.Value ? (string)data.Reader["Apellido"] : string.Empty;
+                    user.Email = data.Reader["Email"] != DBNull.Value ? (string)data.Reader["Email"] : string.Empty;
+                    user.Mobile = data.Reader["Celular"] != DBNull.Value ? (string)data.Reader["Celular"] : string.Empty;
+                    user.RegistrationDate = data.Reader["FechaAlta"] != DBNull.Value ? (DateTime)data.Reader["FechaAlta"] : default(DateTime);
+                    user.BirthDate = data.Reader["FechaNac"] != DBNull.Value ? (DateTime?)data.Reader["FechaNac"] : null;
+                    user.Active = (bool)data.Reader["Active"];
+                    user.Admin = (bool)data.Reader["EsAdmin"];
+                    user.Owner = (bool)data.Reader["EsOwner"];
+
+                    //user.PasswordHash = data.Reader["ContraseniaHash"] != DBNull.Value ? (string)data.Reader["ContraseniaHash"] : string.Empty;
+
+                    user.AddressId = data.Reader["IdDireccion"] != DBNull.Value ? (int)data.Reader["IdDireccion"] : 0;
+              
                 }
 
-                return user;
+                if (user.AddressId > 0)
+                {
+                    user.Address = businessAdress.GetAddressById(user.AddressId);
+                }
+
+                    return user;
             }
             catch (Exception ex)
             {
@@ -259,13 +276,13 @@ namespace Business
                 Apellido = @Apellido,
                 Email = @Email,
                 Celular = @Celular,
-                FechaNac = @FechaNacimiento,
-                IdDireccion = @IdDireccion
+                FechaNac = @FechaNacimiento
+                
                 
                
             WHERE IdUsuario = @IdUsuario";
 
-                // Asignar los parámetros a la consulta
+                
                 data.setQuery(query);
                 data.setParameter("@Dni", user.Dni);
                 data.setParameter("@Nombre", user.FirstName);
@@ -273,12 +290,10 @@ namespace Business
                 data.setParameter("@Email", user.Email);
                 data.setParameter("@Celular", user.Mobile);
                 data.setParameter("@FechaNacimiento", user.BirthDate);
-                data.setParameter("@IdDireccion", user.AddressId);
-              
-               
+                //data.setParameter("@IdDireccion", user.AddressId);
                 data.setParameter("@IdUsuario", user.UserId);
 
-                // Ejecutar la acción
+                
                 data.executeAction();
             }
             catch (Exception ex)
@@ -381,12 +396,12 @@ namespace Business
 
             try
             {
-                string query = "SELECT U.IdUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Celular, U.FechaAlta, U.Active, U.ContraseniaHash FROM Usuarios U WHERE U.EsAdmin = 1";
+                string query = "SELECT U.IdUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Celular, U.FechaAlta,U.FechaNac, U.Active, U.ContraseniaHash FROM Usuarios U WHERE U.EsAdmin = 1";
 
                 // Si se pasa un id, agrega la condición WHERE
                 if (!string.IsNullOrEmpty(id))
                 {
-                    query += " WHERE U.IdUsuario = @UserId";
+                    query += " AND U.IdUsuario = @UserId";
                 }
 
                 // Establecer la consulta
@@ -410,7 +425,8 @@ namespace Business
                         LastName = data.Reader["Apellido"] != DBNull.Value ? (string)data.Reader["Apellido"] : string.Empty,
                         Email = data.Reader["Email"] != DBNull.Value ? (string)data.Reader["Email"] : string.Empty,
                         Mobile = data.Reader["Celular"] != DBNull.Value ? (string)data.Reader["Celular"] : string.Empty,
-                        RegistrationDate = (DateTime)data.Reader["FechaAlta"],
+                        RegistrationDate = data.Reader["FechaAlta"] != DBNull.Value ? (DateTime)data.Reader["FechaAlta"] : default(DateTime),
+                        BirthDate = data.Reader["FechaNac"] != DBNull.Value ? (DateTime?)data.Reader["FechaNac"] : null,
                         Active = (bool)data.Reader["Active"],
                         PasswordHash = data.Reader["ContraseniaHash"] != DBNull.Value ? (string)data.Reader["ContraseniaHash"] : string.Empty
                     };

@@ -23,18 +23,48 @@ namespace TpIntegrador_Grupo_3A
                     {
 
                         Model.User user = (Model.User)Session["user"];
-                        txtEmail.Text = user.Email;
-                        txtEmail.ReadOnly = true;
-                        if (user.FirstName != null)
-                            txtNombre.Text = user.FirstName;
-                        if (user.LastName != null)
-                            txtApellido.Text = user.LastName;
-                        if (user.ImageUrl != null)
-                            imgNuevoPerfil.ImageUrl = "~/Images/" + user.ImageUrl;
+                        System.Diagnostics.Debug.WriteLine("User: " + user.ToString());
+                        txtDni.Text = user.Dni ?? "";  
+                        txtNombre.Text = user.FirstName ?? "";  
+                        txtApellido.Text = user.LastName ?? "";  
+                        txtEmail.Text = user.Email ?? ""; 
+                        txtCel.Text = user.Mobile ?? "";  
+                        if (user.BirthDate.HasValue)
+                        {
+                            txtNacimiento.Text = user.BirthDate.Value.ToString("yyyy-MM-dd"); // Formato año-mes-día
+                        }
                         else
-                            imgNuevoPerfil.ImageUrl = "https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg";
+                        {
+                            txtNacimiento.Text = ""; // O un valor por defecto si es nula
+                        }
+                        if (user.ImageUrl != null)
+                        {
+                            imgNuevoPerfil.ImageUrl = "~/Images/" + user.ImageUrl;
+                        }
+                        else
+                        {
+                            imgNuevoPerfil.ImageUrl = "https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg"; // Imagen por defecto
+                        }
 
-                        //imgNuevoPerfil.ImageUrl = "~/images/" + user.ImageUrl;
+
+                        if (user.AddressId > 0)
+                        {
+                            // Obtener la dirección del usuario
+                            BusinessAdress businessAdress = new BusinessAdress();
+                            Adress adress = businessAdress.GetAddressById(user.AddressId); 
+
+                            if (adress != null)
+                            {
+                                txtProvincia.Text = adress.Province;
+                                txtCiudad.Text = adress.Town;
+                                txtBarrio.Text = adress.District;
+                                txtCalle.Text = adress.Street;
+                                txtNumero.Text = adress.Number.ToString(); // Convertimos el número a string
+                                txtCP.Text = adress.CP;
+                                txtPiso.Text = adress.Floor;
+                                txtDpto.Text = adress.Unit;
+                            }
+                        }
                     }
                     else
                     {
@@ -108,12 +138,24 @@ namespace TpIntegrador_Grupo_3A
                     adress.Number = string.IsNullOrEmpty(txtNumero.Text) ? 0 : Convert.ToInt32(txtNumero.Text);
                     adress.CP = txtCP.Text;
                     adress.Floor = string.IsNullOrEmpty(txtPiso.Text) ? null : txtPiso.Text;
-
                     adress.Unit = txtDpto.Text;
 
+                    if ( user.AddressId > 0)
+                    {
+                        adress.Id = user.AddressId; // Si ya tiene dirección, asignamos el Id de la dirección
+                        businessAdress.Update(adress); // Llamamos a un método Update que debería actualizar la tabla de direcciones
+                    }
+                    else
+                    {
+                        // Si el usuario no tiene dirección, hacemos un INSERT
+                        businessAdress.Add(adress); // Este método debe insertar la nueva dirección en la base de datos
+                        user.AddressId = adress.Id; // Asignamos el nuevo Id de la dirección al usuario
+                    }
 
-                    businessAdress.Add(adress);
-                    user.AddressId = adress.Id;
+
+
+                    //businessAdress.Add(adress);
+                    //user.AddressId = adress.Id;
 
                     businessUser.Update(user);
                 }

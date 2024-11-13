@@ -31,6 +31,7 @@ namespace TpIntegrador_Grupo_3A
 
                 if (businessUser.Login(user))
                 {
+                    user = businessUser.GetUserById(user.UserId);
                     Session.Add("user", user);
 
                     if (!user.Active)

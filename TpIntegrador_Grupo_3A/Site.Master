@@ -102,7 +102,7 @@
                                     <div class="accordion-body p-2">
                                         <ul class="list-unstyled">
                                             <li>
-                                                <a href="MyProfile.aspx" class="text-decoration-none">Mi Perfil</a>
+                                                <a href="/MyProfile.aspx" class="text-decoration-none">Mi Perfil</a>
                                             </li>
                                             <li>
                                                 <asp:Button Text="Salir" ID="btnExit" CssClass="text-decoration-none text-light d-block bg-transparent border-0" OnClick="btnExit_Click" runat="server" />
