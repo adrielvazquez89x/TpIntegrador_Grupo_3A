@@ -7,6 +7,7 @@ using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Services.Description;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -37,6 +38,7 @@ namespace TpIntegrador_Grupo_3A.Admin
                 // Obtener el ID del producto actual
                 currentProductId = Request.QueryString["id"] != null ? int.Parse(Request.QueryString["id"]) : 0;
                 Session["idCurrentItem"] = currentProductId;
+                
 
                 if (currentProductId != 0)
                 {
@@ -226,8 +228,6 @@ namespace TpIntegrador_Grupo_3A.Admin
             lblMessage.CssClass = "";
         }
 
-
-
         private void FillForm(int id)
         {
             BusinessProduct businessProduct = new BusinessProduct();
@@ -244,6 +244,9 @@ namespace TpIntegrador_Grupo_3A.Admin
                     txtName.Text = product[0].Name;
                     txtPrice.Text = product[0].Price.ToString();
                     txtDescription.Text = product[0].Description;
+
+                    Session["isActive"] = product[0].IsActive;
+                    Session["CurrentProductCode"] = currentProductCode;
 
                     ddlCategory.SelectedValue = product[0].Category.Id.ToString();
                     BindSubCategories(product[0].Category.Id);
@@ -263,6 +266,9 @@ namespace TpIntegrador_Grupo_3A.Admin
                     }
 
                     ddlSeason.SelectedValue = product[0].Season.Id.ToString();
+
+
+                    HandleToggleStateButton(product[0].IsActive);
                 }
             }
             catch (Exception ex)
@@ -273,8 +279,13 @@ namespace TpIntegrador_Grupo_3A.Admin
             }
         }
 
-
-
+        private void HandleToggleStateButton(bool product)
+        {
+            btnToggleEstado.Text = product ? "Desactivar" : "Activar";
+            btnToggleEstado.CssClass = "";
+            btnToggleEstado.CssClass = product ? "btn btn-danger" : "btn btn-success";
+            
+        }
         //IMAGENES
 
         private void InitializeImages()
@@ -305,7 +316,6 @@ namespace TpIntegrador_Grupo_3A.Admin
             lblMessage.Text = "";
         }
 
-
         private void BindImagesListBox()
         {
             List<string> newImages = ViewState[NewImagesViewStateKey] as List<string>;
@@ -315,7 +325,6 @@ namespace TpIntegrador_Grupo_3A.Admin
                 lstImages.Items.Add(new ListItem(imageUrl));
             }
         }
-
 
         private void BindImagesRepeater()
         {
@@ -342,7 +351,6 @@ namespace TpIntegrador_Grupo_3A.Admin
                 rptExistingImages.DataBind();
             }
         }
-
 
         protected void lstImages_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -427,5 +435,71 @@ namespace TpIntegrador_Grupo_3A.Admin
             return imagesToDelete;
         }
 
+        protected void btnToggleEstado_Click(object sender, EventArgs e)
+        {
+
+            bool state = (bool)Session["isActive"] ? false : true;
+
+            BusinessProduct businnesProduct = new BusinessProduct();
+            try
+            {
+                bool result = businnesProduct.ToggleActivation(currentProductId, state);
+                string message = state ? "activado" : "desactivado";
+
+                if(result)
+                {
+                    UserControl_Toast.ShowToast($"El producto ha sido {message} correctamente", true);
+                    HandleToggleStateButton(state);
+                    Session["isActive"] = state;
+
+                   
+                }
+                else
+                {
+                   UserControl_Toast.ShowToast("Error al cambiar el producto", false);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        protected void btnEliminarDefinitivo_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if(chkConfirmarEliminar.Checked)
+                {
+                    BusinessProduct businessProduct = new BusinessProduct();
+
+                    currentProductCode = Session["CurrentProductCode"] != null ? (string)Session["CurrentProductCode"] : "";
+                    currentProductId = Session["idCurrentItem"] != null ? (int)Session["idCurrentItem"] : 0;
+
+                    bool result = businessProduct.Delete(currentProductId, currentProductCode);
+
+                    if(result)
+                    {
+                        UserControl_Toast.ShowToast("Producto eliminado correctamente", true);
+                        ClearForm();
+                    }
+                    else
+                    {
+                       UserControl_Toast.ShowToast("Error al eliminar el producto", false);
+                    }
+                    
+                }
+                else
+                {
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
