@@ -109,6 +109,7 @@
     <Content Include="Admin\UserControl_ButtonBack.ascx" />
     <Content Include="Admin\UserControl_Buttons.ascx" />
     <Content Include="Admin\ProductsManagement.aspx" />
+    <Content Include="Admin\UserControl_ModalStock.ascx" />
     <Content Include="Admin\UserControl_Toast.ascx" />
     <Content Include="Admin\UserForm.aspx" />
     <Content Include="Admin\UsersManagement.aspx" />
@@ -257,6 +258,13 @@
     </Compile>
     <Compile Include="Admin\ProductsManagement.aspx.designer.cs">
       <DependentUpon>ProductsManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\UserControl_ModalStock.ascx.cs">
+      <DependentUpon>UserControl_ModalStock.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\UserControl_ModalStock.ascx.designer.cs">
+      <DependentUpon>UserControl_ModalStock.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\UserControl_Toast.ascx.cs">
       <DependentUpon>UserControl_Toast.ascx</DependentUpon>

@@ -2,6 +2,8 @@
 
 <%@ Register Src="~/Admin/UserControl_Buttons.ascx" TagPrefix="uc1" TagName="UserControl_Buttons" %>
 <%@ Register Src="~/Admin/UserControl_Toast.ascx" TagPrefix="uc1" TagName="UserControl_Toast" %>
+<%@ Register Src="~/Admin/UserControl_ModalStock.ascx" TagPrefix="uc1" TagName="UserControl_ModalStock" %>
+
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
@@ -108,16 +110,14 @@
                     </div>
                 </PagerTemplate>
             </asp:GridView>
-
-
-
+            
             <asp:LinkButton ID="btnAddProduct" runat="server" CssClass="buttonCus btn-electric-blue" OnClick="btnAddProduct_Click">
                 <i class="bi bi-bag-plus fs-4"></i>
                 Agregar Producto
             </asp:LinkButton>
 
             <uc1:UserControl_Toast runat="server" ID="UserControl_Toast" />
-
+            <uc1:UserControl_ModalStock runat="server" id="UserControl_ModalStock" />
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
