@@ -207,7 +207,8 @@ namespace TpIntegrador_Grupo_3A
             else 
             {
                 Session["user"] = user;
-                Response.Redirect(Request.RawUrl); // Redirige a la misma página para actualizar la vista
+                // Response.Redirect(Request.RawUrl); // Redirige a la misma página para actualizar la vista
+                Control_Toast.ShowToast($"Opaaaaa", true);
             }            
         }
         protected bool ValidateStock(int selectedColourId, int selectedSizeId, int number)
