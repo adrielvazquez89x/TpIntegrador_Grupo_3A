@@ -69,6 +69,26 @@ namespace Business
 
         }
 
+        public string DeleteAll(string code, DataAccess data)
+        {
+            try
+            {
+                data.clearParams();
+                string query = "DELETE FROM ImagenesProductos WHERE CodigoProducto = @CodigoProducto";
+                data.setQuery(query);
+                data.setParameter("@CodigoProducto", code);
+                data.executeAction();
+
+                return "ok";
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al borrar las imágenes: " + ex.Message);
+            }
+
+        }
+
         public void Add(string imgUrl, string code, DataAccess data)
         {
             try

@@ -470,5 +470,29 @@ namespace Business
                 throw ex ;
             }
         }
+
+        public bool Delete(int id, string code)
+        {
+            BusinessImageProduct businesImgProduct = new BusinessImageProduct();
+            try
+            {
+                data.BeginTransaction();
+
+                businesImgProduct.DeleteAll(code, data);
+
+                data.setQuery("DELETE FROM Productos WHERE Id = @Id");
+                data.setParameter("@Id", id);
+                data.executeAction();
+
+                data.CommitTransaction();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                data.RollbackTransaction();
+                throw ex;
+            }
+        }
     }
 }

@@ -7,46 +7,65 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <div class="container">
+            <div>
                 <h2 class="text-center my-5">Gestión de Producto</h2>
-
                 <!-- Fila que contiene ambas columnas -->
-                <div class="row">
+                <div class="row justify-content-around">
                     <!-- Columna Izquierda -->
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="txtCode" class="form-label">Código:</label>
-                            <asp:TextBox ID="txtCode" runat="server" CssClass="form-control"></asp:TextBox>
+                    <div class="col-md-7 d-flex flex-column rounded-4 p-4 bg-secondary bg-opacity-10">
+
+                        <div class="row d-flex align-items-center">
+                            <!-- Contenedor de columnas para alinear los inputs -->
+                            <div class="d-flex mb-3">
+                                <div class="col-4">
+                                    <label for="txtCode" class="form-label">Código:</label>
+                                    <asp:TextBox ID="txtCode" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="col-4">
+                                    <label for="txtName" class="form-label">Nombre:</label>
+                                    <asp:TextBox ID="txtName" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="col-4">
+                                    <label for="txtPrice" class="form-label">Precio:</label>
+                                    <asp:TextBox ID="txtPrice" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="txtName" class="form-label">Nombre:</label>
-                            <asp:TextBox ID="txtName" runat="server" CssClass="form-control"></asp:TextBox>
+
+                        <div class="row ">
+                            <div class="mb-3 col-12">
+                                <label for="txtDescription" class="form-label">Descripción:</label>
+                                <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control w-100" TextMode="MultiLine" Rows="5" Style="width: 100%;"></asp:TextBox>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="txtPrice" class="form-label">Precio:</label>
-                            <asp:TextBox ID="txtPrice" runat="server" CssClass="form-control"></asp:TextBox>
+                        <div class="row">
+                            <div class="mb-3 col-4">
+                                <label for="ddlCategory" class="form-label">Categoría:</label>
+                                <asp:DropDownList
+                                    ID="ddlCategory"
+                                    runat="server"
+                                    CssClass="form-select"
+                                    OnSelectedIndexChanged="ddlCategory_SelectedIndexChanged" AutoPostBack="true">
+                                </asp:DropDownList>
+                            </div>
+                            <div class="mb-3 col-4">
+                                <label for="ddlSubCategory" class="form-label">Sub-Categoría:</label>
+                                <asp:DropDownList
+                                    ID="ddlSubCategory"
+                                    runat="server"
+                                    CssClass="form-select">
+                                </asp:DropDownList>
+                            </div>
+                            <div class="mb-3 col-4">
+                                <label for="ddlSeason" class="form-label">Temporada:</label>
+                                <asp:DropDownList
+                                    ID="ddlSeason"
+                                    runat="server"
+                                    CssClass="form-select">
+                                </asp:DropDownList>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="txtDescription" class="form-label">Descripción:</label>
-                            <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="5"></asp:TextBox>
-                        </div>
-                        <div class="mb-3">
-                            <label for="ddlCategory" class="form-label">Categoría:</label>
-                            <asp:DropDownList
-                                ID="ddlCategory"
-                                runat="server"
-                                CssClass="form-select"
-                                OnSelectedIndexChanged="ddlCategory_SelectedIndexChanged" AutoPostBack="true">
-                            </asp:DropDownList>
-                        </div>
-                        <div class="mb-3">
-                            <label for="ddlSubCategory" class="form-label">Sub-Categoría:</label>
-                            <asp:DropDownList ID="ddlSubCategory" runat="server" CssClass="form-select"></asp:DropDownList>
-                        </div>
-                        <div class="mb-4">
-                            <label for="ddlSeason" class="form-label">Temporada:</label>
-                            <asp:DropDownList ID="ddlSeason" runat="server" CssClass="form-select"></asp:DropDownList>
-                        </div>
+
                         <%--                        
                     <div class="form-group">
                         <label for="ddlSection">Sección:</label>
@@ -64,51 +83,10 @@
                                 CssClass="btn btn-primary"
                                 OnClick="btnSave_Click" />
                         </div>
-                        <div>
-                            <div class="container mt-5">
-                                <div class="card shadow">
-                                    <div class="card-body">
-                                        <!-- Botones de Activar/Desactivar y Eliminar -->
-                                        <div class="d-flex justify-content-between mb-4">
-                                            <asp:Button
-                                                ID="btnToggleEstado"
-                                                runat="server"
-                                                Text="Desactivar"
-                                                CssClass="btn btn-danger" OnClick="btnToggleEstado_Click" />
-                                            <asp:Button
-                                                ID="btnEliminar"
-                                                runat="server"
-                                                Text="Eliminar"
-                                                CssClass="btn btn-secondary" />
-                                        </div>
-
-
-
-                                        <div id="divConfirmarEliminar" class="alert alert-warning d-none">
-                                            <!-- Información del Producto (puedes agregar más campos según necesidad) -->
-                                            <div class="mb-3">
-                                                <h4>Eliminación</h4>
-                                            </div>
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="chkConfirmarEliminar" runat="server"
-                                                    onclick="ToggleEliminarDefinitivo()" />
-                                                <label class="form-check-label" for="chkConfirmarEliminar">Confirmar eliminación</label>
-                                            </div>
-                                            <asp:Button
-                                                ID="btnEliminarDefinitivo"
-                                                runat="server"
-                                                Text="Eliminar Definitivamente"
-                                                CssClass="btn btn-danger mt-2"
-                                                Enabled="true" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- Columna Derecha -->
-                    <div class="col-md-8">
+                    <div class="col-md-4 bg-secondary-subtle p-3 rounded-4">
                         <div class="mb-4">
                             <label for="txtImageUrl" class="form-label">Imágenes (URLs):</label>
                             <!-- Input para URL -->
@@ -131,7 +109,7 @@
                         <!-- Lista de Imágenes y Previsualización -->
                         <div class="mb-4">
                             <div class="row">
-                                <div class="col-md-6 mb-3">
+                                <div class="mb-3">
                                     <asp:ListBox
                                         ID="lstImages"
                                         runat="server"
@@ -164,11 +142,11 @@
                         <!-- Sección de Imágenes Existentes -->
                         <div>
                             <%-- Columna Derecha: Gestión de Imágenes --%>
-                            <div class="col-md-6">
+                            <div class="">
                                 <%-- Sección de Imágenes Existentes --%>
                                 <%
                                     if (currentProductId != 0)
-                                    {%>
+                                {%>
                                 <div class="form-group">
                                     <h4>Imágenes Existentes</h4>
                                     <asp:Repeater ID="rptExistingImages" runat="server">
@@ -208,14 +186,56 @@
                         </div>
                     </div>
                 </div>
+
+                <%-- Sección de eliminación y activación --%>
+                <div>
+                    <div class="mt-5 col-4 m-lg-4 ">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <!-- Botones de Activar/Desactivar y Eliminar -->
+                                <div class="d-flex justify-content-between mb-4">
+                                    <asp:Button
+                                        ID="btnToggleEstado"
+                                        runat="server"
+                                        Text="Desactivar"
+                                        CssClass="btn btn-danger" OnClick="btnToggleEstado_Click" />
+                                    <asp:Button
+                                        ID="btnEliminar"
+                                        runat="server"
+                                        Text="Eliminar"
+                                        CssClass="btn btn-secondary" OnClientClick="return ToggleShowDelete()" />
+                                </div>
+
+                                <div id="divConfirmarEliminar" class="alert alert-warning d-none">
+                                    <!-- Información del Producto (puedes agregar más campos según necesidad) -->
+                                    <div class="mb-3">
+                                        <h4>Eliminación</h4>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="chkConfirmarEliminar" runat="server"
+                                            onclick="ToggleEliminarDefinitivo()" />
+                                        <label class="form-check-label" for="chkConfirmarEliminar">Confirmar eliminación</label>
+                                    </div>
+                                    <asp:Button
+                                        ID="btnEliminarDefinitivo"
+                                        runat="server"
+                                        Text="Eliminar Definitivamente"
+                                        CssClass="btn btn-danger mt-2"
+                                        Enabled="true"
+                                        OnClick="btnEliminarDefinitivo_Click"
+                                        />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <asp:HiddenField ID="hfImagesToDelete" runat="server" />
                 <uc1:UserControl_Toast runat="server" ID="UserControl_Toast" />
             </div>
         </ContentTemplate>
 
     </asp:UpdatePanel>
-
-
 
     <script type="text/javascript">
         function toggleDelete(imageId) {
@@ -251,6 +271,13 @@
                 ids.splice(index, 1);
                 hiddenField.value = ids.join(',');
             }
+        }
+
+        function ToggleShowDelete() {
+            var divConfirmarEliminar = document.getElementById('divConfirmarEliminar');
+            divConfirmarEliminar.classList.toggle('d-none');
+
+            return false;
         }
     </script>
 </asp:Content>

@@ -228,8 +228,6 @@ namespace TpIntegrador_Grupo_3A.Admin
             lblMessage.CssClass = "";
         }
 
-
-
         private void FillForm(int id)
         {
             BusinessProduct businessProduct = new BusinessProduct();
@@ -248,6 +246,7 @@ namespace TpIntegrador_Grupo_3A.Admin
                     txtDescription.Text = product[0].Description;
 
                     Session["isActive"] = product[0].IsActive;
+                    Session["CurrentProductCode"] = currentProductCode;
 
                     ddlCategory.SelectedValue = product[0].Category.Id.ToString();
                     BindSubCategories(product[0].Category.Id);
@@ -287,9 +286,6 @@ namespace TpIntegrador_Grupo_3A.Admin
             btnToggleEstado.CssClass = product ? "btn btn-danger" : "btn btn-success";
             
         }
-
-
-
         //IMAGENES
 
         private void InitializeImages()
@@ -320,7 +316,6 @@ namespace TpIntegrador_Grupo_3A.Admin
             lblMessage.Text = "";
         }
 
-
         private void BindImagesListBox()
         {
             List<string> newImages = ViewState[NewImagesViewStateKey] as List<string>;
@@ -330,7 +325,6 @@ namespace TpIntegrador_Grupo_3A.Admin
                 lstImages.Items.Add(new ListItem(imageUrl));
             }
         }
-
 
         private void BindImagesRepeater()
         {
@@ -357,7 +351,6 @@ namespace TpIntegrador_Grupo_3A.Admin
                 rptExistingImages.DataBind();
             }
         }
-
 
         protected void lstImages_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -470,6 +463,42 @@ namespace TpIntegrador_Grupo_3A.Admin
             {
 
                 throw ex;
+            }
+        }
+
+        protected void btnEliminarDefinitivo_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if(chkConfirmarEliminar.Checked)
+                {
+                    BusinessProduct businessProduct = new BusinessProduct();
+
+                    currentProductCode = Session["CurrentProductCode"] != null ? (string)Session["CurrentProductCode"] : "";
+                    currentProductId = Session["idCurrentItem"] != null ? (int)Session["idCurrentItem"] : 0;
+
+                    bool result = businessProduct.Delete(currentProductId, currentProductCode);
+
+                    if(result)
+                    {
+                        UserControl_Toast.ShowToast("Producto eliminado correctamente", true);
+                        ClearForm();
+                    }
+                    else
+                    {
+                       UserControl_Toast.ShowToast("Error al eliminar el producto", false);
+                    }
+                    
+                }
+                else
+                {
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }
