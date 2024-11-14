@@ -32,13 +32,17 @@ namespace TpIntegrador_Grupo_3A
                         rptFav.DataSource = ProdList;
                         rptFav.DataBind();
                     }
+                    else
+                    {
+                        Session.Add("error", "Debes estar logueado para ingresar a esta seccion");
+                        Response.Redirect("Error.aspx", false);
+                    }
                 }
-
+               
             }
             catch (Exception ex)
             {
                 Session.Add("error", ex.ToString());
-                Response.Redirect("Error.aspx", false);
             }
         }
 
@@ -66,5 +70,28 @@ namespace TpIntegrador_Grupo_3A
             return aux;
         }
 
+        protected void bntDeleteFav_Click(object sender, EventArgs e)
+        {
+            string codeProdFav = ((LinkButton)sender).CommandArgument.ToString();
+            int idUser = ((Model.User)Session["user"]).UserId;
+
+            try
+            {
+                BusinessFavourite businessFav = new BusinessFavourite();
+                businessFav.Delete(idUser, codeProdFav);
+
+                FavIdList = listFavIdByUser(idUser);
+
+                ProdList = listProdFav(FavIdList);
+
+                rptFav.DataSource = ProdList;
+                rptFav.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
+            }
+        }
     }
 }

@@ -112,6 +112,7 @@
     <Content Include="Admin\UserControl_Toast.ascx" />
     <Content Include="Admin\UserForm.aspx" />
     <Content Include="Admin\UsersManagement.aspx" />
+    <Content Include="Checkout.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -129,6 +130,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Control_Toast.ascx" />
     <Content Include="Css\Master.css" />
     <Content Include="Default.aspx" />
     <Content Include="Details.aspx" />
@@ -136,12 +138,12 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\slider1.jpg" />
+    <Content Include="Images\trash-icon.png" />
     <Content Include="Login.aspx" />
     <Content Include="Cart.aspx" />
     <Content Include="Favourites.aspx" />
     <Content Include="MyProfile.aspx" />
     <Content Include="PassConfig.aspx" />
-    <Content Include="PersonalData.aspx" />
     <Content Include="Products.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="ResetPassword.aspx" />
@@ -279,6 +281,20 @@
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Checkout.aspx.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Checkout.aspx.designer.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Control_Toast.ascx.cs">
+      <DependentUpon>Control_Toast.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Control_Toast.ascx.designer.cs">
+      <DependentUpon>Control_Toast.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -337,13 +353,6 @@
     </Compile>
     <Compile Include="PassConfig.aspx.designer.cs">
       <DependentUpon>PassConfig.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="PersonalData.aspx.cs">
-      <DependentUpon>PersonalData.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PersonalData.aspx.designer.cs">
-      <DependentUpon>PersonalData.aspx</DependentUpon>
     </Compile>
     <Compile Include="Products.aspx.cs">
       <DependentUpon>Products.aspx</DependentUpon>

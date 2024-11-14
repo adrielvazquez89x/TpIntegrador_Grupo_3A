@@ -10,8 +10,8 @@ namespace Model.ProductAttributes
     {
         public int Id { get; set; }
         public string ProdCode { get; set; }
-        public int IdColour { get; set; }
-        public int IdSize { get; set; }
+        public Colour Colour { get; set; }
+        public Size Size { get; set; }
         public int Amount { get; set; }
     }
 }

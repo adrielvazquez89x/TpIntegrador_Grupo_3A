@@ -19,7 +19,10 @@ namespace Business.ProductAttributes
         {
             try
             {
-                data.setQuery("SELECT * FROM Stock WHERE AND Id = " + id);
+                data.setQuery($"SELECT S.Id AS Id, S.CodigoProducto, S.IdColor, S.IdTalle, S.Stock, " +
+                    $"CO.Descripcion AS Color, T.Descripcion AS Talle FROM Stock S " +
+                    $"INNER JOIN Colores Co ON CO.Id=S.IdColor INNER JOIN Talles T ON T.Id=S.IdTalle WHERE S.Id = {id}");
+
                 data.executeRead();
 
                 Stock aux = new Stock();
@@ -27,8 +30,16 @@ namespace Business.ProductAttributes
                 {
                     aux.Id = (int)data.Reader["Id"];
                     aux.ProdCode = (string)data.Reader["CodigoProducto"];
-                    aux.IdColour = (int)data.Reader["IdColor"];
-                    aux.IdSize = (int)data.Reader["IdTalle"];
+                    aux.Colour = new Colour
+                    {
+                        Id = data.Reader["IdColor"] != DBNull.Value ? (int)data.Reader["IdColor"] : 0,
+                        Description = data.Reader["Color"] != DBNull.Value ? (string)data.Reader["Color"] : string.Empty
+                    };
+                    aux.Size = new Size
+                    {
+                        Id = data.Reader["IdTalle"] != DBNull.Value ? (int)data.Reader["IdTalle"] : 0,
+                        Description = data.Reader["Talle"] != DBNull.Value ? (string)data.Reader["Talle"] : string.Empty
+                    };
                     aux.Amount = (int)data.Reader["Stock"];
                 }
 
@@ -45,11 +56,52 @@ namespace Business.ProductAttributes
             }
         }
 
+        public Stock getStock(string prodCode, int idColor, int idSize)
+        {
+            try
+            {
+                data.setQuery($"SELECT S.Id AS Id, S.CodigoProducto, S.IdColor, S.IdTalle, S.Stock, " +
+                    $"CO.Descripcion AS Color, T.Descripcion AS Talle FROM Stock S " +
+                    $"INNER JOIN Colores Co ON CO.Id=S.IdColor INNER JOIN Talles T ON T.Id=S.IdTalle" +
+                    $" WHERE CodigoProducto ='{prodCode}' AND IdColor={idColor} AND IdTalle={idSize}");
+                data.executeRead();
+
+                Stock aux = new Stock();
+                aux.Amount = 0;
+                while (data.Reader.Read())
+                {
+                    aux.Id = (int)data.Reader["Id"];
+                    aux.ProdCode = (string)data.Reader["CodigoProducto"];
+                    aux.Colour = new Colour
+                    {
+                        Id = data.Reader["IdColor"] != DBNull.Value ? (int)data.Reader["IdColor"] : 0,
+                        Description = data.Reader["Color"] != DBNull.Value ? (string)data.Reader["Color"] : string.Empty
+                    };
+                    aux.Size = new Size
+                    {
+                        Id = data.Reader["IdTalle"] != DBNull.Value ? (int)data.Reader["IdTalle"] : 0,
+                        Description = data.Reader["Talle"] != DBNull.Value ? (string)data.Reader["Talle"] : string.Empty
+                    };
+                    aux.Amount = (int)data.Reader["Stock"];
+                }
+
+                return aux;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
         public string Add(Stock stock)
         {
             try
             {
-                data.setQuery($"INSERT INTO Stock (CodigoProducto, IdColor, IdTalle, Stock) Values ('{stock.ProdCode}', {stock.IdColour}, {stock.IdSize}, {stock.Amount})");
+                data.setQuery($"INSERT INTO Stock (CodigoProducto, IdColor, IdTalle, Stock) Values ('{stock.ProdCode}', {stock.Colour.Id}, {stock.Size.Id}, {stock.Amount})");
                 data.executeAction();
                 return "ok";
             }
@@ -79,7 +131,7 @@ namespace Business.ProductAttributes
         {
             try
             {
-                data.setQuery($"UPDATE Stock SET CodigoProducto = '{stock.ProdCode}', IdColor={stock.IdColour}, IdTalle={stock.IdSize}, Stock={stock.Amount} WHERE Id = {stock.Id}");
+                data.setQuery($"UPDATE Stock SET CodigoProducto = '{stock.ProdCode}', IdColor={stock.Colour.Id}, IdTalle={stock.Size.Id}, Stock={stock.Amount} WHERE Id = {stock.Id}");
                 data.executeAction();
                 return "ok";
             }

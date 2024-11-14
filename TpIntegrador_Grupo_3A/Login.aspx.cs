@@ -31,13 +31,12 @@ namespace TpIntegrador_Grupo_3A
                 if (businessUser.Login(user))
                 {
                     Session.Add("user", user);
-
-                    if(!user.Active)
+                    if (Session["Cart"] == null)
                     {
-                        UserControl_Toast.ShowToast("Tu cuenta está inactiva. Contacta con el administrador.",false);
-                        return;  // Detener el proceso de redirección
+                        Model.Cart cart = new Model.Cart(); // Si no existe, creamos un nuevo carrito
+                        Session["Cart"] = cart;
+                        user.Cart = cart;
                     }
-
                     if (SessionSecurity.IsAdmin(Session["user"]))
                     {
                        

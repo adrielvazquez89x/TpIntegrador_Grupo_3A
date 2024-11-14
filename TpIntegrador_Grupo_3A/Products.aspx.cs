@@ -30,41 +30,63 @@ namespace TpIntegrador_Grupo_3A
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            BusinessProduct businessProd = new BusinessProduct();
-            int idCategory =Request.QueryString["Idcategory"] is null ? 0 : int.Parse(Request.QueryString["Idcategory"]);  //validarlo (podrian a mano ponerle algo no entero)
-
-            int idSubCategory = Request.QueryString["IdSubCategory"] is null ? 0 : int.Parse(Request.QueryString["IdSubCategory"]);  //validarlo (podrian a mano ponerle algo no entero)
-
-            prodList= prodList is null ? businessProd.list() : prodList;
-
-            if (!IsPostBack)
+            try 
             {
-                if (idCategory == 0)
+                BusinessProduct businessProd = new BusinessProduct();
+                
+                int idCategory = Request.QueryString["Idcategory"] is null ? 0 : int.Parse(Request.QueryString["Idcategory"]);  //validarlo (podrian a mano ponerle algo no entero)
+
+                int idSubCategory = Request.QueryString["IdSubCategory"] is null ? 0 : int.Parse(Request.QueryString["IdSubCategory"]);  //validarlo (podrian a mano ponerle algo no entero)
+
+                int idSection = Request.QueryString["IdSection"] is null ? 0 : int.Parse(Request.QueryString["IdSection"]);  //validarlo (podrian a mano ponerle algo no entero)
+
+                prodList = prodList is null ? businessProd.list() : prodList;
+
+
+                if (!IsPostBack)
                 {
-                    //prodList = businessProd.list();    //Carga los productos
-                    string filter = Session["productFilter"] as string;
-                    if (!string.IsNullOrEmpty(filter))
+                    if (idCategory == 0)
                     {
-                        prodList = prodList.FindAll(prod => prod.Name.ToUpper().Contains(filter.ToUpper()) ||
-                                                            prod.Description.ToUpper().Contains(filter.ToUpper()) ||
-                                                            prod.Category.Description.ToUpper().Contains(filter.ToUpper()) ||
-                                                            prod.SubCategory.Description.ToUpper().Contains(filter.ToUpper()) ||
-                                                            prod.Season.Description.ToUpper().Contains(filter.ToUpper()) ||
-                                                            prod.Price.ToString().Contains(filter));
-                        Session.Remove("productFilter");
+                        if (idSection == 0)
+                        {
+                            string filter = Session["productFilter"] as string;
+                            if (!string.IsNullOrEmpty(filter))
+                            {
+                                prodList = prodList.FindAll(prod => prod.Name.ToUpper().Contains(filter.ToUpper()) ||
+                                                                    prod.Description.ToUpper().Contains(filter.ToUpper()) ||
+                                                                    prod.Category.Description.ToUpper().Contains(filter.ToUpper()) ||
+                                                                    prod.SubCategory.Description.ToUpper().Contains(filter.ToUpper()) ||
+                                                                    prod.Season.Description.ToUpper().Contains(filter.ToUpper()) ||
+                                                                    prod.Price.ToString().Contains(filter));
+                                Session.Remove("productFilter");
+                            }
+                        }
+                        else
+                        {
+                            prodList = businessProd.listBySection(idSection);    //Carga los productos según la seccion
+                        }
                     }
+                    else
+                    {
+                        prodList = businessProd.listByCategory(idCategory, idSubCategory);    //Carga los productos según la categoría
+                    }
+
+                    Session.Add("AllProducts", prodList);
+
+                    rptProdList.DataSource = prodList;
+                    rptProdList.DataBind();
                 }
-                else
+                if (SessionSecurity.ActiveSession(Session["user"]))
                 {
-                    prodList = businessProd.listByCategory(idCategory, idSubCategory);    //Carga los productos según la categoría
+                    user = (Model.User)Session["user"];
                 }
-                rptProdList.DataSource = prodList;
-                rptProdList.DataBind();
             }
-            if (SessionSecurity.ActiveSession(Session["user"]))
+            catch (Exception ex) 
             {
-                user = (Model.User)Session["user"];
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
             }
+            
         }
 
         protected void rptProdList_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -84,7 +106,7 @@ namespace TpIntegrador_Grupo_3A
             Response.Redirect($"/Details?Code={CodeSelectedProd}");
         }
 
-        protected void ddlOrdenar_SelectedIndexChanged(object sender, EventArgs e)
+        protected void OrderByCriteria()
         {
             switch (ddlOrdenar.SelectedIndex)
             {
@@ -101,29 +123,40 @@ namespace TpIntegrador_Grupo_3A
                     prodList = prodList.OrderByDescending(x => x.Price).ToList();
                     break;
             }
-            rptProdList.DataSource = prodList;
-            rptProdList.DataBind();
         }
 
-        private void filterByPrice()
+        private void filterByPrice() 
         {
-            
+            int min = 0, max = 0;
 
-        }
+            string.IsNullOrEmpty(txtPriceMin.Text);
+            min = string.IsNullOrEmpty(txtPriceMin.Text) ? 0 : int.Parse(txtPriceMin.Text);
 
-        protected void btnFilter_Click(object sender, EventArgs e)
-        {
-            int min, max;
-
-            min = txtPriceMin.Text is null ? 0 : int.Parse(txtPriceMin.Text);  //si no ingresan texto toma el placeHolder y arroja error..
-
-            max = txtPriceMax.Text is null ? 0 : int.Parse(txtPriceMax.Text);
+            max = string.IsNullOrEmpty(txtPriceMax.Text) ? 0 : int.Parse(txtPriceMax.Text);
 
 
             if (max == 0)
                 prodList = prodList.FindAll(x => x.Price >= min);
             else
                 prodList = prodList.FindAll(x => x.Price >= min && x.Price <= max);
+
+        }
+
+        protected void btnFilter_Click(object sender, EventArgs e)
+        {
+            prodList = (List<Product>)Session["AllProducts"];
+            filterByPrice();
+            OrderByCriteria();
+            rptProdList.DataSource = prodList;
+            rptProdList.DataBind();
+        }
+
+        protected void btnClearFilter_Click(object sender, EventArgs e)
+        {
+            prodList = (List<Product>)Session["AllProducts"];
+            txtPriceMax.Text = "";
+            txtPriceMin.Text = "";
+            ddlOrdenar.SelectedIndex = 0;
 
             rptProdList.DataSource = prodList;
             rptProdList.DataBind();

@@ -41,9 +41,6 @@
                     </p>
 
                     <!-- Slider de Productos -->
-                    <div id="carouselProd<%# Eval("Id") %>" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
                                 <div class="row row-cols-1 row-cols-md-4 g-3">
                                     <!-- Repeater anidado para los productos -->
                                     <asp:Repeater ID="rptProdList" runat="server">
@@ -62,28 +59,14 @@
                                             </div>
                                         </ItemTemplate>
                                     </asp:Repeater>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Controles del slider -->
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProd<%# Eval("Id") %>" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselProd<%# Eval("Id") %>" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                    
-                    <a href='#' class="btn btn-primary mt-3">Ver todos</a>
+                                 </div>
+                    <a href='/products?IdSection=<%# Eval("Id") %>' class="btn btn-primary mt-3">Ver todos</a>
                 </div>
             </div>
         </div>
     </ItemTemplate>
 </asp:Repeater>
-        </div>
+        
 
                  <%--seccion contacto--%>
          <section>
@@ -211,6 +194,6 @@
              </div>
          </section>
          <%--fin seccion contacto--%>
-
+            </div>
     </main>
 </asp:Content>
