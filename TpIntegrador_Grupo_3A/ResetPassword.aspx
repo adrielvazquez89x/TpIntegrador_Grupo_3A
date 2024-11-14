@@ -6,7 +6,8 @@
             <div class="mb-3">
                 <label class="form-label">Email</label>
                 <asp:TextBox runat="server" CssClass="form-control" ID="txtResetEmail" REQUIRED />
-                <asp:Label Text="" ID="lblResetError" CssClass="error-message" runat="server" />
+                <asp:Label Text="" ID="lblSend"  ForeColor="Green" runat="server" />
+                <asp:Label Text="" ID="lblResetError" CssClass="error-message" ForeColor="Red" runat="server" />
             </div>
             <div class="text-center">
                 <asp:Button Text="Enviar Enlace" runat="server" CssClass="btn btn-primary" OnClick="btnSendReset_Click" ID="btnSendReset" />

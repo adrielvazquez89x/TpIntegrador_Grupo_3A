@@ -43,14 +43,7 @@
                     ErrorMessage="Debe cargar un DNI"
                     ForeColor="Red"
                     Display="Dynamic" />
-                <asp:RegularExpressionValidator
-                    ID="revDni"
-                    runat="server"
-                    ControlToValidate="txtDni"
-                    ValidationExpression="^\d{7,8}$"
-                    ErrorMessage="El DNI debe ser un número válido"
-                    ForeColor="Red"
-                    Display="Dynamic" />
+
             </div>
 
 
@@ -170,7 +163,7 @@
             <div class="mb-3">
                 <label class="form-label">Numero</label>
                 <asp:TextBox runat="server" CssClass="form-control" ID="txtNumero" />
-                    <asp:RequiredFieldValidator 
+                <asp:RequiredFieldValidator
                     ID="rfvNumero"
                     runat="server"
                     ControlToValidate="txtNumero"
@@ -191,7 +184,7 @@
             <div class="mb-3">
                 <label class="form-label">Codigo Postal</label>
                 <asp:TextBox runat="server" CssClass="form-control" ID="txtCP" />
-                <asp:RequiredFieldValidator 
+                <asp:RequiredFieldValidator
                     ID="rfvCP"
                     runat="server"
                     ControlToValidate="txtCP"
@@ -225,6 +218,15 @@
             <div class="mb-3">
                 <label class="form-label">Departamento</label>
                 <asp:TextBox runat="server" CssClass="form-control" ID="txtDpto" />
+
+                <asp:RegularExpressionValidator
+                    ID="revDpto"
+                    runat="server"
+                    ControlToValidate="txtDpto"
+                    ValidationExpression="^[A-Za-z0-9]{1,2}$"
+                    ErrorMessage="Solo se permiten 1 o 2 caracteres alfanuméricos."
+                    ForeColor="Red"
+                    Display="Dynamic" />
             </div>
 
         </div>

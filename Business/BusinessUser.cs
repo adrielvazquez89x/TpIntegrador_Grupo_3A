@@ -276,10 +276,8 @@ namespace Business
                 Apellido = @Apellido,
                 Email = @Email,
                 Celular = @Celular,
-                FechaNac = @FechaNacimiento
-                
-                
-               
+                FechaNac = @FechaNacimiento,
+                IdDireccion = @IdDireccion
             WHERE IdUsuario = @IdUsuario";
 
                 
@@ -290,7 +288,7 @@ namespace Business
                 data.setParameter("@Email", user.Email);
                 data.setParameter("@Celular", user.Mobile);
                 data.setParameter("@FechaNacimiento", user.BirthDate);
-                //data.setParameter("@IdDireccion", user.AddressId);
+                data.setParameter("@IdDireccion", user.AddressId);
                 data.setParameter("@IdUsuario", user.UserId);
 
                 

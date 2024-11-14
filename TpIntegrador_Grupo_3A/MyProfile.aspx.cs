@@ -137,7 +137,7 @@ namespace TpIntegrador_Grupo_3A
                     adress.Street = txtCalle.Text;
                     adress.Number = string.IsNullOrEmpty(txtNumero.Text) ? 0 : Convert.ToInt32(txtNumero.Text);
                     adress.CP = txtCP.Text;
-                    adress.Floor = string.IsNullOrEmpty(txtPiso.Text) ? null : txtPiso.Text;
+                    adress.Floor =  txtPiso.Text;
                     adress.Unit = txtDpto.Text;
 
                     if ( user.AddressId > 0)
@@ -148,7 +148,8 @@ namespace TpIntegrador_Grupo_3A
                     else
                     {
                         // Si el usuario no tiene dirección, hacemos un INSERT
-                        businessAdress.Add(adress); // Este método debe insertar la nueva dirección en la base de datos
+                        businessAdress.Add(adress);// Este método debe insertar la nueva dirección en la base de datos
+                        Console.WriteLine("Dirección insertada con Id: " + adress.Id);
                         user.AddressId = adress.Id; // Asignamos el nuevo Id de la dirección al usuario
                     }
 

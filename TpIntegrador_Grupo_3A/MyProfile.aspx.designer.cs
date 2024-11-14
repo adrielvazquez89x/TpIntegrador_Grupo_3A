@@ -69,15 +69,6 @@ namespace TpIntegrador_Grupo_3A
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDni;
 
         /// <summary>
-        /// revDni control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator revDni;
-
-        /// <summary>
         /// txtEmail control.
         /// </summary>
         /// <remarks>
@@ -319,6 +310,15 @@ namespace TpIntegrador_Grupo_3A
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDpto;
+
+        /// <summary>
+        /// revDpto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revDpto;
 
         /// <summary>
         /// btnGuardar control.
