@@ -15,7 +15,9 @@ namespace Model
         public string Email { get; set; }
         public string ImageUrl { get; set; }
         public string Mobile { get; set; }
-        public int? AddressId { get; set; }
+        public int AddressId { get; set; }
+
+        public Adress Address { get; set; }
         public DateTime? BirthDate { get; set; }
         public DateTime RegistrationDate { get; set; }
         public string PasswordHash { get; set; }

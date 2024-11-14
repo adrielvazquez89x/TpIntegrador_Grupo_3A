@@ -14,6 +14,7 @@ namespace TpIntegrador_Grupo_3A
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+         
 
         }
 
@@ -30,12 +31,20 @@ namespace TpIntegrador_Grupo_3A
 
                 if (businessUser.Login(user))
                 {
+                    user = businessUser.GetUserById(user.UserId);
                     Session.Add("user", user);
                     if (Session["Cart"] == null)
                     {
                         Model.Cart cart = new Model.Cart(); // Si no existe, creamos un nuevo carrito
                         Session["Cart"] = cart;
                         user.Cart = cart;
+
+                    if (!user.Active)
+                    { 
+                        //quedaria mejor implementar el toast no pude por el momento 
+                        //UserControl_Toast.ShowToast("Tu cuenta está inactiva. Contacta con el administrador.",false);
+                        lblError.Text = "Tu cuenta está inactiva. Contacta con el administrador.";
+                        return;  // Detener el proceso de redirección
                     }
                     if (SessionSecurity.IsAdmin(Session["user"]))
                     {
@@ -54,6 +63,7 @@ namespace TpIntegrador_Grupo_3A
                         // Redirigir a la página principal
                         Response.Redirect("Default.aspx", false);
                     }
+                   
                 }
                 else
                 {
