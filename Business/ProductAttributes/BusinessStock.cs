@@ -15,19 +15,20 @@ namespace Business.ProductAttributes
     public class BusinessStock
     {
         DataAccess data = new DataAccess();
-        public Stock list(int id)
+        public List<Stock> list(string code)
         {
+            List<Stock> stocks = new List<Stock>();
             try
             {
                 data.setQuery($"SELECT S.Id AS Id, S.CodigoProducto, S.IdColor, S.IdTalle, S.Stock, " +
                     $"CO.Descripcion AS Color, T.Descripcion AS Talle FROM Stock S " +
-                    $"INNER JOIN Colores Co ON CO.Id=S.IdColor INNER JOIN Talles T ON T.Id=S.IdTalle WHERE S.Id = {id}");
+                    $"INNER JOIN Colores Co ON CO.Id=S.IdColor INNER JOIN Talles T ON T.Id=S.IdTalle WHERE S.CodigoProducto = '{code}' ");
 
                 data.executeRead();
 
-                Stock aux = new Stock();
                 while (data.Reader.Read())
                 {
+                    Stock aux = new Stock();
                     aux.Id = (int)data.Reader["Id"];
                     aux.ProdCode = (string)data.Reader["CodigoProducto"];
                     aux.Colour = new Colour
@@ -41,9 +42,11 @@ namespace Business.ProductAttributes
                         Description = data.Reader["Talle"] != DBNull.Value ? (string)data.Reader["Talle"] : string.Empty
                     };
                     aux.Amount = (int)data.Reader["Stock"];
+
+                    stocks.Add(aux);
                 }
 
-                return aux;
+                return stocks;
             }
             catch (Exception ex)
             {

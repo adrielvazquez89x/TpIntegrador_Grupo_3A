@@ -1,8 +1,7 @@
 ﻿using Model;
+using Model.ProductAttributes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -12,16 +11,18 @@ namespace TpIntegrador_Grupo_3A.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Inicialización si es necesario
+
         }
 
-        // Método para mostrar el modal desde el servidor
-        public void ShowModal(string codigo, string nombre, int stockActual, List<Colour> colores, List<Size> talles)
+        public void ShowModal(string codigo, string nombre, List<Stock> stockActual, List<Colour> colores, List<Size> talles)
         {
             txtCodigo.Text = codigo;
             txtNombre.Text = nombre;
-            lblStockActual.Text = stockActual.ToString();
+            
+            rptStock.DataSource = stockActual;
+            rptStock.DataBind();
 
+            // Cargar colores y talles en los dropdowns
             ddlColor.DataSource = colores;
             ddlColor.DataValueField = "Id";
             ddlColor.DataTextField = "Description";
@@ -43,26 +44,29 @@ namespace TpIntegrador_Grupo_3A.Admin
             ScriptManager.RegisterStartupScript(this, GetType(), "showModal", script, true);
         }
 
-        protected void btnAceptar_Click(object sender, EventArgs e)
+        protected void btnAgregarStock_Click(object sender, EventArgs e)
         {
-            // Lógica para manejar la aceptación del modal
-            string codigo = txtCodigo.Text;
-            string nombre = txtNombre.Text;
-            int cantidad = int.Parse(txtCantidad.Text);
+            // Lógica para agregar una nueva combinación de stock
             int colorId = int.Parse(ddlColor.SelectedValue);
             int talleId = int.Parse(ddlTalle.SelectedValue);
+            int cantidad = int.Parse(txtCantidad.Text);
 
-            // Aquí puedes agregar la lógica para actualizar el stock en la base de datos
+            // Aquí agregarías la lógica para insertar un nuevo stock en la base de datos
+        }
 
-            // Después de la lógica, ocultar el modal
-            string script = $@"
-                var toastEl = document.getElementById('{stockModal.ClientID}');
-                var modal = bootstrap.Modal.getInstance(toastEl);
-                if (modal) {{
-                    modal.hide();
-                }}
-            ";
-            ScriptManager.RegisterStartupScript(this, GetType(), "hideModal", script, true);
+        protected void rptStock_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "UpdateStock")
+            {
+                
+                int newStock;
+                if (int.TryParse(((TextBox)e.Item.FindControl("txtEditStock")).Text, out newStock))
+                {
+                    int stockId = int.Parse(e.CommandArgument.ToString());
+
+                    // Actualizar el stock en la base de datos usando stockId y newStock
+                }
+            }
         }
     }
 }
