@@ -23,7 +23,7 @@ namespace TpIntegrador_Grupo_3A
                     {
 
                         Model.User user = (Model.User)Session["user"];
-                        System.Diagnostics.Debug.WriteLine("User: " + user.ToString());
+                        //System.Diagnostics.Debug.WriteLine("User: " + user.ToString());
                         txtDni.Text = user.Dni ?? "";  
                         txtNombre.Text = user.FirstName ?? "";  
                         txtApellido.Text = user.LastName ?? "";  

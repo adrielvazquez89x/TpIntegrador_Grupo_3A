@@ -96,7 +96,7 @@ namespace TpIntegrador_Grupo_3A.Admin
                 {
                     // Actualizar el usuario existente
                     user.UserId = int.Parse(Request.QueryString["id"]);
-                    businessUser.Update(user);
+                    businessUser.UpdateUserForm(user);
                     UserControl_Toast.ShowToast("Usuario actualizado correctamente.", true);
                     Response.Redirect("/Admin/UsersManagement.aspx", false);
                 }

@@ -11,7 +11,7 @@
 
 
                 <asp:Label ID="lblEmail" runat="server" Text="Email" CssClass="form-label"></asp:Label>
-                <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" REQUIRED></asp:TextBox>
+                <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" required="true"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvEmail" runat="server" ControlToValidate="txtEmail" ErrorMessage="Email requerido." CssClass="text-danger" Display="Dynamic"></asp:RequiredFieldValidator>
                 <asp:RegularExpressionValidator ID="revEmail" runat="server" ControlToValidate="txtEmail" ErrorMessage="Formato de email invalido." CssClass="text-danger" ValidationExpression="^[^@\s]+@[^@\s]+\.[^@\s]+$" Display="Dynamic"></asp:RegularExpressionValidator>
                 <div class="container mb-2">
@@ -20,7 +20,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Contraseña</label>
-                <asp:TextBox runat="server" CssClass="form-control w-100" ID="txtPassword" TextMode="Password" REQUIRED />
+                <asp:TextBox runat="server" CssClass="form-control w-100" ID="txtPassword" TextMode="Password" required="true" />
 
             </div>
             <%--<div class="mb-3">

@@ -46,20 +46,8 @@ namespace TpIntegrador_Grupo_3A
             else
             {
                 //DESCOMENTAR ESTO 
-               // if (!(base.Page is Login || base.Page is Register || base.Page is Products || base.Page is Default))
+                //if (!(base.Page is Login || base.Page is Register || base.Page is Products || base.Page is Default))
                 //Response.Redirect("~/Login.aspx", false);
-            }
-
-                BusinessProduct businessProduct = new BusinessProduct();
-                prodList = businessProduct.list();
-                //Session.Add("listAllProducts", prodList);
-                Session["listAllProducts"] = prodList;
-
-                BusinessCategory businessCategory = new BusinessCategory();
-                categList = businessCategory.list();
-
-                RepeaterSidebar.DataSource = categList;
-                RepeaterSidebar.DataBind();
             }
 
             //if (Request.Url.AbsolutePath.Contains("login") || Request.Url.AbsolutePath.Contains("Login"))

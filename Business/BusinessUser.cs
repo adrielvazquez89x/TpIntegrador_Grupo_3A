@@ -90,8 +90,6 @@ namespace Business
         public bool Login(User user)
         {
             DataAccess data = new DataAccess();
-
-
             try
             {
 
@@ -216,6 +214,8 @@ namespace Business
                     user.Active = (bool)data.Reader["Active"];
                     user.Admin = (bool)data.Reader["EsAdmin"];
                     user.Owner = (bool)data.Reader["EsOwner"];
+                    user.ImageUrl = data.Reader["UrlImg"] != DBNull.Value ? (string)data.Reader["UrlImg"] : string.Empty;
+
 
                     //user.PasswordHash = data.Reader["ContraseniaHash"] != DBNull.Value ? (string)data.Reader["ContraseniaHash"] : string.Empty;
 
@@ -297,6 +297,44 @@ namespace Business
             catch (Exception ex)
             {
                 throw new Exception("Error al actualizar el usuario: " + ex.Message);
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
+
+
+        public void UpdateUserForm(User user)
+        {
+            DataAccess data = new DataAccess();
+            try
+            {
+                string query = @"
+        UPDATE Usuarios 
+        SET 
+            Dni = @Dni,
+            Nombre = @Nombre,
+            Apellido = @Apellido,
+            Email = @Email,
+            Celular = @Celular,
+            FechaNac = @FechaNacimiento
+        WHERE IdUsuario = @IdUsuario";
+
+                data.setQuery(query);
+                data.setParameter("@Dni", user.Dni);
+                data.setParameter("@Nombre", user.FirstName);
+                data.setParameter("@Apellido", user.LastName);
+                data.setParameter("@Email", user.Email);
+                data.setParameter("@Celular", user.Mobile);
+                data.setParameter("@FechaNacimiento", user.BirthDate);
+                data.setParameter("@IdUsuario", user.UserId);
+
+                data.executeAction();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al actualizar la información del usuario: " + ex.Message);
             }
             finally
             {

@@ -19,7 +19,7 @@ namespace TpIntegrador_Grupo_3A
         protected void btnSendReset_Click(object sender, EventArgs e)
         {
             var businessUser = new BusinessUser();
-            var userEmail = txtResetEmail.Text.Trim();
+            var userEmail = txtResetEmail.Text;
 
             if (businessUser.emailExists(userEmail))
             {
@@ -39,7 +39,7 @@ namespace TpIntegrador_Grupo_3A
                     var resetLink = $"https://localhost:44379/ResetPasswordConfirm.aspx?email={userEmail}&token={token}";
 
                     // Enviar el correo
-                    EmailService emailService = new EmailService("programacionsorteos@gmail.com", "zlujsnytsxpeuvsy");
+                    EmailService emailService = new EmailService("programacionsorteos@gmail.com", "rdnnfccpmyfoamap");
 
                     var subject = "Restablecer Contraseña";
                     var body = $"Haz clic en este enlace para restablecer tu contraseña: <a href='{resetLink}'>Restablecer Contraseña</a>";
