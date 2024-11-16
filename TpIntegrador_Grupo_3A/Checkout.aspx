@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="BannerContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:ScriptManager runat="server" />
+    <%--<asp:ScriptManager runat="server" />--%>
 
 <h1 class="text-center mt-5" id="h1Confirmar">Confirmar Compra</h1>
 <%-- Primera parte del formulario, datos personales --%>
@@ -43,7 +43,6 @@
                             runat="server"
                             placeholder="Ingrese número de tarjeta"
                             CssClass="form-control my-1" Text="1111-1111-1111-1111"></asp:TextBox>
-                        <span class="text-danger">NO INGRESAR DATOS REALES DE TARJETA DE CREDITO</span>
                         <%}%>
                     </div>
 
@@ -52,7 +51,7 @@
             <div class="mt-5">
                 <asp:Button ID="btnConfirmarCompra" runat="server"
                     CssClass="btnComprar" Text="Confirmar datos"
-                    OnClick="btnConfirmarCompra_Click"
+                   
                     OnClientClick="return validacionConfirmar()" />
             </div>
 

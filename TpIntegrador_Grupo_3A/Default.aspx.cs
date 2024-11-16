@@ -3,7 +3,9 @@ using Business.ProductAttributes;
 using Model;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -51,6 +53,27 @@ namespace TpIntegrador_Grupo_3A
                 string productCode = e.CommandArgument.ToString();
                 Response.Redirect($"Details.aspx?Code={productCode}");
             }
+        }
+
+        protected void btnSubmit_Click(object sender, EventArgs e)
+        {
+            
+            string userEmail = ConfigurationManager.AppSettings["UserEmail"];
+            string userPassword = ConfigurationManager.AppSettings["UserPassword"];
+            var emailService = new EmailService(userEmail, userPassword);
+
+            string name = Request.Form["nombre"];
+            string subject = Request.Form["asunto"];
+            string email = Request.Form["email"];
+            string body = Request.Form["mensaje"];
+
+            string to = "programacionsorteos@gmail.com";
+
+            // Llama al método SendEmailAsync de forma asíncrona
+            Task.Run(async () => await emailService.SendEmailAsync(to, subject, body));
+
+            Session["Success"] = "ok";
+            Response.Redirect("Default.aspx");
         }
     }
 }
