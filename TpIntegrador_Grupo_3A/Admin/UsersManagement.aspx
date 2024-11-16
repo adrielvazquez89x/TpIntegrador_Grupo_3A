@@ -10,24 +10,22 @@
             <%-- Contenedor principal --%>
             <div class="container my-4">
                 <%-- Título de la página --%>
-                <h2 class="text-center mb-4">Gestión de Usuarios</h2>
+                <h2 class="text-center mb-4">Gestión de Administradores</h2>
 
                 <%-- Botón para volver --%>
                 <div class="mb-3">
                     <uc1:UserControl_ButtonBack runat="server" ID="UserControl_ButtonBack" />
                 </div>
 
-                <%-- Sección de Categorías --%>
-                <div class="row">
-                    <%-- Formulario de Categorías --%>
-
+                <%-- Sección de Administradores --%>
+                <div class="row d-flex justify-content-center">
 
                     <%-- Lista de Usuarios --%>
-                    <div class="col-md-8">
+                    <div class="col-12 col-md-8 ">
                         <asp:GridView
                             ID="dgvUsers"
                             runat="server"
-                            CssClass="table table-striped table-bordered"
+                            CssClass="table table-striped table-bordered text-center"
                             HeaderStyle-CssClass="table-dark"
                             DataKeyNames="UserId"
                             AutoGenerateColumns="false"
@@ -35,11 +33,12 @@
                             AllowPaging="true"
                             PageSize="5">
                             <Columns>
-                                <%-- Nombre de la Categoría --%>
+
                                 <asp:BoundField DataField="FirstName" HeaderText="Nombre" ItemStyle-CssClass="align-middle" />
                                 <asp:BoundField DataField="LastName" HeaderText="Apellido" ItemStyle-CssClass="align-middle" />
                                 <asp:BoundField DataField="Email" HeaderText="Email" ItemStyle-CssClass="align-middle" />
-
+                                <asp:BoundField DataField="Mobile" HeaderText="Celular" ItemStyle-CssClass="align-middle" />
+                                <asp:BoundField DataField="RegistrationDate" HeaderText="Fecha de Alta" ItemStyle-CssClass="align-middle" DataFormatString="{0:dd/MM/yyyy}" />
 
                                 <%-- Estado Activo/Inactivo --%>
                                 <asp:TemplateField HeaderText="Activo">
@@ -99,8 +98,9 @@
                     </div>
                 </div>
 
-                <asp:Button ID="btnAddUser" runat="server" CssClass="btn btn-primary mb-3" Text="Agregar Nuevo Usuario" OnClick="btnAddUser_Click" />
-
+                <div class="text-center my-3">
+                    <asp:Button ID="btnAddUser" runat="server" CssClass="btn btn-primary mb-3" Text="Agregar Nuevo Usuario" OnClick="btnAddUser_Click" />
+                </div>
                 <%-- Toast de Notificaciones --%>
                 <uc1:UserControl_Toast runat="server" ID="UserControl_Toast" />
             </div>

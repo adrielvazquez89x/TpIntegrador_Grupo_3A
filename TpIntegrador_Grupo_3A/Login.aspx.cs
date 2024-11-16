@@ -14,6 +14,7 @@ namespace TpIntegrador_Grupo_3A
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+         
 
         }
 
@@ -24,42 +25,54 @@ namespace TpIntegrador_Grupo_3A
                 BusinessUser businessUser = new BusinessUser();
                 Model.User user = new Model.User();
 
-                 user.Email = txtEmail.Text;
-                 user.PasswordHash = txtPassword.Text;
+                user.Email = txtEmail.Text;
+                user.PasswordHash = txtPassword.Text;
 
 
                 if (businessUser.Login(user))
                 {
+                    user = businessUser.GetUserById(user.UserId);
                     Session.Add("user", user);
+
                     if (Session["Cart"] == null)
                     {
                         Model.Cart cart = new Model.Cart(); // Si no existe, creamos un nuevo carrito
                         Session["Cart"] = cart;
                         user.Cart = cart;
                     }
-                    if (SessionSecurity.IsAdmin(Session["user"]))
-                    {
-                       
-                        Response.Redirect("Admin/ProductsManagement.aspx");
-                    }
 
-                    // Redirigir a la página principal o al área protegida
-                    if (string.IsNullOrEmpty(user.FirstName) || string.IsNullOrEmpty(user.LastName))
-                    {
-                        // Redirigir a la página para completar el perfil
-                        Response.Redirect("MyProfile.aspx", false);
+                        if (!user.Active)
+                        {
+                            //quedaria mejor implementar el toast no pude por el momento 
+                            //UserControl_Toast.ShowToast("Tu cuenta está inactiva. Contacta con el administrador.",false);
+                            lblError.Text = "Tu cuenta está inactiva. Contacta con el administrador.";
+                            return;  // Detener el proceso de redirección
+                        }
+                        if (SessionSecurity.IsAdmin(Session["user"]))
+                        {
+
+                            Response.Redirect("Admin/ProductsManagement.aspx");
+                        }
+
+                        // Redirigir a la página principal o al área protegida
+                        if (string.IsNullOrEmpty(user.FirstName) || string.IsNullOrEmpty(user.LastName))
+                        {
+                            // Redirigir a la página para completar el perfil
+                            Response.Redirect("/MyProfile.aspx", false);
+                        }
+                        else
+                        {
+                            // Redirigir a la página principal
+                            Response.Redirect("/Default.aspx", false);
+                        }
+
                     }
                     else
                     {
-                        // Redirigir a la página principal
-                        Response.Redirect("Default.aspx", false);
+                        lblError.Text = "Usuario o contrasenia incorrectos. Inténtalo de nuevo.";
                     }
                 }
-                else
-                {
-                    lblError.Text = "Usuario o contrasenia incorrectos. Inténtalo de nuevo.";
-                }
-            }
+            
             catch (Exception ex)
             {
                 // Manejo de errores

@@ -31,7 +31,13 @@ namespace TpIntegrador_Grupo_3A
 
                 if (txtPassword.Text != txtConfirmPass.Text)
                 {
-                    lblError.Text = "Las contraseñas no coinciden.";
+                    //lblError.Text = "Las contraseñas no coinciden.";
+                    return;
+                }
+
+                if (txtPassword.Text.Length < 8)
+                {
+                    //lblError.Text = "La contraseña debe tener entre 3 y 9 caracteres.";
                     return;
                 }
 
@@ -50,7 +56,7 @@ namespace TpIntegrador_Grupo_3A
                     string subject = "Confirmación de Registro";
                     string body = $"Hola {user.Email},<br/>Gracias por registrarte en nuestro sistema. Por favor, confirma tu registro.";
                     await emailService.SendEmailAsync(to, subject, body);
-                    
+
                     Response.Redirect("Login.aspx", false);
                     HttpContext.Current.ApplicationInstance.CompleteRequest();
                 }
@@ -64,7 +70,8 @@ namespace TpIntegrador_Grupo_3A
                 Session.Add("error", ex.ToString());
                 //Response.Redirect("Error.aspx");
             }
+
         }
-    }
-    
+           
+        }
 }

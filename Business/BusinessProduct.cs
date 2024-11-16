@@ -48,7 +48,7 @@ namespace Business
                     aux.Price = data.Reader["Precio"] != DBNull.Value ? Math.Round((decimal)data.Reader["Precio"], 2) : 0;
                     aux.Description = data.Reader["Descripcion"] != DBNull.Value ? (string)data.Reader["Descripcion"] : string.Empty;
                     aux.CreationDate = data.Reader["FechaCreacion"] != DBNull.Value ? (DateTime)data.Reader["FechaCreacion"] : DateTime.MinValue;
-
+                    aux.IsActive = data.Reader["Activo"] != DBNull.Value ? (bool)data.Reader["Activo"] : false;
                     aux.Category = new Category
                     {
                         Id = data.Reader["IdCategoria"] != DBNull.Value ? (int)data.Reader["IdCategoria"] : 0,
@@ -451,6 +451,48 @@ namespace Business
                 data.closeConnection();
             }
 
+        }
+
+        public bool ToggleActivation(int id, bool isActive)
+        {
+            try
+            {
+                data.setQuery("UPDATE Productos set Activo = @IsActive Where Id = @Id");
+                data.setParameter("@IsActive", isActive);
+                data.setParameter("@Id", id);
+                data.executeAction();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex ;
+            }
+        }
+
+        public bool Delete(int id, string code)
+        {
+            BusinessImageProduct businesImgProduct = new BusinessImageProduct();
+            try
+            {
+                data.BeginTransaction();
+
+                businesImgProduct.DeleteAll(code, data);
+
+                data.setQuery("DELETE FROM Productos WHERE Id = @Id");
+                data.setParameter("@Id", id);
+                data.executeAction();
+
+                data.CommitTransaction();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                data.RollbackTransaction();
+                throw ex;
+            }
         }
     }
 }

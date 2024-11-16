@@ -21,33 +21,41 @@ namespace TpIntegrador_Grupo_3A
             var businessUser = new BusinessUser();
             var userEmail = txtResetEmail.Text;
 
-            var user = businessUser.GetUserByEmail(userEmail);
-
-
-            if (user != null)
+            if (businessUser.emailExists(userEmail))
             {
-                // Generar el token de restablecimiento de contraseña
-                var token = businessUser.GenerateToken();
 
-                businessUser.StoreResetToken(userEmail, token);
+                var user = businessUser.GetUserByEmail(userEmail);
 
 
-                // Crear el enlace para restablecer la contraseña
-                var resetLink = $"https://localhost:44379/ResetPasswordConfirm.aspx?email={userEmail}&token={token}";
+                if (user != null)
+                {
+                    // Generar el token de restablecimiento de contraseña
+                    var token = businessUser.GenerateToken();
 
-                // Enviar el correo
-                EmailService emailService = new EmailService("programacionsorteos@gmail.com", "zlujsnytsxpeuvsy");
+                    businessUser.StoreResetToken(userEmail, token);
 
-                var subject = "Restablecer Contraseña";
-                var body = $"Haz clic en este enlace para restablecer tu contraseña: <a href='{resetLink}'>Restablecer Contraseña</a>";
 
-                Task.Run(() => emailService.SendEmailAsync(userEmail, subject, body));
+                    // Crear el enlace para restablecer la contraseña
+                    var resetLink = $"https://localhost:44379/ResetPasswordConfirm.aspx?email={userEmail}&token={token}";
 
-                lblResetError.Text = "Se ha enviado un enlace a tu correo electrónico.";
+                    // Enviar el correo
+                    EmailService emailService = new EmailService("programacionsorteos@gmail.com", "rdnnfccpmyfoamap");
+
+                    var subject = "Restablecer Contraseña";
+                    var body = $"Haz clic en este enlace para restablecer tu contraseña: <a href='{resetLink}'>Restablecer Contraseña</a>";
+
+                    Task.Run(() => emailService.SendEmailAsync(userEmail, subject, body));
+
+                    lblSend.Text = "Se ha enviado un enlace a tu correo electrónico.";
+                    lblSend.Visible = true;
+                    lblResetError.Visible = false;
+                }
             }
             else
             {
                 lblResetError.Text = "Este correo no está registrado.";
+                lblResetError.Visible = true;
+                lblSend.Visible = false;
             }
         }
     }

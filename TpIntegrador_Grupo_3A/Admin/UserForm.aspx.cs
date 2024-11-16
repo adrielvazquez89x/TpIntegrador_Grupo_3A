@@ -28,15 +28,27 @@ namespace TpIntegrador_Grupo_3A.Admin
                     txtEmail.Text = select.Email;
                     txtMobile.Text = select.Mobile;
                     txtPassword.Text = select.PasswordHash;
-                    //txtBirthDate.Text = select.BirthDate.ToString("yyyy-MM-dd");
+                    if (select.BirthDate.HasValue)
+                    {
+                        txtBirthDate.Text = select.BirthDate.Value.ToString("yyyy-MM-dd"); // Formato año-mes-día
+                    }
+                    else
+                    {
+                        txtBirthDate.Text = ""; // O un valor por defecto si es nula
+                    }
+                   // txtBirthDate.Text = select.BirthDate.Value.ToString("yyyy-MM-dd");
 
                     btnSave.Text = "Actualizar Usuario";
+                    txtPassword.Visible = false;
                     divPassword.Visible = false;
+                    rfvPassword.Enabled = false;
 
                 }
                 else
                 {
                     btnSave.Text = "Agregar Usuario";
+                    txtPassword.Visible = true;
+                    rfvPassword.Enabled = true;
                     divPassword.Visible = true;
                 }
             }
@@ -61,6 +73,7 @@ namespace TpIntegrador_Grupo_3A.Admin
                     Email = txtEmail.Text.Trim(),
                     Mobile = txtMobile.Text.Trim(),
                     RegistrationDate = DateTime.Now,
+                    BirthDate = string.IsNullOrEmpty(txtBirthDate.Text) ? (DateTime?)null : DateTime.Parse(txtBirthDate.Text),
                     Admin = true,
                     Owner = false,
                     Active = true,
@@ -68,8 +81,8 @@ namespace TpIntegrador_Grupo_3A.Admin
                 };
 
                 if (string.IsNullOrWhiteSpace(user.FirstName) || string.IsNullOrWhiteSpace(user.LastName) ||
-           string.IsNullOrWhiteSpace(user.Dni) || string.IsNullOrWhiteSpace(user.Email) ||
-           string.IsNullOrWhiteSpace(user.Mobile))
+                    string.IsNullOrWhiteSpace(user.Dni) || string.IsNullOrWhiteSpace(user.Email) ||
+                    string.IsNullOrWhiteSpace(user.Mobile))
                 {
                     UserControl_Toast.ShowToast("Por favor, complete todos los campos.", false);
                     return;
@@ -83,14 +96,16 @@ namespace TpIntegrador_Grupo_3A.Admin
                 {
                     // Actualizar el usuario existente
                     user.UserId = int.Parse(Request.QueryString["id"]);
-                    businessUser.Update(user);
+                    businessUser.UpdateUserForm(user);
                     UserControl_Toast.ShowToast("Usuario actualizado correctamente.", true);
+                    Response.Redirect("/Admin/UsersManagement.aspx", false);
                 }
                 else
                 {
 
                     businessUser.CreateAdmin(user);
                     UserControl_Toast.ShowToast("Usuario agregado correctamente.", true);
+                    Response.Redirect("/Admin/UsersManagement.aspx", false);
                 }
             }
 
@@ -102,7 +117,7 @@ namespace TpIntegrador_Grupo_3A.Admin
                 Response.Write($"Error al crear el usuario: {ex.Message}");
             }
         }
-        
+
 
         protected void btnExit_Click(object sender, EventArgs e)
         {

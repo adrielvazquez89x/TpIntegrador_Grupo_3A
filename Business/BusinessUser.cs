@@ -24,10 +24,11 @@ namespace Business
             try
             {
 
-                data.setQuery("INSERT INTO Usuarios (Email, ContraseniaHash, SeguridadStamp) OUTPUT INSERTED.IdUsuario values (@email, @pass, @security);");
+                data.setQuery("INSERT INTO Usuarios (Email, ContraseniaHash, SeguridadStamp, FechaAlta) OUTPUT INSERTED.IdUsuario values (@email, @pass, @security, GETDATE());");
                 data.setParameter("@email", user.Email);
                 data.setParameter("@pass", user.PasswordHash);
-                data.setParameter("security", user.SecurityStamp);
+                data.setParameter("@security", user.SecurityStamp); //no tenia el @
+                //data.setParameter("@fechaAlta", getdate());
 
                 user.UserId = data.ActionScalar();
 
@@ -61,7 +62,7 @@ namespace Business
             INSERT INTO Usuarios 
                 (Dni, Nombre, Apellido, Email, Celular, FechaAlta, ContraseniaHash, SeguridadStamp, EsAdmin, EsOwner, Active)
             VALUES 
-                (@dni, @nombre, @apellido, @email, @celular, @fechaAlta, @pass, @stamp, @admin, @owner, @active);");
+                (@dni, @nombre, @apellido, @email, @celular, GETDATE(), @pass, @stamp, @admin, @owner, @active);");
 
 
                 data.setParameter("@dni", user.Dni);
@@ -89,8 +90,6 @@ namespace Business
         public bool Login(User user)
         {
             DataAccess data = new DataAccess();
-
-
             try
             {
 
@@ -105,6 +104,8 @@ namespace Business
                 {
                     user.UserId = (int)data.Reader["IdUsuario"];
                     user.Admin = (bool)(data.Reader["EsAdmin"]);
+                    user.Owner = (bool)(data.Reader["EsOwner"]);
+                    user.Active = (bool)(data.Reader["Active"]);    
                     //if (!(data.Reader["urlImagenPerfil"] is DBNull))
                     //    user.ImagenPerfil = (string)(data.Reader["urlImagenPerfil"]);
                     if (!(data.Reader["Nombre"] is DBNull))
@@ -122,8 +123,6 @@ namespace Business
 
                     if (verificationResult == PasswordVerificationResult.Success)
                     {
-
-
                         // El inicio de sesión fue exitoso
                         return true;
                     }
@@ -168,6 +167,8 @@ namespace Business
                     // aux.Mobile = (string)reader["Celular"];
                     // aux.BirthDate = (DateTime)reader["FechaNac"];
                     //aux.RegistrationDate = (DateTime)reader["FechaAlta"];
+                    aux.AddressId = reader["IdDireccion"] != DBNull.Value ? (int)reader["IdDireccion"] : 0;  // Asegúrate de capturar el AddressId
+
                 }
                 return aux;
 
@@ -176,6 +177,61 @@ namespace Business
             catch (Exception ex)
             {
 
+                throw ex;
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
+
+        public User GetUserById(int userId)
+        {
+            DataAccess data = new DataAccess();
+            User user = new User();
+            BusinessAdress businessAdress = new BusinessAdress();
+
+            try
+            {
+                // Realizamos la consulta para obtener los detalles del usuario por ID
+                data.setQuery("SELECT * FROM Usuarios U WHERE IdUsuario = @IdUsuario;");
+                data.setParameter("@IdUsuario", userId);
+                data.executeRead();
+
+                var reader = data.Reader;
+
+                if (reader.Read())
+                {
+
+                    user.UserId = (int)data.Reader["IdUsuario"];
+                    user.Dni = data.Reader["Dni"] != DBNull.Value ? (string)data.Reader["Dni"] : string.Empty;
+                    user.FirstName = data.Reader["Nombre"] != DBNull.Value ? (string)data.Reader["Nombre"] : string.Empty;
+                    user.LastName = data.Reader["Apellido"] != DBNull.Value ? (string)data.Reader["Apellido"] : string.Empty;
+                    user.Email = data.Reader["Email"] != DBNull.Value ? (string)data.Reader["Email"] : string.Empty;
+                    user.Mobile = data.Reader["Celular"] != DBNull.Value ? (string)data.Reader["Celular"] : string.Empty;
+                    user.RegistrationDate = data.Reader["FechaAlta"] != DBNull.Value ? (DateTime)data.Reader["FechaAlta"] : default(DateTime);
+                    user.BirthDate = data.Reader["FechaNac"] != DBNull.Value ? (DateTime?)data.Reader["FechaNac"] : null;
+                    user.Active = (bool)data.Reader["Active"];
+                    user.Admin = (bool)data.Reader["EsAdmin"];
+                    user.Owner = (bool)data.Reader["EsOwner"];
+                    user.ImageUrl = data.Reader["UrlImg"] != DBNull.Value ? (string)data.Reader["UrlImg"] : string.Empty;
+
+
+                    //user.PasswordHash = data.Reader["ContraseniaHash"] != DBNull.Value ? (string)data.Reader["ContraseniaHash"] : string.Empty;
+
+                    user.AddressId = data.Reader["IdDireccion"] != DBNull.Value ? (int)data.Reader["IdDireccion"] : 0;
+              
+                }
+
+                if (user.AddressId > 0)
+                {
+                    user.Address = businessAdress.GetAddressById(user.AddressId);
+                }
+
+                    return user;
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
             finally
@@ -220,28 +276,65 @@ namespace Business
                 Apellido = @Apellido,
                 Email = @Email,
                 Celular = @Celular,
-                FechaAlta = @FechaAlta
-                
-               
+                FechaNac = @FechaNacimiento,
+                IdDireccion = @IdDireccion
             WHERE IdUsuario = @IdUsuario";
 
-                // Asignar los parámetros a la consulta
+                
                 data.setQuery(query);
                 data.setParameter("@Dni", user.Dni);
                 data.setParameter("@Nombre", user.FirstName);
                 data.setParameter("@Apellido", user.LastName);
                 data.setParameter("@Email", user.Email);
                 data.setParameter("@Celular", user.Mobile);
-                data.setParameter("@FechaAlta", user.RegistrationDate);
-
+                data.setParameter("@FechaNacimiento", user.BirthDate);
+                data.setParameter("@IdDireccion", user.AddressId);
                 data.setParameter("@IdUsuario", user.UserId);
 
-                // Ejecutar la acción
+                
                 data.executeAction();
             }
             catch (Exception ex)
             {
                 throw new Exception("Error al actualizar el usuario: " + ex.Message);
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
+
+
+        public void UpdateUserForm(User user)
+        {
+            DataAccess data = new DataAccess();
+            try
+            {
+                string query = @"
+        UPDATE Usuarios 
+        SET 
+            Dni = @Dni,
+            Nombre = @Nombre,
+            Apellido = @Apellido,
+            Email = @Email,
+            Celular = @Celular,
+            FechaNac = @FechaNacimiento
+        WHERE IdUsuario = @IdUsuario";
+
+                data.setQuery(query);
+                data.setParameter("@Dni", user.Dni);
+                data.setParameter("@Nombre", user.FirstName);
+                data.setParameter("@Apellido", user.LastName);
+                data.setParameter("@Email", user.Email);
+                data.setParameter("@Celular", user.Mobile);
+                data.setParameter("@FechaNacimiento", user.BirthDate);
+                data.setParameter("@IdUsuario", user.UserId);
+
+                data.executeAction();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al actualizar la información del usuario: " + ex.Message);
             }
             finally
             {
@@ -339,12 +432,12 @@ namespace Business
 
             try
             {
-                string query = "SELECT U.IdUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Celular, U.FechaAlta, U.Active, U.ContraseniaHash FROM Usuarios U";
+                string query = "SELECT U.IdUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Celular, U.FechaAlta,U.FechaNac, U.Active, U.ContraseniaHash FROM Usuarios U WHERE U.EsAdmin = 1";
 
                 // Si se pasa un id, agrega la condición WHERE
                 if (!string.IsNullOrEmpty(id))
                 {
-                    query += " WHERE U.IdUsuario = @UserId";
+                    query += " AND U.IdUsuario = @UserId";
                 }
 
                 // Establecer la consulta
@@ -368,7 +461,8 @@ namespace Business
                         LastName = data.Reader["Apellido"] != DBNull.Value ? (string)data.Reader["Apellido"] : string.Empty,
                         Email = data.Reader["Email"] != DBNull.Value ? (string)data.Reader["Email"] : string.Empty,
                         Mobile = data.Reader["Celular"] != DBNull.Value ? (string)data.Reader["Celular"] : string.Empty,
-                        RegistrationDate = (DateTime)data.Reader["FechaAlta"],
+                        RegistrationDate = data.Reader["FechaAlta"] != DBNull.Value ? (DateTime)data.Reader["FechaAlta"] : default(DateTime),
+                        BirthDate = data.Reader["FechaNac"] != DBNull.Value ? (DateTime?)data.Reader["FechaNac"] : null,
                         Active = (bool)data.Reader["Active"],
                         PasswordHash = data.Reader["ContraseniaHash"] != DBNull.Value ? (string)data.Reader["ContraseniaHash"] : string.Empty
                     };
@@ -425,6 +519,7 @@ namespace Business
                 data.closeConnection();
             }
         }
+
     }
 }
 //public User userById(int id)
