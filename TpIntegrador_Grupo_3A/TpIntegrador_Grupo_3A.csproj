@@ -105,6 +105,7 @@
     <Content Include="Admin\Seasons.aspx" />
     <Content Include="Admin\Sections.aspx" />
     <Content Include="Admin\Sizes.aspx" />
+    <Content Include="Admin\StockManagement.aspx" />
     <Content Include="Admin\SubCategories.aspx" />
     <Content Include="Admin\UserControl_ButtonBack.ascx" />
     <Content Include="Admin\UserControl_Buttons.ascx" />
@@ -229,6 +230,13 @@
     </Compile>
     <Compile Include="Admin\Sizes.aspx.designer.cs">
       <DependentUpon>Sizes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\StockManagement.aspx.cs">
+      <DependentUpon>StockManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\StockManagement.aspx.designer.cs">
+      <DependentUpon>StockManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\SubCategories.aspx.cs">
       <DependentUpon>SubCategories.aspx</DependentUpon>

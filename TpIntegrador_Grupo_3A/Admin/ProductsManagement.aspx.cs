@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Business;
+using Business.ProductAttributes;
 using Model;
 using static TpIntegrador_Grupo_3A.Admin.Categories;
 
@@ -47,7 +48,19 @@ namespace TpIntegrador_Grupo_3A.Admin
 
         protected void dgvProducts_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            dgvProducts.PageIndex = e.NewPageIndex;
+            int newPageIndex = e.NewPageIndex;
+
+            // Validar que el nuevo índice está dentro del rango válido
+            if (newPageIndex < 0)
+            {
+                newPageIndex = 0;
+            }
+            else if (newPageIndex >= dgvProducts.PageCount)
+            {
+                newPageIndex = dgvProducts.PageCount - 1;
+            }
+
+            dgvProducts.PageIndex = newPageIndex;
             BindProducts();
         }
 
@@ -58,7 +71,23 @@ namespace TpIntegrador_Grupo_3A.Admin
 
         protected void dgvProducts_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            if (e.CommandName == "EditStock")
+            {
+                string productCode = e.CommandArgument.ToString();
 
+                // Redirigir a StockManagement.aspx pasando el código del producto
+                Response.Redirect("StockManagement.aspx?code=" + Server.UrlEncode(productCode));
+            }
+            else if (e.CommandName == "EditProduct")
+            {
+                string productId = e.CommandArgument.ToString();
+                Response.Redirect("ProductForm.aspx?id=" + productId);
+            }
+            else if (e.CommandName == "View")
+            {
+                // Implementar si es necesario
+            }
+            
         }
 
         protected void btnView_Click(object sender, EventArgs e)
