@@ -193,40 +193,37 @@ namespace TpIntegrador_Grupo_3A
 
             Model.User user = (Model.User)Session["user"];
 
-            //aca habria primero que sumar number con la cant en carrito si es que ya existe !
-            bool validateStock = ValidateStock(selectedColourId, selectedSizeId, number);
-            bool added=false;
-            if (validateStock)
-            {
+            BusinessStock businessStock = new BusinessStock();
+            stock = businessStock.getStock(CodeSelectedProd, selectedColourId, selectedSizeId);
+            //bool validateStock = ValidateStock(selectedColourId, selectedSizeId, number);
+            bool added =false;
+            //if (validateStock)
                added = user.Cart.AddProduct(selectedProd, stock, number);
-            }
             if (!added)
             {
-                Control_Toast.ShowToast($"Este pedido no se sumo. Al agregar esto se excede el stock disponible", false);
+                Control_Toast.ShowToast($"Este pedido no se sumo.Se excede el stock disponible", false);
             }
             else 
             {
                 Session["user"] = user;
-                // Response.Redirect(Request.RawUrl); // Redirige a la misma página para actualizar la vista
-                Control_Toast.ShowToast($"Opaaaaa", true);
-            }            
-        }
-        protected bool ValidateStock(int selectedColourId, int selectedSizeId, int number)
-        {
-            BusinessStock businessStock = new BusinessStock();
-            stock = businessStock.getStock(CodeSelectedProd, selectedColourId, selectedSizeId);
-            if (number > stock.Amount)
-            {
-                Control_Toast.ShowToast($"No es posible añadirlo al carrito. \n El producto con el talle y color seleccionados cuenta con un stock de {stock.Amount} prendas", false);
-                return false;
-            }
-            else
-            {
                 Control_Toast.ShowToast("Articulo Añadido exitosamente", true);
-                //todavia no se resta del stock, eso recien al confirmar la compra se vuelve a ver
-                return true;
+                ddlSize.ClearSelection();
+                ddlColour.ClearSelection();
             }
         }
+        //protected bool ValidateStock(int selectedColourId, int selectedSizeId, int number)
+        //{
+        //    BusinessStock businessStock = new BusinessStock();
+        //    stock = businessStock.getStock(CodeSelectedProd, selectedColourId, selectedSizeId);
+        //    if (number > stock.Amount)
+        //    {
+        //        return false;
+        //    }
+        //    else
+        //    {
+        //        return true;
+        //    }
+        //}
 
 
     }

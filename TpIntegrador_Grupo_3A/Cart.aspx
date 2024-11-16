@@ -1,8 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="TpIntegrador_Grupo_3A.Cart" %>
 
+<%@ Register Src="~/Control_Toast.ascx" TagPrefix="uc1" TagName="Control_Toast" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="BannerContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <uc1:Control_Toast runat="server" ID="Control_Toast" />
     <h3 class="text-center mt-5">Mi carrito </h3>
     <% if (Items.Count != 0 && Items != null)
         {%>

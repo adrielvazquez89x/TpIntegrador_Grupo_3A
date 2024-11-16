@@ -19,12 +19,16 @@ namespace Model
             {
                 if(itemOnCart.Number+number>stock.Amount)  //si el prod ya estaba en la lista hay que chequear si al sumar los pedidos alcanza el stock
                     return false;
+
                 itemOnCart.Number +=number;
                 itemOnCart.Product= prod;
                 itemOnCart.Stock = stock;
             }
             else
             {
+                if (number > stock.Amount)  //hay que chequear si  alcanza el stock
+                    return false;
+
                 ItemCart newItem = new ItemCart
                 {
                     Number = number,
@@ -58,9 +62,6 @@ namespace Model
                     return false;
                 itemOnCart.Number++;
             }
-            
-
-            //Items.Update(itemOnCart);
             return true;
         }
         public void ClearCart()
