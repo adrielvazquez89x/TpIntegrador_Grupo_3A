@@ -38,7 +38,12 @@ namespace Model
             return false;
         }
 
+        public static bool IsBiggerThanZero(string input)
+        {
+            int value = int.Parse(input);
 
+            return value >= 0;
+        }
 
     }
 }
