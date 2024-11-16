@@ -85,7 +85,10 @@ namespace TpIntegrador_Grupo_3A.Admin
             }
             else if (e.CommandName == "View")
             {
-                // Implementar si es necesario
+                string code = e.CommandArgument.ToString();
+                string url = ResolveUrl($"~/Details.aspx?code={code}");
+                string script = $"window.open('{url}', '_blank');";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "OpenWindow", script, true);
             }
             
         }
