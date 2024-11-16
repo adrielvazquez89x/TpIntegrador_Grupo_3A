@@ -60,6 +60,7 @@
     <Compile Include="ProductAttributes\Section.cs" />
     <Compile Include="ProductAttributes\Size.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="Validator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
