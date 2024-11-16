@@ -2,12 +2,11 @@
 
 <%@ Register Src="~/Admin/UserControl_Buttons.ascx" TagPrefix="uc1" TagName="UserControl_Buttons" %>
 <%@ Register Src="~/Admin/UserControl_Toast.ascx" TagPrefix="uc1" TagName="UserControl_Toast" %>
-<%@ Register Src="~/Admin/UserControl_ModalStock.ascx" TagPrefix="uc1" TagName="UserControl_ModalStock" %>
-
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2 class="text-center my-5">Gestión de Productos</h2>
+    <!-- Puedes eliminar el UpdatePanel si ya no es necesario -->
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
 
@@ -55,8 +54,7 @@
                                 OnClick="btnEdit_Click">
                     <i class="bi bi-pencil-square"></i> 
                             </asp:LinkButton>
-                            <%-- Nuevo Botón para Editar Stock --%>
-                            
+                            <%-- Botón para Editar Stock --%>
                             <asp:LinkButton
                                 ID="btnEditStock"
                                 runat="server"
@@ -79,7 +77,8 @@
                             CommandArgument="First"
                             CssClass="btn btn-link">
                 <i class="bi bi-skip-start-fill"></i>
-                        </asp:LinkButton>
+            </asp:LinkButton>
+
                         <asp:LinkButton
                             ID="lnkPrevious"
                             runat="server"
@@ -87,7 +86,8 @@
                             CommandArgument="Prev"
                             CssClass="btn btn-link">
                 <i class="bi bi-chevron-left"></i>
-                        </asp:LinkButton>
+            </asp:LinkButton>
+
                         <asp:LinkButton
                             ID="lnkNext"
                             runat="server"
@@ -95,7 +95,8 @@
                             CommandArgument="Next"
                             CssClass="btn btn-link">
                 <i class="bi bi-chevron-right"></i>
-                        </asp:LinkButton>
+            </asp:LinkButton>
+
                         <asp:LinkButton
                             ID="lnkLast"
                             runat="server"
@@ -103,11 +104,11 @@
                             CommandArgument="Last"
                             CssClass="btn btn-link">
                 <i class="bi bi-skip-end-fill"></i>
-                        </asp:LinkButton>
+            </asp:LinkButton>
                     </div>
                 </PagerTemplate>
-            </asp:GridView>
 
+            </asp:GridView>
 
             <asp:LinkButton ID="btnAddProduct" runat="server" CssClass="buttonCus btn-electric-blue" OnClick="btnAddProduct_Click">
                 <i class="bi bi-bag-plus fs-4"></i>
@@ -115,7 +116,6 @@
             </asp:LinkButton>
 
             <uc1:UserControl_Toast runat="server" ID="UserControl_Toast" />
-            <uc1:UserControl_ModalStock runat="server" id="UserControl_ModalStock" />
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

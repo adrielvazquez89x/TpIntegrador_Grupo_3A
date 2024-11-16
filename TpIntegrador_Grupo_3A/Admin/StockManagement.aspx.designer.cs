@@ -11,17 +11,17 @@ namespace TpIntegrador_Grupo_3A.Admin
 {
 
 
-    public partial class UserControl_ModalStock
+    public partial class StockManagement
     {
 
         /// <summary>
-        /// Control stockModal.
+        /// Control UpdatePanel1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl stockModal;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
         /// Control txtCodigo.
@@ -94,5 +94,14 @@ namespace TpIntegrador_Grupo_3A.Admin
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCancelar;
+
+        /// <summary>
+        /// Control UserControl_Toast.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::TpIntegrador_Grupo_3A.Admin.UserControl_Toast UserControl_Toast;
     }
 }

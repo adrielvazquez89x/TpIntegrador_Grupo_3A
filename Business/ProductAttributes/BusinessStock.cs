@@ -130,11 +130,11 @@ namespace Business.ProductAttributes
             }
         }
 
-        public string Update(Stock stock)
+        public string Update(int id, int cant)
         {
             try
             {
-                data.setQuery($"UPDATE Stock SET CodigoProducto = '{stock.ProdCode}', IdColor={stock.Colour.Id}, IdTalle={stock.Size.Id}, Stock={stock.Amount} WHERE Id = {stock.Id}");
+                data.setQuery($"UPDATE Stock SET Stock = {cant} where Id = {id}");
                 data.executeAction();
                 return "ok";
             }

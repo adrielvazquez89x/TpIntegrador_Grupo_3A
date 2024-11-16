@@ -1,14 +1,13 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="UserControl_ModalStock.ascx.cs" Inherits="TpIntegrador_Grupo_3A.Admin.UserControl_ModalStock" %>
+﻿<%@ Page Title="Gestión de Stock" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="StockManagement.aspx.cs" Inherits="TpIntegrador_Grupo_3A.Admin.StockManagement" %>
 
-<!-- Modal de Stock -->
-<div class="modal fade" id="stockModal" runat="server" tabindex="-1" aria-labelledby="stockModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="stockModalLabel">Manejar Stock</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
+<%@ Register Src="~/Admin/UserControl_Toast.ascx" TagPrefix="uc1" TagName="UserControl_Toast" %>
+
+
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <ContentTemplate>
+            <div class="container">
+                <h2 class="text-center my-5">Manejar Stock</h2>
 
                 <!-- Información del Producto -->
                 <div class="mb-3">
@@ -21,8 +20,8 @@
                 </div>
 
                 <!-- Lista de Stocks Existentes -->
-                <h6>Stock Actual</h6>
-                <asp:Repeater ID="rptStock" runat="server">
+                <h4>Stock Actual</h4>
+                <asp:Repeater ID="rptStock" runat="server" OnItemCommand="rptStock_ItemCommand">
                     <HeaderTemplate>
                         <div class="list-group">
                     </HeaderTemplate>
@@ -34,19 +33,20 @@
                                 <strong>Stock:</strong> <%# Eval("Amount") %>
                             </div>
                             <div>
-                                <asp:TextBox 
+                                <asp:TextBox
                                     ID="txtEditStock"
                                     runat="server"
                                     CssClass="form-control d-inline-block w-25"
-                                    Text='<%# Eval("Amount") %>'>
+                                    Text='<%# Eval("Amount") %>'
 
+                                    >
                                 </asp:TextBox>
-                                <asp:Button 
-                                    ID="btnUpdateStock" 
-                                    runat="server" 
-                                    CssClass="btn btn-success btn-sm ms-2" 
-                                    CommandName="UpdateStock" 
-                                    CommandArgument='<%# Eval("Id") %>' 
+                                <asp:Button
+                                    ID="btnUpdateStock"
+                                    runat="server"
+                                    CssClass="btn btn-success btn-sm ms-2"
+                                    CommandName="UpdateStock"
+                                    CommandArgument='<%# Eval("Id") %>'
                                     Text="Modificar" />
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                 </asp:Repeater>
 
                 <!-- Formulario para Agregar Nuevo Stock -->
-                <h6 class="mt-4">Agregar Nueva Combinación</h6>
+                <h4 class="mt-5">Agregar Nueva Combinación</h4>
                 <div class="mb-3">
                     <label for="ddlColor" class="form-label">Color</label>
                     <asp:DropDownList ID="ddlColor" runat="server" CssClass="form-select">
@@ -72,30 +72,13 @@
                     <label for="txtCantidad" class="form-label">Cantidad</label>
                     <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
                 </div>
-
+                <div class="mb-3">
+                    <asp:Button ID="btnAgregarStock" runat="server" CssClass="btn btn-success me-2" Text="Agregar" OnClick="btnAgregarStock_Click" />
+                    <asp:Button ID="btnCancelar" runat="server" CssClass="btn btn-secondary" Text="Cancelar" OnClick="btnCancelar_Click" />
+                </div>
             </div>
-            <div class="modal-footer">
-                <asp:Button ID="btnAgregarStock" runat="server" CssClass="btn btn-success" Text="Aceptar" OnClick="btnAgregarStock_Click" />
-                <asp:Button
-                    ID="btnCancelar" 
-                    runat="server" 
-                    CssClass="btn btn-danger" 
-                    Text="Cancelar" 
-                    OnClientClick="hideModal(); return false;" />
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- Script para ocultar el modal -->
-<script type="text/javascript">
-    function hideModal() {
-        var toastEl = document.getElementById('<%= stockModal.ClientID %>');
-        if (toastEl) {
-            var modal = bootstrap.Modal.getInstance(toastEl);
-            if (modal) {
-                modal.hide();
-            }
-        }
-    }
-</script>
+            <uc1:UserControl_Toast runat="server" ID="UserControl_Toast" />
+        </ContentTemplate>
+    </asp:UpdatePanel>
+</asp:Content>

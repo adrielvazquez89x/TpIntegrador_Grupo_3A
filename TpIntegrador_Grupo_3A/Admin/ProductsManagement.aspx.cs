@@ -48,7 +48,19 @@ namespace TpIntegrador_Grupo_3A.Admin
 
         protected void dgvProducts_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            dgvProducts.PageIndex = e.NewPageIndex;
+            int newPageIndex = e.NewPageIndex;
+
+            // Validar que el nuevo índice está dentro del rango válido
+            if (newPageIndex < 0)
+            {
+                newPageIndex = 0;
+            }
+            else if (newPageIndex >= dgvProducts.PageCount)
+            {
+                newPageIndex = dgvProducts.PageCount - 1;
+            }
+
+            dgvProducts.PageIndex = newPageIndex;
             BindProducts();
         }
 
@@ -63,30 +75,20 @@ namespace TpIntegrador_Grupo_3A.Admin
             {
                 string productCode = e.CommandArgument.ToString();
 
-                // Obtener la información del producto
-                BusinessProduct businessProduct = new BusinessProduct();
-                BusinessStock businessStock = new BusinessStock();
-                List<Product> listProduct = businessProduct.list(productCode);
-                Product product = listProduct.FirstOrDefault();
-                List<Model.ProductAttributes.Stock> stockActual = businessStock.list(productCode);
-
-                if (product != null)
-                {
-                    // Obtener el stock actual (ajusta según tu modelo de datos)
-                    
-                    // Obtener las listas de colores y talles
-                    BusinessColour businessColour = new BusinessColour();
-                    List<Colour> colores = businessColour.list();
-
-                    BusinessSize businessSize = new BusinessSize();
-                    List<Size> talles = businessSize.list();
-
-                    // Mostrar el modal con la información del producto
-                    UserControl_ModalStock.ShowModal(product.Code, product.Name, stockActual, colores, talles);
-                }
+                // Redirigir a StockManagement.aspx pasando el código del producto
+                Response.Redirect("StockManagement.aspx?code=" + Server.UrlEncode(productCode));
             }
+            else if (e.CommandName == "EditProduct")
+            {
+                string productId = e.CommandArgument.ToString();
+                Response.Redirect("ProductForm.aspx?id=" + productId);
+            }
+            else if (e.CommandName == "View")
+            {
+                // Implementar si es necesario
+            }
+            
         }
-
 
         protected void btnView_Click(object sender, EventArgs e)
         {
