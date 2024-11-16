@@ -100,7 +100,6 @@
             </div>
             <%--<asp:Image ID="imgNuevoPerfil" ImageUrl="https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg"
                     runat="server" CssClass="img-fluid mb-3" />--%>
-           <asp:Image ID="imgNuevoPerfil" runat="server" CssClass="img-fluid mb-3" />
         </div>
 
 

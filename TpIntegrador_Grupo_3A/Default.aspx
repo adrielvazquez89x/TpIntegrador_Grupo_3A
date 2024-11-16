@@ -123,7 +123,7 @@
                                 </div>
 
                                 <div class="col-12 d-grid mt-3">
-                                    <asp:button type="submit" runat="server" id="btnSubmit" onclick="btnSubmit_Click" class="btn btn-primary btn-lg w-50">Enviar Mensaje</asp:button>
+                                    <asp:button type="submit" runat="server" id="btnSubmit" onclick="btnSubmit_Click" class="btn btn-primary btn-lg w-50" Text="Enviar Mensaje"/>
                                 </div>
                             </form>
 
