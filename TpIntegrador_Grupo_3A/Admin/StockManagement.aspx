@@ -65,12 +65,12 @@
                     <label for="ddlTalle" class="form-label">Talle</label>
                     <asp:DropDownList ID="ddlTalle" ClientIDMode="Static" runat="server" CssClass="form-select">
                     </asp:DropDownList>
-                    <span id="spanTalle">TalleSpan</span>
+                    <span id="spanTalle"></span>
                 </div>
                 <div class="mb-3">
                     <label for="txtCantidad" class="form-label">Cantidad</label>
                     <asp:TextBox ID="txtCantidad" ClientIDMode="Static" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
-                    <span id="spanCant">CantidadSpan</span>
+                    <span id="spanCant"></span>
                 </div>
                 <div class="mb-3">
                     <asp:Button

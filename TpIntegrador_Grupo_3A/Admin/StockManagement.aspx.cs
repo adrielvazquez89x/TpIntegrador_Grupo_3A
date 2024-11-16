@@ -93,6 +93,7 @@ namespace TpIntegrador_Grupo_3A.Admin
 
                 string currentValue = txtStockAmount.Text;
 
+
                 if(!Validator.IsOnlyNumbers(txtStockAmount.Text))
                 {
                     UserControl_Toast.ShowToast("La cantidad de stock debe ser un número entero, mayor o igual a cero.", false);
@@ -100,7 +101,10 @@ namespace TpIntegrador_Grupo_3A.Admin
                     return;
                 }
 
-
+                if(currentValue == hfOriginalAmount.Value)
+                {
+                    return;
+                }
 
                 int stockId = int.Parse(e.CommandArgument.ToString());
                 int stockAmount = int.Parse(txtStockAmount.Text);
