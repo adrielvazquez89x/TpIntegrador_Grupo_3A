@@ -17,7 +17,8 @@ namespace Model
                 return false;
             }
 
-            return Regex.IsMatch(input, @"^\d+$");
+            decimal value;
+            return decimal.TryParse(input, out value);  
 
         }
 

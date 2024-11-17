@@ -476,13 +476,35 @@ namespace Business
             BusinessImageProduct businesImgProduct = new BusinessImageProduct();
             try
             {
+                // Iniciar la transacción
                 data.BeginTransaction();
 
+                //Eliminar todos los registros en la tabla 'Stock'
+                data.setQuery("DELETE FROM Stock WHERE CodigoProducto = @CodigoProducto");
+                data.setParameter("@CodigoProducto", code);
+                data.executeAction();
+
+                //Eliminar todos los registros tabla 'ImagenesProductos'
                 businesImgProduct.DeleteAll(code, data);
 
+                //Eliminar todos los registros relacionados en la tabla 'Favoritos'
+                data.clearParams();
+                data.setQuery("DELETE FROM Favoritos WHERE CodigoProducto = @CodigoProducto");
+                data.setParameter("@CodigoProducto", code);
+                data.executeAction();
+
+                //Eliminar todos los registros  la tabla 'ProductosXSecciones'
+                data.clearParams();
+                data.setQuery("DELETE FROM ProductosXSecciones WHERE CodigoProducto = @CodigoProducto");
+                data.setParameter("@CodigoProducto", code);
+                data.executeAction();
+
+                //Finalmente, eliminar el producto de la tabla 'Productos'
+                data.clearParams();
                 data.setQuery("DELETE FROM Productos WHERE Id = @Id");
                 data.setParameter("@Id", id);
                 data.executeAction();
+
 
                 data.CommitTransaction();
 
@@ -490,6 +512,7 @@ namespace Business
             }
             catch (Exception ex)
             {
+                // Revertir la transacción si hay algún error
                 data.RollbackTransaction();
                 throw ex;
             }

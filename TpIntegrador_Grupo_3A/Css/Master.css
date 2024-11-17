@@ -5,6 +5,11 @@
     /*height: 30px;*/
 }
 
+.frontZIndez{
+        z-index: 1030;
+
+}
+
 a{
     text-decoration: none;
 }

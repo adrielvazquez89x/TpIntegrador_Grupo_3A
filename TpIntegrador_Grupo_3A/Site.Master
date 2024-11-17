@@ -41,7 +41,7 @@
             </Scripts>
         </asp:ScriptManager>
 
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark frontZIndez">
             <div class="container-fluid">
                 <a class="navbar-brand" runat="server" href="~/">UrbanGlam
                     <img src="/Images/iconoPag.png" alt="Icono" class="me-2" style="height: 40px;" />
@@ -119,7 +119,7 @@
         </nav>
 
         <%-- Banner Principal --%>
-        <div class="col body-content">
+        <div class="col body-content mt-0">
             <asp:ContentPlaceHolder ID="BannerContent" runat="server">
             </asp:ContentPlaceHolder>
         </div>

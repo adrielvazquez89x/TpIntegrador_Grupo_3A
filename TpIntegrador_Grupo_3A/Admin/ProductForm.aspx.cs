@@ -38,7 +38,7 @@ namespace TpIntegrador_Grupo_3A.Admin
                 // Obtener el ID del producto actual
                 currentProductId = Request.QueryString["id"] != null ? int.Parse(Request.QueryString["id"]) : 0;
                 Session["idCurrentItem"] = currentProductId;
-                
+
 
                 if (currentProductId != 0)
                 {
@@ -76,8 +76,33 @@ namespace TpIntegrador_Grupo_3A.Admin
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
+            string[] txtsValues = { txtCode.Text, txtName.Text, txtDescription.Text };
+
             try
             {
+
+                foreach (var txt in txtsValues)
+                {
+                    if (Validator.IsEmpty(txt))
+                    {
+                        UserControl_Toast.ShowToast("Todos los campos son obligatorios", false);
+                        return;
+                    }
+                }
+
+                if (!Validator.IsOnlyNumbers(txtPrice.Text))
+                {
+                    UserControl_Toast.ShowToast("El precio debe ser numérico", false);
+                    return;
+                }
+
+                if (lstImages.Items.Count == 0 && currentProductId == 0)
+                {
+                    UserControl_Toast.ShowToast("Debes agregar al menos una imagen", false);
+                    return;
+                }
+
+
                 Product product = new Product();
                 product.Code = txtCode.Text;
                 product.Name = txtName.Text;
@@ -241,6 +266,8 @@ namespace TpIntegrador_Grupo_3A.Admin
                     currentProductCode = product[0].Code;
 
                     txtCode.Text = product[0].Code;
+                    txtCode.ReadOnly = true;
+                    txtCode.Enabled =  false;
                     txtName.Text = product[0].Name;
                     txtPrice.Text = product[0].Price.ToString();
                     txtDescription.Text = product[0].Description;
@@ -259,7 +286,7 @@ namespace TpIntegrador_Grupo_3A.Admin
                     }
                     else
                     {
-                        
+
                         ddlSubCategory.SelectedValue = "0"; // Asegúrate de que "0" exista como opción
                         lblMessage.Text = "La subcategoría del producto no está disponible para la categoría seleccionada.";
                         lblMessage.CssClass = "text-warning";
@@ -269,6 +296,10 @@ namespace TpIntegrador_Grupo_3A.Admin
 
 
                     HandleToggleStateButton(product[0].IsActive);
+                }
+                else
+                {
+                    Response.Redirect("ProductsManagement.aspx");
                 }
             }
             catch (Exception ex)
@@ -284,7 +315,7 @@ namespace TpIntegrador_Grupo_3A.Admin
             btnToggleEstado.Text = product ? "Desactivar" : "Activar";
             btnToggleEstado.CssClass = "";
             btnToggleEstado.CssClass = product ? "btn btn-danger" : "btn btn-success";
-            
+
         }
         //IMAGENES
 
@@ -375,18 +406,18 @@ namespace TpIntegrador_Grupo_3A.Admin
         {
             List<string> images = ViewState[NewImagesViewStateKey] as List<string>;
 
-            if(images == null)
+            if (images == null)
             {
                 lblMessage.Text = "No hay imágenes para eliminar";
                 lblMessage.CssClass = "text-danger";
-               return;
+                return;
             }
 
             List<ListItem> itemsToRemove = new List<ListItem>();
 
-            foreach(ListItem item in lstImages.Items)
+            foreach (ListItem item in lstImages.Items)
             {
-                if(item.Selected)
+                if (item.Selected)
                 {
                     itemsToRemove.Add(item);
                 }
@@ -397,15 +428,15 @@ namespace TpIntegrador_Grupo_3A.Admin
                 lblMessage.CssClass = "text-warning";
                 return;
             }
-            foreach(ListItem item in itemsToRemove)
+            foreach (ListItem item in itemsToRemove)
             {
                 images.Remove(item.Text);
             }
 
-            
+
             ViewState[NewImagesViewStateKey] = images;
 
-            
+
             BindImagesListBox();
 
             lblMessage.Text = "Imágenes eliminadas correctamente.";
@@ -446,17 +477,17 @@ namespace TpIntegrador_Grupo_3A.Admin
                 bool result = businnesProduct.ToggleActivation(currentProductId, state);
                 string message = state ? "activado" : "desactivado";
 
-                if(result)
+                if (result)
                 {
                     UserControl_Toast.ShowToast($"El producto ha sido {message} correctamente", true);
                     HandleToggleStateButton(state);
                     Session["isActive"] = state;
 
-                   
+
                 }
                 else
                 {
-                   UserControl_Toast.ShowToast("Error al cambiar el producto", false);
+                    UserControl_Toast.ShowToast("Error al cambiar el producto", false);
                 }
             }
             catch (Exception ex)
@@ -470,7 +501,7 @@ namespace TpIntegrador_Grupo_3A.Admin
         {
             try
             {
-                if(chkConfirmarEliminar.Checked)
+                if (chkConfirmarEliminar.Checked)
                 {
                     BusinessProduct businessProduct = new BusinessProduct();
 
@@ -479,16 +510,26 @@ namespace TpIntegrador_Grupo_3A.Admin
 
                     bool result = businessProduct.Delete(currentProductId, currentProductCode);
 
-                    if(result)
+                    if (result)
                     {
                         UserControl_Toast.ShowToast("Producto eliminado correctamente", true);
                         ClearForm();
+
+                        string script = @"
+                         setTimeout(function() {
+                           window.location.href = 'ProductsManagement.aspx';
+                         }, 1260);
+                         ";
+
+                        // Registrar el script para ejecutarlo en el lado del cliente
+                        ScriptManager.RegisterStartupScript(this, GetType(), "redirectAfterDelay", script, true);
+
                     }
                     else
                     {
-                       UserControl_Toast.ShowToast("Error al eliminar el producto", false);
+                        UserControl_Toast.ShowToast("Error al eliminar el producto", false);
                     }
-                    
+
                 }
                 else
                 {
