@@ -45,9 +45,8 @@ namespace TpIntegrador_Grupo_3A
             }
             else
             {
-                //DESCOMENTAR ESTO 
-                //if (!(base.Page is Login || base.Page is Register || base.Page is Products || base.Page is Default))
-                //Response.Redirect("~/Login.aspx", false);
+                if (!(base.Page is Login || base.Page is Register || base.Page is ResetPassword || base.Page is ResetPasswordConfirm || base.Page is Products || base.Page is Default || base.Page is Details || base.Page is Error) && (Session["error"] == null))
+                    Response.Redirect("~/Login.aspx", false);
             }
 
             //if (Request.Url.AbsolutePath.Contains("login") || Request.Url.AbsolutePath.Contains("Login"))

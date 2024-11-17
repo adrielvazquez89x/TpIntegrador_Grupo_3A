@@ -11,9 +11,10 @@ namespace TpIntegrador_Grupo_3A
 {
     public partial class Checkout : System.Web.UI.Page
     {
-        public Model.Cart Cart {get;set;}
+        public Model.Cart Cart { get; set; }
         public new List<ItemCart> Items = new List<ItemCart>();
         public decimal Total;
+        public bool delivery = false;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -28,10 +29,19 @@ namespace TpIntegrador_Grupo_3A
 
                     Items = user.Cart.Items;
                     Total = user.Cart.SumTotal();
-                    //repeater.DataSource = Items;
-                    //repeater.DataBind();
 
-                    txtName.Text = user.FirstName;
+                    txtName.Text = user.FirstName is null ? "" : user.FirstName;
+                    txtDni.Text = user.Dni is null ? "" : user.Dni.ToString();
+                    txtProvince.Text = user.Address.Province is null ? "" : user.Address.Province;
+                    txtTown.Text = user.Address.Town is null ? "" : user.Address.Town;
+                    txtDistrict.Text = user.Address.District is null ? "" : user.Address.District;
+                    txtCP.Text = user.Address.CP is null ? "" : user.Address.CP.ToString();
+                    txtStreet.Text = user.Address.Street is null ? "" : user.Address.Street;
+                    txtNumber.Text = user.Address.Number.ToString() is null ? "" : user.Address.Number.ToString();
+                    txtFloor.Text = user.Address.Floor is null ? "" : user.Address.Floor;
+                    txtUnit.Text = user.Address.Unit is null ? "" : user.Address.Unit;
+
+                    ViewState["delivery"] = false; //inicia con la opcion de retiro en tienda
                 }
                 else
                 {
@@ -39,6 +49,18 @@ namespace TpIntegrador_Grupo_3A
                     Response.Redirect("Error.aspx", false);
                 }
             }
+            else
+            {
+                if (ViewState["delivery"] != null)
+                    delivery = (bool)ViewState["delivery"];
+            }
+        }
+
+        protected void ddlEntrega_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            delivery = ddlEntrega.SelectedValue == "1";
+            ViewState["delivery"] = delivery;
+            UpdatePanelDelivery.Update();
         }
     }
 }
