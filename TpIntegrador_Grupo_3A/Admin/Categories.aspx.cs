@@ -41,6 +41,12 @@ namespace TpIntegrador_Grupo_3A.Admin
             BusinessCategory businessCategory = new BusinessCategory();
             string result = "";
 
+            if (Validator.IsEmpty(txtCategory.Text))
+            {
+                UserControl_Toast.ShowToast("Debe completar el campo", false);
+                return;
+            }
+
             //Manejamos el botón de agregar y editar
             if (btnAddCategory.Text == "Agregar")
             {

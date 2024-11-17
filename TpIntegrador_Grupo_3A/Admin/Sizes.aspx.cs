@@ -21,6 +21,12 @@ namespace TpIntegrador_Grupo_3A.Admin
             BusinessSize businessSize = new BusinessSize();
             string result = "";
 
+            if (Validator.IsEmpty(txtSize.Text))
+            {
+                UserControl_Toast.ShowToast("Debe completar el campo", false);
+                return;
+            }
+
             //Manejamos el botón de agregar y editar
             if (btnAddSize.Text == "Agregar")
             {

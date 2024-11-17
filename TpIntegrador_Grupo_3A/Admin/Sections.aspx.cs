@@ -22,6 +22,12 @@ namespace TpIntegrador_Grupo_3A.Admin
             BusinessSection businessSection = new BusinessSection();
             string result = "";
 
+            if (Validator.IsEmpty(txtSection.Text))
+            {
+                UserControl_Toast.ShowToast("Debe completar el campo", false);
+                return;
+            }
+
             //Manejamos el botón de agregar y editar
             if (btnAddSection.Text == "Agregar")
             {

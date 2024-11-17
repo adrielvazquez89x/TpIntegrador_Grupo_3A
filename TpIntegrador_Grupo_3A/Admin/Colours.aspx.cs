@@ -21,6 +21,12 @@ namespace TpIntegrador_Grupo_3A.Admin
             BusinessColour businessColour = new BusinessColour();
             string result = "";
 
+            if (Validator.IsEmpty(txtColour.Text))
+            {
+                UserControl_Toast.ShowToast("Debe completar el campo", false);
+                return;
+            }
+
             //Manejamos el botón de agregar y editar
             if (btnAddColour.Text == "Agregar")
             {
