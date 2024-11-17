@@ -22,7 +22,7 @@ namespace Business
             userPassword = password;
         }
 
-        public async Task SendEmailAsync(string to, string subject, string body)
+        public async Task SendEmailAsync(string to, string subject, string body, Attachment attachment = null)
         {
             try
             {
@@ -41,12 +41,26 @@ namespace Business
 
                     mailMessage.To.Add(to);
 
-                    await client.SendMailAsync(mailMessage);
+                    if (attachment != null)
+                    {
+                        using (attachment)
+                        {
+                            mailMessage.Attachments.Add(attachment);
+                            await client.SendMailAsync(mailMessage);
+                        }
+                    }
+                    else
+                    {
+                        await client.SendMailAsync(mailMessage);
+                    }
+
+                   // await client.SendMailAsync(mailMessage);
                    
                 }
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error al enviar el correo: {ex.Message}");
                 ex.ToString();
 
             }

@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Services.Description;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -57,23 +58,29 @@ namespace TpIntegrador_Grupo_3A
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            
-            string userEmail = ConfigurationManager.AppSettings["UserEmail"];
-            string userPassword = ConfigurationManager.AppSettings["UserPassword"];
-            var emailService = new EmailService(userEmail, userPassword);
-
+           
             string name = Request.Form["nombre"];
-            string subject = Request.Form["asunto"];
+            string sub = Request.Form["asunto"];
             string email = Request.Form["email"];
-            string body = Request.Form["mensaje"];
+            string bod = Request.Form["mensaje"];
+
+            var subject = "Mensaje de Contacto: " + sub;
+            var body = $"<strong>Nombre:</strong> {name}<br>" +
+                       $"<strong>Correo Electrónico:</strong> {email}<br>" +
+                       $"<strong>Mensaje:</strong><br>{bod}";
+
 
             string to = "programacionsorteos@gmail.com";
+            EmailService emailService = new EmailService("programacionsorteos@gmail.com", "rdnnfccpmyfoamap");
+
 
             // Llama al método SendEmailAsync de forma asíncrona
             Task.Run(async () => await emailService.SendEmailAsync(to, subject, body));
 
             Session["Success"] = "ok";
-            Response.Redirect("Default.aspx");
+           // Response.Redirect("Default.aspx");
+            Control_Toast.ShowToast("Mensaje enviado correctamente.",false);
+
         }
     }
 }

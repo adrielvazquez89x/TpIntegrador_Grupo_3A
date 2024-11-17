@@ -29,7 +29,7 @@ namespace Model
                 return string.IsNullOrEmpty(input);
             }
 
-            if(input.Trim().Length == 0)
+            if (input.Trim().Length == 0)
             {
                 return true;
             }

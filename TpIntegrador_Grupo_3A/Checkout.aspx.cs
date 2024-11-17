@@ -1,8 +1,20 @@
-﻿using Model;
+﻿using Business;
+using iText.IO.Font.Constants;
+using iText.Kernel.Font;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Layout.Properties;
+using Model;
 using Security;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -62,5 +74,152 @@ namespace TpIntegrador_Grupo_3A
             ViewState["delivery"] = delivery;
             UpdatePanelDelivery.Update();
         }
+
+        protected void btnFinalizar_Click(object sender, EventArgs e)
+        {
+
+            Model.User user = (Model.User)Session["user"];
+            var userEmail = user.Email;
+            byte[] pdfBytes = GeneratePdf();
+
+
+            var subject = "Confirmacion de compra";
+            var body = "Adjunto encontrarás el detalle de tu compra en formato PDF.";
+            //var body = GenerateBody();
+
+            EmailService emailService = new EmailService("programacionsorteos@gmail.com", "rdnnfccpmyfoamap");
+
+            MemoryStream ms = new MemoryStream(pdfBytes);
+
+            // Crear el archivo adjunto (PDF)
+            ms.Position = 0;
+            Console.WriteLine($"Tamaño del PDF generado: {ms.Length} bytes");
+            var attachment = new System.Net.Mail.Attachment(ms, "ConfirmacionCompra.pdf", "application/pdf");
+
+            Task.Run(() => emailService.SendEmailAsync(userEmail, subject, body, attachment));
+
+
+
+
+            Response.Redirect("BuyConfirmation.aspx", false);
+
+        }
+
+        private byte[] GeneratePdf()
+        {
+            // Crear el archivo PDF en memoria (stream)
+            using (MemoryStream ms = new MemoryStream())
+            {
+                PdfWriter writer = new PdfWriter(ms);
+                PdfDocument pdf = new PdfDocument(writer);
+                Document document = new Document(pdf);
+
+                // Configuración de estilo (fuentes, tamaños y colores)
+                PdfFont fontHeader = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+                PdfFont fontNormal = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
+                PdfFont fontItalic = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_OBLIQUE);
+
+                // Estilo de la tabla
+                float[] columnWidths = { 3, 1, 1, 2 };  // Ajuste el tamaño de las columnas
+                iText.Layout.Element.Table table = new iText.Layout.Element.Table(columnWidths);
+
+                // Título de la factura
+                document.Add(new Paragraph("Factura de Compra")
+                    .SetFont(fontHeader)
+                    .SetFontSize(18)
+                    .SetTextAlignment(TextAlignment.CENTER)
+                    .SetMarginBottom(10));
+
+                // Encabezados de la tabla
+                table.AddHeaderCell(new Cell().Add(new Paragraph("Producto").SetFont(fontHeader).SetFontSize(12).SetBold()));
+                table.AddHeaderCell(new Cell().Add(new Paragraph("Cantidad").SetFont(fontHeader).SetFontSize(12).SetBold()));
+                table.AddHeaderCell(new Cell().Add(new Paragraph("Precio Unitario").SetFont(fontHeader).SetFontSize(12).SetBold()));
+                table.AddHeaderCell(new Cell().Add(new Paragraph("Subtotal").SetFont(fontHeader).SetFontSize(12).SetBold()));
+
+                // Agregar los productos del carrito
+                Model.User user = (Model.User)Session["user"];
+                if (user != null && user.Cart != null && user.Cart.Items != null)
+                {
+                    foreach (var item in user.Cart.Items)
+                    {
+                        table.AddCell(new Cell().Add(new Paragraph(item.Product.Name).SetFont(fontNormal).SetFontSize(12)));
+                        table.AddCell(new Cell().Add(new Paragraph(item.Number.ToString()).SetFont(fontNormal).SetFontSize(12)));
+                        table.AddCell(new Cell().Add(new Paragraph($"${item.Product.Price:F2}").SetFont(fontNormal).SetFontSize(12)));
+                        table.AddCell(new Cell().Add(new Paragraph($"${item.Subtotal:F2}").SetFont(fontNormal).SetFontSize(12)));
+                    }
+
+                    // Total de la compra
+                    table.AddCell(new Cell(1, 3).Add(new Paragraph("Total").SetFont(fontHeader).SetFontSize(12).SetBold()).SetTextAlignment(TextAlignment.RIGHT));
+                    table.AddCell(new Cell().Add(new Paragraph($"${user.Cart.SumTotal():F2}").SetFont(fontHeader).SetFontSize(12).SetBold()));
+                }
+
+                // Agregar la tabla al documento
+                document.Add(table);
+
+                // Detalles adicionales (pie de página, fecha, etc.)
+                document.Add(new Paragraph("\nGracias por tu compra!")
+                    .SetFont(fontItalic)
+                    .SetFontSize(10)
+                    .SetTextAlignment(TextAlignment.CENTER));
+
+                document.Add(new Paragraph($"Fecha de compra: {DateTime.Now.ToString("yyyy-MM-dd")}")
+                    .SetFont(fontItalic)
+                    .SetFontSize(10)
+                    .SetTextAlignment(TextAlignment.CENTER));
+
+                document.Add(new Paragraph("\nPara más detalles, visita nuestro sitio web o contacta con soporte.")
+                    .SetFont(fontItalic)
+                    .SetFontSize(10)
+                    .SetTextAlignment(TextAlignment.CENTER));
+
+                // Cerrar el documento
+                document.Close();
+
+                // Retornar el PDF generado como un arreglo de bytes
+                return ms.ToArray();
+            }
+        }
     }
-}
+    }
+
+
+
+
+        //private byte[] GeneratePdf()
+        //{
+        //    // Crear el archivo PDF en memoria (stream)
+        //    using (MemoryStream ms = new MemoryStream())
+        //    {
+        //        PdfWriter writer = new PdfWriter(ms);
+        //        PdfDocument pdf = new PdfDocument(writer);
+        //        Document document = new Document(pdf);
+
+        //        // Añadir título y contenido
+        //        document.Add(new Paragraph("Confirmación de compra"));
+        //        document.Add(new Paragraph("Gracias por tu compra. A continuación, los detalles de la misma:"));
+
+        //        // Accedemos al carrito
+        //        Model.User user = (Model.User)Session["user"];
+        //        if (user != null && user.Cart != null && user.Cart.Items != null)
+        //        {
+        //            foreach (var item in user.Cart.Items)
+        //            {
+        //                document.Add(new Paragraph($"{item.Product.Name} - Cantidad: {item.Number} - Subtotal: ${item.Subtotal}"));
+        //            }
+
+        //            document.Add(new Paragraph($"Total: ${user.Cart.SumTotal()}"));
+        //        }
+
+        //        document.Close();
+        //        //string filePath = Server.MapPath("~/App_Data/BuyConfirmation.pdf");
+        //        //File.WriteAllBytes(filePath, ms.ToArray());
+
+
+
+
+        //        // Devolver el PDF como un string en base64 (si quieres adjuntarlo a un email o almacenarlo)
+        //        return ms.ToArray();
+
+        //    }
+    //}
+    //}

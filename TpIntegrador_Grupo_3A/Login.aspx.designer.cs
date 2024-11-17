@@ -87,12 +87,12 @@ namespace TpIntegrador_Grupo_3A
         protected global::System.Web.UI.WebControls.Button btnIniciar;
 
         /// <summary>
-        /// UserControl_Toast control.
+        /// Control_Toast control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TpIntegrador_Grupo_3A.Admin.UserControl_Toast UserControl_Toast;
+        protected global::TpIntegrador_Grupo_3A.Control_Toast Control_Toast;
     }
 }

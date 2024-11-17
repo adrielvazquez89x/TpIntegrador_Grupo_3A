@@ -19,7 +19,7 @@ namespace TpIntegrador_Grupo_3A
         protected void btnSendReset_Click(object sender, EventArgs e)
         {
             var businessUser = new BusinessUser();
-            var userEmail = txtResetEmail.Text;
+            var userEmail = txtResetEmail.Text.Trim();
 
             if (businessUser.emailExists(userEmail))
             {
@@ -27,7 +27,7 @@ namespace TpIntegrador_Grupo_3A
                 var user = businessUser.GetUserByEmail(userEmail);
 
 
-                if (user != null)
+                if (user != null && user.Active)
                 {
                     // Generar el token de restablecimiento de contraseña
                     var token = businessUser.GenerateToken();
@@ -50,12 +50,20 @@ namespace TpIntegrador_Grupo_3A
                     lblSend.Visible = true;
                     lblResetError.Visible = false;
                 }
+                else
+                {
+                    lblResetError.Text = "Este correo esta inactivo.";
+                    lblResetError.Visible = true;
+                    lblSend.Visible = false;
+                    return;
+                }
             }
             else
             {
                 lblResetError.Text = "Este correo no está registrado.";
                 lblResetError.Visible = true;
                 lblSend.Visible = false;
+                return;
             }
         }
     }

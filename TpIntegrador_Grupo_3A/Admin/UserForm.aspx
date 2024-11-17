@@ -107,18 +107,18 @@
                         ErrorMessage="Este campo es requerido"
                         ForeColor="Red"
                         Display="Dynamic" />
-                     <asp:RegularExpressionValidator
+                    <asp:RegularExpressionValidator
                         ID="revPassword"
                         runat="server"
                         ControlToValidate="txtPassword"
                         ValidationExpression="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$"
                         ErrorMessage="La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número."
                         ForeColor="Red"
-                        Display="Dynamic" />
+                        Display="Dynamic"
+                        EnableClientScript="true" />
                 </div>
-
                 <div class="text-center">
-                    <asp:Button ID="btnSave" runat="server" Text="Guardar Usuario" CssClass="btn btn-primary" OnClick="btnSave_Click" />
+                    <asp:Button ID="btnSave" runat="server" Text="" CssClass="btn btn-primary" OnClick="btnSave_Click" />
                 </div>
                 <uc1:UserControl_Toast runat="server" ID="UserControl_Toast" />
             </div>

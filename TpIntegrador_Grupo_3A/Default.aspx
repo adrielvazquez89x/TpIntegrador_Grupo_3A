@@ -1,5 +1,8 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="TpIntegrador_Grupo_3A.Default" %>
 
+<%@ Register Src="~/Control_Toast.ascx" TagPrefix="uc1" TagName="Control_Toast" %>
+
+
 <asp:Content ID="BannerContent" ContentPlaceHolderID="BannerContent" runat="server">
     <!-- Carousel de imágenes -->
     <div id="carouselExample" class="carousel slide mb-4">
@@ -204,6 +207,7 @@
                 </div>
             </section>
             <%--fin seccion contacto--%>
+            <uc1:Control_Toast runat="server" ID="Control_Toast" />
         </div>
     </main>
 </asp:Content>

@@ -24,7 +24,7 @@ namespace TpIntegrador_Grupo_3A
             {
 
                 BusinessUser usersNegocio = new BusinessUser();
-                EmailService emailService = new EmailService("programacionsorteos@gmail.com", "zlujsnytsxpeuvsy");
+                EmailService emailService = new EmailService("programacionsorteos@gmail.com", "rdnnfccpmyfoamap");
                 PasswordHasher passwordHasher = new PasswordHasher();
 
 

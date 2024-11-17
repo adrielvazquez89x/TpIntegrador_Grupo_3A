@@ -15,8 +15,13 @@
 
             <div class="mb-3">
                 <label class="form-label" for="txtPassword">Contraseña</label>
-                <asp:TextBox runat="server" CssClass="form-control" ID="txtPassword" TextMode="Password" REQUIRED />
-                <asp:RequiredFieldValidator ID="rfvPassword" runat="server" ControlToValidate="txtPassword" ErrorMessage="La contraseña es requerida." CssClass="text-danger" Display="Dynamic" />
+                <asp:TextBox runat="server" CssClass="form-control" ID="txtPassword" TextMode="Password" required="true" />
+                <asp:RequiredFieldValidator 
+                    ID="rfvPassword" 
+                    runat="server" 
+                    ControlToValidate="txtPassword"
+                    ErrorMessage="La contraseña es requerida."
+                    CssClass="text-danger" Display="Dynamic" />
 
 
                 <asp:RegularExpressionValidator

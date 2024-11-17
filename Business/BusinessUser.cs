@@ -60,9 +60,9 @@ namespace Business
 
                 data.setQuery(@"
             INSERT INTO Usuarios 
-                (Dni, Nombre, Apellido, Email, Celular, FechaAlta, ContraseniaHash, SeguridadStamp, EsAdmin, EsOwner, Active)
+                (Dni, Nombre, Apellido, Email, Celular, FechaAlta,FechaNac, ContraseniaHash, SeguridadStamp, EsAdmin, EsOwner, Active)
             VALUES 
-                (@dni, @nombre, @apellido, @email, @celular, GETDATE(), @pass, @stamp, @admin, @owner, @active);");
+                (@dni, @nombre, @apellido, @email, @celular, GETDATE(),@fechanac, @pass, @stamp, @admin, @owner, @active);");
 
 
                 data.setParameter("@dni", user.Dni);
@@ -71,6 +71,7 @@ namespace Business
                 data.setParameter("@email", user.Email);
                 data.setParameter("@celular", user.Mobile);
                 data.setParameter("@fechaAlta", user.RegistrationDate);
+                data.setParameter("fechaNac", user.BirthDate);
                 data.setParameter("@pass", user.PasswordHash); // Contraseña ya hasheada
                 data.setParameter("@stamp", user.SecurityStamp); // Security Stamp
                 data.setParameter("@admin", user.Admin); // Admin: true

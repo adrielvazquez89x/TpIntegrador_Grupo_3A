@@ -49,7 +49,7 @@
 
             <div class="mb-3">
                 <label class="form-label">Email</label>
-                <asp:TextBox runat="server" CssClass="form-control" ID="txtEmail" />
+                <asp:TextBox runat="server" CssClass="form-control" ID="txtEmail" ReadOnly="true" />
                 <asp:RequiredFieldValidator
                     ID="rfvEmail"
                     runat="server"
