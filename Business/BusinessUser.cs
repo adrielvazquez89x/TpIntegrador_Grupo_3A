@@ -103,6 +103,7 @@ namespace Business
                 if (reader.Read())
                 {
                     user.UserId = (int)data.Reader["IdUsuario"];
+                    user.firstAccess = (bool)data.Reader["PrimerAcceso"];
                     user.Admin = (bool)(data.Reader["EsAdmin"]);
                     user.Owner = (bool)(data.Reader["EsOwner"]);
                     user.Active = (bool)(data.Reader["Active"]);    
@@ -167,7 +168,7 @@ namespace Business
                     // aux.Mobile = (string)reader["Celular"];
                     // aux.BirthDate = (DateTime)reader["FechaNac"];
                     //aux.RegistrationDate = (DateTime)reader["FechaAlta"];
-                    aux.AddressId = reader["IdDireccion"] != DBNull.Value ? (int)reader["IdDireccion"] : 0;  // Asegúrate de capturar el AddressId
+                    aux.AddressId = reader["IdDireccion"] != DBNull.Value ? (int)reader["IdDireccion"] : 0;
 
                 }
                 return aux;
@@ -204,6 +205,7 @@ namespace Business
                 {
 
                     user.UserId = (int)data.Reader["IdUsuario"];
+                    user.firstAccess = (bool)data.Reader["PrimerAcceso"];
                     user.Dni = data.Reader["Dni"] != DBNull.Value ? (string)data.Reader["Dni"] : string.Empty;
                     user.FirstName = data.Reader["Nombre"] != DBNull.Value ? (string)data.Reader["Nombre"] : string.Empty;
                     user.LastName = data.Reader["Apellido"] != DBNull.Value ? (string)data.Reader["Apellido"] : string.Empty;
@@ -520,6 +522,22 @@ namespace Business
             }
         }
 
+        public void FirstAccessDone(int id)
+        {
+            try
+            {
+                data.setQuery($"Update Usuarios SET PrimerAcceso = 0 where IdUsuario = {id}");
+                data.executeAction();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
     }
 }
 //public User userById(int id)

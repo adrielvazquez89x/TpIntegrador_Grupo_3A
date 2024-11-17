@@ -195,10 +195,7 @@ namespace TpIntegrador_Grupo_3A
 
             BusinessStock businessStock = new BusinessStock();
             stock = businessStock.getStock(CodeSelectedProd, selectedColourId, selectedSizeId);
-            //bool validateStock = ValidateStock(selectedColourId, selectedSizeId, number);
-            bool added =false;
-            //if (validateStock)
-               added = user.Cart.AddProduct(selectedProd, stock, number);
+            bool added = user.Cart.AddProduct(selectedProd, stock, number);
             if (!added)
             {
                 Control_Toast.ShowToast($"Este pedido no se sumo.Se excede el stock disponible", false);
@@ -211,20 +208,6 @@ namespace TpIntegrador_Grupo_3A
                 ddlColour.ClearSelection();
             }
         }
-        //protected bool ValidateStock(int selectedColourId, int selectedSizeId, int number)
-        //{
-        //    BusinessStock businessStock = new BusinessStock();
-        //    stock = businessStock.getStock(CodeSelectedProd, selectedColourId, selectedSizeId);
-        //    if (number > stock.Amount)
-        //    {
-        //        return false;
-        //    }
-        //    else
-        //    {
-        //        return true;
-        //    }
-        //}
-
-
+        
     }
 }

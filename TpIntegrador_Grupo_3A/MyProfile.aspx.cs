@@ -24,6 +24,12 @@ namespace TpIntegrador_Grupo_3A
 
                         Model.User user = (Model.User)Session["user"];
                         //System.Diagnostics.Debug.WriteLine("User: " + user.ToString());
+                        if(user.firstAccess)
+                        {
+                            BusinessUser businessUser = new BusinessUser();
+                            businessUser.FirstAccessDone(user.UserId);
+                        }
+
                         txtDni.Text = user.Dni ?? "";  
                         txtNombre.Text = user.FirstName ?? "";  
                         txtApellido.Text = user.LastName ?? "";  
