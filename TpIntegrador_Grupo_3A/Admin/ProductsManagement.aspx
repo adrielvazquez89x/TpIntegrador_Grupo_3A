@@ -40,7 +40,7 @@
                                 ID="btnView"
                                 runat="server"
                                 CommandName="View"
-                                CommandArgument='<%# Eval("Id") %>'
+                                CommandArgument='<%# Eval("Code") %>'
                                 CssClass="btn btn-link text-primary"
                                 OnClick="btnView_Click">
                     <i class="bi bi-search"></i> 

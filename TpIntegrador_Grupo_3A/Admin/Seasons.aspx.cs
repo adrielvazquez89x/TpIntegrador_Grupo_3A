@@ -23,6 +23,12 @@ namespace TpIntegrador_Grupo_3A.Admin
             BusinessSeason businessSeason = new BusinessSeason();
             string result = "";
 
+            if (Validator.IsEmpty(txtSeason.Text))
+            {
+                UserControl_Toast.ShowToast("Debe completar el campo", false);
+                return;
+            }
+
             //Manejamos el botón de agregar y editar
             if (btnAddSeason.Text == "Agregar")
             {

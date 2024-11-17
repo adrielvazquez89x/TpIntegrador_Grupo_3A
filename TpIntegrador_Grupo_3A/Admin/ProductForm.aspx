@@ -188,6 +188,9 @@
                 </div>
 
                 <%-- Sección de eliminación y activación --%>
+
+                <%if (currentProductId != 0)
+                    {%>
                 <div>
                     <div class="mt-5 col-4 m-lg-4 ">
                         <div class="card shadow">
@@ -222,13 +225,14 @@
                                         Text="Eliminar Definitivamente"
                                         CssClass="btn btn-danger mt-2"
                                         Enabled="true"
-                                        OnClick="btnEliminarDefinitivo_Click"
-                                        />
+                                        OnClick="btnEliminarDefinitivo_Click" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <%} %>
+                
 
                 <asp:HiddenField ID="hfImagesToDelete" runat="server" />
                 <uc1:UserControl_Toast runat="server" ID="UserControl_Toast" />

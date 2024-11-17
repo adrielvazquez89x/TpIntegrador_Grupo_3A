@@ -89,12 +89,20 @@ namespace TpIntegrador_Grupo_3A.Admin
 
                 Label lblUpdateMessage = (Label)e.Item.FindControl("lblUpdateMessage");
                 TextBox txtStockAmount = (TextBox)e.Item.FindControl("txtEditStock");
+                HiddenField hfOriginalAmount = (HiddenField)e.Item.FindControl("hfOriginalAmount");
+
                 string currentValue = txtStockAmount.Text;
+
 
                 if(!Validator.IsOnlyNumbers(txtStockAmount.Text))
                 {
-                    UserControl_Toast.ShowToast("La cantidad de stock debe ser un número entero.", false);
-                    txtStockAmount.Text = currentValue;
+                    UserControl_Toast.ShowToast("La cantidad de stock debe ser un número entero, mayor o igual a cero.", false);
+                    txtStockAmount.Text = hfOriginalAmount.Value;
+                    return;
+                }
+
+                if(currentValue == hfOriginalAmount.Value)
+                {
                     return;
                 }
 
@@ -119,17 +127,26 @@ namespace TpIntegrador_Grupo_3A.Admin
 
         protected void btnAgregarStock_Click(object sender, EventArgs e)
         {
-            if (ddlColor.SelectedValue != "0" && ddlTalle.SelectedValue != "0" && int.TryParse(txtCantidad.Text, out int cantidad) && cantidad > 0)
+            if (ddlColor.SelectedValue != "0"
+                && ddlTalle.SelectedValue != "0" 
+                && int.TryParse(txtCantidad.Text, out int cantidad) && cantidad > 0)
             {
                 string productCode = txtCodigo.Text;
                 int colorId = int.Parse(ddlColor.SelectedValue);
                 int talleId = int.Parse(ddlTalle.SelectedValue);
 
+                Stock newStock = new Stock();
+
+                newStock.ProdCode = productCode;
+                newStock.Colour = new Colour() { Id = colorId };
+                newStock.Size = new Model.Size() { Id = talleId };
+                newStock.Amount = cantidad;
+
                 // Agregar el nuevo stock a la base de datos
                 BusinessStock businessStock = new BusinessStock();
-                bool resultado = false;
+                string resultado = businessStock.Add(newStock);
 
-                if (resultado)
+                if (resultado == "ok")
                 {
                     // Limpiar los campos
                     ddlColor.SelectedIndex = 0;
@@ -141,15 +158,10 @@ namespace TpIntegrador_Grupo_3A.Admin
                 }
                 else
                 {
-                    // Mostrar mensaje de error
-                    // Puedes agregar un Label para mostrar mensajes de error
+                    UserControl_Toast.ShowToast(resultado, false);
                 }
             }
-            else
-            {
-                // Mostrar mensaje de error por datos inválidos
-                // Puedes agregar un Label para mostrar mensajes de error
-            }
+
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)

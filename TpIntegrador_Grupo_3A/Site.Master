@@ -244,6 +244,6 @@
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/Scripts/bootstrap.js") %>
     </asp:PlaceHolder>
-
+    <script src="/Scripts/Master.js"></script>
 </body>
 </html>
