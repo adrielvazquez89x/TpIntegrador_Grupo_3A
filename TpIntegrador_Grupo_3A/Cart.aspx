@@ -1,7 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="TpIntegrador_Grupo_3A.Cart" %>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:UpdatePanel runat="server" UpdateMode="Conditional">
+<%@ Register Src="~/Control_Toast.ascx" TagPrefix="uc1" TagName="Control_Toast" %>
+
+
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <h3 class="text-center mt-5">Mi carrito</h3>
             <% if (Items != null && Items.Count != 0)
@@ -104,6 +107,9 @@
                 <h3 class="text-center mt-5">El carrito está vacío</h3>
             </div>
             <% } %>
+
+
+            <uc1:Control_Toast runat="server" ID="Control_Toast" />
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

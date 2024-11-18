@@ -1,66 +1,64 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Products.aspx.cs" Inherits="TpIntegrador_Grupo_3A.Products" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-<asp:Label ID="Titulo" Text="Nuestro listado de Prendas" runat="server" CssClass="h2 mb-5 d-flex justify-content-center" />
-<div class="container">
+    <asp:Label ID="Titulo" Text="Nuestro listado de Prendas" runat="server" CssClass="h2 mb-5 d-flex justify-content-center" />
+    <div class="container">
 
         <asp:UpdatePanel runat="server" UpdateMode="Conditional">
-    <ContentTemplate>
-        <!-- Collapse con opciones para filtrar -->
-        <div class="col mb-4">
-            <button class="btn gap-1 btn-deep-purple" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
-                <i class="bi bi-filter-circle"></i>
-            </button>
+            <ContentTemplate>
+                <!-- Collapse con opciones para filtrar -->
+                <div class="col mb-4">
+                    <button class="btn gap-1 btn-deep-purple" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+                        <i class="bi bi-filter-circle"></i>
+                    </button>
 
-            <div class="collapse" id="collapseFilter">
-                <div class="card card-body">
+                    <div class="collapse" id="collapseFilter">
+                        <div class="card card-body">
 
-                    <!-- Opcion generica "Ordenar por..."-->
-                    <div class="row mb-3">
-                        <div class="col-auto">
-                            <asp:Label Text="Ordenar por:" runat="server" CssClass="form-label" />
-                            <asp:DropDownList runat="server" CssClass="form-control" ID="ddlOrdenar">
-                                <asp:ListItem Text="A - Z" />
-                                <asp:ListItem Text="Z - A" />
-                                <asp:ListItem Text="Menor precio" />
-                                <asp:ListItem Text="Mayor precio" />
-                            </asp:DropDownList>
-                        </div>
+                            <!-- Opcion generica "Ordenar por..."-->
+                            <div class="row mb-3">
+                                <div class="col-auto">
+                                    <asp:Label Text="Ordenar por:" runat="server" CssClass="form-label" />
+                                    <asp:DropDownList runat="server" CssClass="form-control" ID="ddlOrdenar">
+                                        <asp:ListItem Text="A - Z" />
+                                        <asp:ListItem Text="Z - A" />
+                                        <asp:ListItem Text="Menor precio" />
+                                        <asp:ListItem Text="Mayor precio" />
+                                    </asp:DropDownList>
+                                </div>
 
-                        <!-- Filtrar Rango de Precio -->
-                        <div class="col-auto">
-                            <asp:Label Text="Precio" runat="server" CssClass="form-label" />
-                            <div class="d-flex gap-2 w-50">
-                                <asp:TextBox runat="server" ID="txtPriceMin" CssClass="form-control form-control-sm w-50" TextMode="Number" Placeholder="mínimo" min="0" />
-                                <asp:TextBox runat="server" ID="txtPriceMax" CssClass="form-control form-control-sm w-50" TextMode="Number" Placeholder="máximo" min="0" />
-                                <style>
-                                    input[type=number] {
-                                        -moz-appearance: textfield;
-                                    }
+                                <!-- Filtrar Rango de Precio -->
+                                <div class="col-auto">
+                                    <asp:Label Text="Precio" runat="server" CssClass="form-label" />
+                                    <div class="d-flex gap-2 w-50">
+                                        <asp:TextBox runat="server" ID="txtPriceMin" CssClass="form-control form-control-sm w-50" TextMode="Number" Placeholder="mínimo" min="0" />
+                                        <asp:TextBox runat="server" ID="txtPriceMax" CssClass="form-control form-control-sm w-50" TextMode="Number" Placeholder="máximo" min="0" />
+                                        <style>
+                                            input[type=number] {
+                                                -moz-appearance: textfield;
+                                            }
 
-                                        input[type=number]::-webkit-outer-spin-button,
-                                        input[type=number]::-webkit-inner-spin-button {
-                                            -webkit-appearance: none;
-                                            margin: 0;
-                                        }
-                                </style>
+                                                input[type=number]::-webkit-outer-spin-button,
+                                                input[type=number]::-webkit-inner-spin-button {
+                                                    -webkit-appearance: none;
+                                                    margin: 0;
+                                                }
+                                        </style>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <asp:LinkButton runat="server" ID="btnFilter" OnClick="btnFilter_Click" CssClass="btn btn-info mt-4">
+                                <i class="bi bi-funnel"></i>
+                                    </asp:LinkButton>
+                                    <asp:LinkButton runat="server" ID="btnClearFilter" CssClass="btn btn-info mt-4" OnClick="btnClearFilter_Click">
+                                <i class="bi bi-arrow-counterclockwise"></i>
+                                    </asp:LinkButton>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-auto">
-                            <asp:LinkButton runat="server" ID="btnFilter" OnClick="btnFilter_Click" CssClass="btn btn-info mt-4">
-                                <i class="bi bi-funnel"></i>
-                            </asp:LinkButton>
-                            <asp:LinkButton runat="server" ID="btnClearFilter" CssClass="btn btn-info mt-4" OnClick="btnClearFilter_Click">
-                                <i class="bi bi-arrow-counterclockwise"></i>
-                            </asp:LinkButton>
-                        </div>
-
                     </div>
-
                 </div>
-            </div>
-        </div>
-                    </ContentTemplate>
+            </ContentTemplate>
             <Triggers>
                 <asp:AsyncPostBackTrigger ControlID="btnClearFilter" EventName="Click" />
             </Triggers>

@@ -55,7 +55,7 @@ namespace TpIntegrador_Grupo_3A
             bool edited=user.Cart.UpdateProduct(selectedItem.Stock, 0); //envio un 1 para disminuir, un 0 para aumentar
             if (!edited)
             {
-                //Control_Toast.ShowToast($"No es posible. El pedido de este producto llegó al límite de stock disponible", false);
+                Control_Toast.ShowToast($"No es posible. El pedido de este producto llegó al límite de stock disponible", false);
             }
             else
             {
