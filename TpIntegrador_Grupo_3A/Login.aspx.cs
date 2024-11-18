@@ -86,6 +86,5 @@ namespace TpIntegrador_Grupo_3A
                 lblError.Text = "Ocurrió un error durante el inicio de sesión. Inténtalo de nuevo.";
             }
         }
-
     }
 }
