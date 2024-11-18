@@ -44,6 +44,15 @@
                     ForeColor="Red"
                     Display="Dynamic" />
 
+                <asp:RegularExpressionValidator
+                    ID="revDni"
+                    runat="server"
+                    ControlToValidate="txtDni"
+                    ValidationExpression="^\d+$"
+                    ErrorMessage="El DNI debe contener solo números"
+                    ForeColor="Red"
+                    Display="Dynamic" />
+
             </div>
 
 
@@ -118,66 +127,66 @@
             <div class="mb-3">
                 <label class="form-label">Provincia</label>
                 <asp:TextBox runat="server" CssClass="form-control" ID="txtProvincia" />
-                <asp:RequiredFieldValidator
+                <%--<asp:RequiredFieldValidator
                     ID="rfvProvincia"
                     runat="server"
                     ControlToValidate="txtProvincia"
                     InitialValue=""
                     ErrorMessage="Debe cargar su provincia"
                     ForeColor="Red"
-                    Display="Dynamic" />
+                    Display="Dynamic" />--%>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Ciudad</label>
                 <asp:TextBox runat="server" CssClass="form-control" ID="txtCiudad" />
-                <asp:RequiredFieldValidator
+                <%--<asp:RequiredFieldValidator
                     ID="rfvCiudad"
                     runat="server"
                     ControlToValidate="txtCiudad"
                     InitialValue=""
                     ErrorMessage="Debe cargar su Ciudad"
                     ForeColor="Red"
-                    Display="Dynamic" />
+                    Display="Dynamic" />--%>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Barrio</label>
                 <asp:TextBox runat="server" CssClass="form-control" ID="txtBarrio" />
-                <asp:RequiredFieldValidator
+                <%--<asp:RequiredFieldValidator
                     ID="rfvBarrio"
                     runat="server"
                     ControlToValidate="txtBarrio"
                     InitialValue=""
                     ErrorMessage="Debe cargar su Barrio"
                     ForeColor="Red"
-                    Display="Dynamic" />
+                    Display="Dynamic" />--%>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Calle</label>
                 <asp:TextBox runat="server" CssClass="form-control" ID="txtCalle" />
-                <asp:RequiredFieldValidator
+                <%--<asp:RequiredFieldValidator
                     ID="rfvCalle"
                     runat="server"
                     ControlToValidate="txtCalle"
                     InitialValue=""
                     ErrorMessage="Debe cargar su Calle"
                     ForeColor="Red"
-                    Display="Dynamic" />
+                    Display="Dynamic" />--%>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Numero</label>
                 <asp:TextBox runat="server" CssClass="form-control" ID="txtNumero" />
-                <asp:RequiredFieldValidator
+                <%--<asp:RequiredFieldValidator
                     ID="rfvNumero"
                     runat="server"
                     ControlToValidate="txtNumero"
                     InitialValue=""
                     ErrorMessage="Debe cargar un número"
                     ForeColor="Red"
-                    Display="Dynamic" />
+                    Display="Dynamic" />--%>
                 <asp:RegularExpressionValidator
                     ID="revNumero"
                     runat="server"
@@ -191,14 +200,14 @@
             <div class="mb-3">
                 <label class="form-label">Codigo Postal</label>
                 <asp:TextBox runat="server" CssClass="form-control" ID="txtCP" />
-                <asp:RequiredFieldValidator
+                <%--<asp:RequiredFieldValidator
                     ID="rfvCP"
                     runat="server"
                     ControlToValidate="txtCP"
                     InitialValue=""
                     ErrorMessage="Debe cargar su Código Postal"
                     ForeColor="Red"
-                    Display="Dynamic" />
+                    Display="Dynamic" />--%>
                 <asp:RegularExpressionValidator
                     ID="revCP"
                     runat="server"

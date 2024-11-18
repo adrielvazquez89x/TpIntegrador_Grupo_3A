@@ -69,6 +69,15 @@ namespace TpIntegrador_Grupo_3A
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDni;
 
         /// <summary>
+        /// revDni control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revDni;
+
+        /// <summary>
         /// txtEmail control.
         /// </summary>
         /// <remarks>
@@ -168,15 +177,6 @@ namespace TpIntegrador_Grupo_3A
         protected global::System.Web.UI.WebControls.TextBox txtProvincia;
 
         /// <summary>
-        /// rfvProvincia control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvProvincia;
-
-        /// <summary>
         /// txtCiudad control.
         /// </summary>
         /// <remarks>
@@ -184,15 +184,6 @@ namespace TpIntegrador_Grupo_3A
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCiudad;
-
-        /// <summary>
-        /// rfvCiudad control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCiudad;
 
         /// <summary>
         /// txtBarrio control.
@@ -204,15 +195,6 @@ namespace TpIntegrador_Grupo_3A
         protected global::System.Web.UI.WebControls.TextBox txtBarrio;
 
         /// <summary>
-        /// rfvBarrio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvBarrio;
-
-        /// <summary>
         /// txtCalle control.
         /// </summary>
         /// <remarks>
@@ -222,15 +204,6 @@ namespace TpIntegrador_Grupo_3A
         protected global::System.Web.UI.WebControls.TextBox txtCalle;
 
         /// <summary>
-        /// rfvCalle control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCalle;
-
-        /// <summary>
         /// txtNumero control.
         /// </summary>
         /// <remarks>
@@ -238,15 +211,6 @@ namespace TpIntegrador_Grupo_3A
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNumero;
-
-        /// <summary>
-        /// rfvNumero control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNumero;
 
         /// <summary>
         /// revNumero control.
@@ -265,15 +229,6 @@ namespace TpIntegrador_Grupo_3A
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCP;
-
-        /// <summary>
-        /// rfvCP control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCP;
 
         /// <summary>
         /// revCP control.

@@ -70,7 +70,7 @@ namespace Business
                 data.setParameter("@apellido", user.LastName);
                 data.setParameter("@email", user.Email);
                 data.setParameter("@celular", user.Mobile);
-                data.setParameter("@fechaAlta", user.RegistrationDate);
+               // data.setParameter("@fechaAlta", user.RegistrationDate);
                 data.setParameter("fechaNac", user.BirthDate);
                 data.setParameter("@pass", user.PasswordHash); // Contraseña ya hasheada
                 data.setParameter("@stamp", user.SecurityStamp); // Security Stamp
