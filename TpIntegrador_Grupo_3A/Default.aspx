@@ -5,7 +5,7 @@
 
 <asp:Content ID="BannerContent" ContentPlaceHolderID="BannerContent" runat="server">
     <!-- Carousel de imágenes -->
-    <div id="carouselExample" class="carousel slide mb-4">
+    <div id="carouselExample" class="carousel slide">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img src="./Images/slider1.jpg" class="d-block w-100" style="height: 50vh; object-fit: cover;" alt="Imagen 1">
@@ -80,7 +80,7 @@
                     <div class="row">
                         <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
                             <h2 class="text-center">Envianos un mensaje</h2>
-                            <form class="row g-3 p-4 shadow-sm bg-white rounded" action="SendMessage.aspx" method="post" style="max-width: 600px; margin: auto;">
+                       <form class="row g-3 p-4 shadow-sm bg-white rounded" action="SendMessage.aspx" method="post" style="max-width: 600px; margin: auto;">
                                 <div class="col-md-6 mb-3">
                                     <label for="inputNombre" class="form-label visually-hidden">Nombre</label>
                                     <input
@@ -126,7 +126,12 @@
                                 </div>
 
                                 <div class="col-12 d-grid mt-3">
-                                    <asp:button type="submit" runat="server" id="btnSubmit" onclick="btnSubmit_Click" class="btn btn-primary btn-lg w-50" Text="Enviar Mensaje"/>
+                                    <asp:Button 
+                                        type="submit" 
+                                        runat="server" 
+                                        id="btnSubmit" 
+                                        onclick="btnSubmit_Click"
+                                        CssClass="btn btn-primary btn-lg w-50" Text="Enviar Mensaje"></asp:Button>
                                 </div>
                             </form>
 

@@ -54,9 +54,7 @@
                                 <i class="bi bi-arrow-counterclockwise"></i>
                                     </asp:LinkButton>
                                 </div>
-
                             </div>
-
                         </div>
                     </div>
                 </div>
