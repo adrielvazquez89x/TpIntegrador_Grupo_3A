@@ -98,8 +98,8 @@ namespace TpIntegrador_Grupo_3A
 
             Task.Run(() => emailService.SendEmailAsync(userEmail, subject, body, attachment));
 
-
-
+            // Vaciar el carrito despues de que ya compro 
+            user.Cart.ClearCart();
 
             Response.Redirect("BuyConfirmation.aspx", false);
 
