@@ -79,7 +79,7 @@ namespace TpIntegrador_Grupo_3A
 
             Session["Success"] = "ok";
            // Response.Redirect("Default.aspx");
-            Control_Toast.ShowToast("Mensaje enviado correctamente.",false);
+           //Control_Toast.ShowToast("Mensaje enviado correctamente.",false);
 
         }
     }

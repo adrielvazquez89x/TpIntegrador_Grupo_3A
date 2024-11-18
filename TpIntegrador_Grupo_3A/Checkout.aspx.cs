@@ -131,10 +131,10 @@ namespace TpIntegrador_Grupo_3A
                     .SetMarginBottom(10));
 
                 // Encabezados de la tabla
-                table.AddHeaderCell(new Cell().Add(new Paragraph("Producto").SetFont(fontHeader).SetFontSize(12).SetBold()));
-                table.AddHeaderCell(new Cell().Add(new Paragraph("Cantidad").SetFont(fontHeader).SetFontSize(12).SetBold()));
-                table.AddHeaderCell(new Cell().Add(new Paragraph("Precio Unitario").SetFont(fontHeader).SetFontSize(12).SetBold()));
-                table.AddHeaderCell(new Cell().Add(new Paragraph("Subtotal").SetFont(fontHeader).SetFontSize(12).SetBold()));
+                table.AddHeaderCell(new Cell().Add(new Paragraph("Producto").SetFont(fontHeader).SetFontSize(12)));
+                table.AddHeaderCell(new Cell().Add(new Paragraph("Cantidad").SetFont(fontHeader).SetFontSize(12)));
+                table.AddHeaderCell(new Cell().Add(new Paragraph("Precio Unitario").SetFont(fontHeader).SetFontSize(12)));
+                table.AddHeaderCell(new Cell().Add(new Paragraph("Subtotal").SetFont(fontHeader).SetFontSize(12)));
 
                 // Agregar los productos del carrito
                 Model.User user = (Model.User)Session["user"];
@@ -149,8 +149,8 @@ namespace TpIntegrador_Grupo_3A
                     }
 
                     // Total de la compra
-                    table.AddCell(new Cell(1, 3).Add(new Paragraph("Total").SetFont(fontHeader).SetFontSize(12).SetBold()).SetTextAlignment(TextAlignment.RIGHT));
-                    table.AddCell(new Cell().Add(new Paragraph($"${user.Cart.SumTotal():F2}").SetFont(fontHeader).SetFontSize(12).SetBold()));
+                    table.AddCell(new Cell(1, 3).Add(new Paragraph("Total").SetFont(fontHeader).SetFontSize(12)).SetTextAlignment(TextAlignment.RIGHT));
+                    table.AddCell(new Cell().Add(new Paragraph($"${user.Cart.SumTotal():F2}").SetFont(fontHeader).SetFontSize(12)));
                 }
 
                 // Agregar la tabla al documento

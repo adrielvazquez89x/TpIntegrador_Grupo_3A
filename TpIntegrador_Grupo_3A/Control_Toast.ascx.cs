@@ -9,10 +9,10 @@ namespace TpIntegrador_Grupo_3A
 {
     public partial class Control_Toast : System.Web.UI.UserControl
     {
-            protected void Page_Load(object sender, EventArgs e)
-            {
+        protected void Page_Load(object sender, EventArgs e)
+        {
 
-            }
+        }
         // Propiedad para obtener el ClientID del toast
         public string ToastClientID => toastDiv.ClientID;
 
