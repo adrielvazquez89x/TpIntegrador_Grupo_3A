@@ -92,6 +92,14 @@
                     ErrorMessage="Debe seleccionar una fecha de nacimiento"
                     ForeColor="Red"
                     Display="Dynamic" />
+                <asp:CustomValidator
+                    ID="cvNacimiento"
+                    runat="server"
+                    ControlToValidate="txtNacimiento"
+                    OnServerValidate="cvBirthDate_ServerValidate"
+                    ErrorMessage="La fecha de nacimiento no puede ser mayor a la fecha actual."
+                    ForeColor="Red"
+                    Display="Dynamic" />
             </div>
 
             <div class="mb-3">

@@ -85,6 +85,29 @@ namespace TpIntegrador_Grupo_3A
                 Session.Add("error", ex.ToString());
             }
         }
+        protected void cvBirthDate_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            // Intentamos obtener la fecha desde el control txtNacimiento
+            if (DateTime.TryParse(txtNacimiento.Text, out DateTime birthDate))
+            {
+                // Verificamos si la fecha es mayor a la fecha actual
+                if (birthDate > DateTime.Now)
+                {
+                    // La fecha es inválida
+                    args.IsValid = false;
+                }
+                else
+                {
+                    // La fecha es válida
+                    args.IsValid = true;
+                }
+            }
+            else
+            {
+                // Si la fecha no es válida (por ejemplo, si el campo está vacío o mal formateado)
+                args.IsValid = false;
+            }
+        }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {

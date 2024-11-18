@@ -93,6 +93,14 @@
                 <div class="form-group">
                     <label for="txtBirthDate">Fecha de Nacimiento:</label>
                     <asp:TextBox ID="txtBirthDate" runat="server" CssClass="form-control" TextMode="Date" />
+                    <asp:CustomValidator
+                        ID="cvBirthDate"
+                        runat="server"
+                        ControlToValidate="txtBirthDate"
+                        OnServerValidate="cvBirthDate_ServerValidate"
+                        ErrorMessage="La fecha de nacimiento no puede ser mayor a la fecha actual."
+                        ForeColor="Red"
+                        Display="Dynamic" />
                 </div>
 
                 <!-- Campo para la contraseña -->

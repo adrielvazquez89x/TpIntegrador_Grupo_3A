@@ -66,7 +66,26 @@ namespace TpIntegrador_Grupo_3A.Admin
             }
         }
 
-
+        protected void cvBirthDate_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            // Validar que la fecha de nacimiento no sea mayor a la fecha actual
+            DateTime birthDate;
+            if (DateTime.TryParse(args.Value, out birthDate))
+            {
+                if (birthDate > DateTime.Now)
+                {
+                    args.IsValid = false; // Si la fecha es mayor a la actual, la validación falla
+                }
+                else
+                {
+                    args.IsValid = true; // La fecha es válida
+                }
+            }
+            else
+            {
+                args.IsValid = false; // Si no se puede parsear la fecha, la validación falla
+            }
+        }
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
@@ -131,6 +150,8 @@ namespace TpIntegrador_Grupo_3A.Admin
                 UserControl_Toast.ShowToast($"Error al crear el usuario: {ex.Message}", false);
             }
         }
+
+
         protected void btnExit_Click(object sender, EventArgs e)
         {
             Response.Redirect("UsersManagement.aspx", false);
