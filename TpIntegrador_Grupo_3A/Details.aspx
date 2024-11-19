@@ -88,7 +88,7 @@
                             <span class="input-group-text">Cantidad</span>
                             <asp:UpdatePanel runat="server" UpdateMode="Conditional">
                                 <ContentTemplate>
-                                    <asp:TextBox ID="txtQuantity" runat="server" CssClass="form-control text-center" Style="width: 60px;" Text="1" ReadOnly="true" />
+                                    <asp:TextBox ID="txtQuantity" runat="server" CssClass="form-control text-center h-100" Style="width: 60px;" Text="1" ReadOnly="true" />
                                 </ContentTemplate>
                                 <Triggers>
                                     <asp:AsyncPostBackTrigger ControlID="btnAdd" EventName="Click" />

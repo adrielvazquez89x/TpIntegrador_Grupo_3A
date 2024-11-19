@@ -30,7 +30,7 @@ namespace TpIntegrador_Grupo_3A
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            {
+             {
                 if (SessionSecurity.ActiveSession(Session["user"]))
                 {
                     Model.User user = (Model.User)Session["user"];
@@ -44,14 +44,36 @@ namespace TpIntegrador_Grupo_3A
 
                     txtName.Text = user.FirstName is null ? "" : user.FirstName;
                     txtDni.Text = user.Dni is null ? "" : user.Dni.ToString();
-                    txtProvince.Text = user.Address.Province is null ? "" : user.Address.Province;
-                    txtTown.Text = user.Address.Town is null ? "" : user.Address.Town;
-                    txtDistrict.Text = user.Address.District is null ? "" : user.Address.District;
-                    txtCP.Text = user.Address.CP is null ? "" : user.Address.CP.ToString();
-                    txtStreet.Text = user.Address.Street is null ? "" : user.Address.Street;
-                    txtNumber.Text = user.Address.Number.ToString() is null ? "" : user.Address.Number.ToString();
-                    txtFloor.Text = user.Address.Floor is null ? "" : user.Address.Floor;
-                    txtUnit.Text = user.Address.Unit is null ? "" : user.Address.Unit;
+
+                    if(user.Address is null)
+                    {
+                        txtProvince.Text = "";
+                        txtTown.Text = "";
+                        txtDistrict.Text = "";
+                        txtCP.Text = "";
+                        txtStreet.Text = "";
+                        txtNumber.Text = "";
+                        txtFloor.Text = "";
+                        txtUnit.Text ="";
+                    }
+                    else {
+                        txtProvince.Text = user.Address.Province;
+                        txtTown.Text = user.Address.Town;
+                        txtDistrict.Text = user.Address.District;
+                        txtCP.Text = user.Address.CP.ToString();
+                        txtStreet.Text = user.Address.Street;
+                        txtNumber.Text = user.Address.Number.ToString();
+                        txtFloor.Text = user.Address.Floor;
+                        txtUnit.Text = user.Address.Unit;
+                    }
+                    //txtProvince.Text = user.Address.Province is null ? "" : user.Address.Province;
+                    //txtTown.Text = user.Address.Town is null ? "" : user.Address.Town;
+                    //txtDistrict.Text = user.Address.District is null ? "" : user.Address.District;
+                    //txtCP.Text = user.Address.CP is null ? "" : user.Address.CP.ToString();
+                    //txtStreet.Text = user.Address.Street is null ? "" : user.Address.Street;
+                    //txtNumber.Text = user.Address.Number.ToString() is null ? "" : user.Address.Number.ToString();
+                    //txtFloor.Text = user.Address.Floor is null ? "" : user.Address.Floor;
+                    //txtUnit.Text = user.Address.Unit is null ? "" : user.Address.Unit;
 
                     ViewState["delivery"] = false; //inicia con la opcion de retiro en tienda
                 }

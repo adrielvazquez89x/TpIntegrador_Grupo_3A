@@ -186,3 +186,37 @@ li {
         pointer-events: none; /* Permite que los clics pasen al botón de eliminar */
         border-radius: 8px; /* Coincide con el border-radius del contenedor si lo tienes */
     }
+
+
+/* Mod-BS clases*/
+
+.btn {
+    border: 0;
+    border-radius: 56px;
+    cursor: pointer;
+    display: inline-block;
+    font-family: system-ui,-apple-system,system-ui,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    outline: 0;
+    padding: 16px 21px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: all .3s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.btn-primary {
+    background-color: #A357FA;
+    color: #fff;
+}
+    .btn-primary:hover {
+        background-color: #8442D0;
+    }
+
+.btn-outline-primary:hover {
+    background-color: #8442D0;
+}
