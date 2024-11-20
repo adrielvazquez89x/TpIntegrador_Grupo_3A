@@ -142,6 +142,7 @@
     <Compile Include="ProductAttributes\Season.cs" />
     <Compile Include="ProductAttributes\Section.cs" />
     <Compile Include="ProductAttributes\Size.cs" />
+    <Compile Include="Sale.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Validator.cs" />
   </ItemGroup>
