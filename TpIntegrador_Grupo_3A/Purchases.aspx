@@ -13,9 +13,6 @@
                  <asp:Panel ID="noPurchasesPanel" runat="server" Visible="false">
                     <div class="mx-auto">
                         <h3 class="text-center mt-5">Aún no tienes compras registradas</h3>
-                        <div class="wildCart">
-                            <img src="assets/images/CARRITOSALVAJE.png" alt="Carrito Vacío" />
-                        </div>
                     </div>
                 </asp:Panel>
 
