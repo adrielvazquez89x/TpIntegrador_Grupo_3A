@@ -1,4 +1,5 @@
 ﻿using Business;
+using Business.ProductAttributes;
 using iText.IO.Font.Constants;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
@@ -6,6 +7,7 @@ using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
 using Model;
+using Model.ProductAttributes;
 using Security;
 using System;
 using System.Collections.Generic;
@@ -70,15 +72,29 @@ namespace TpIntegrador_Grupo_3A
 
         protected void ddlEntrega_SelectedIndexChanged(object sender, EventArgs e)
         {
-            delivery = ddlEntrega.SelectedValue == "1";
+            delivery = ddlEntrega.SelectedValue == "1";  //verdadero, a domicilio
             ViewState["delivery"] = delivery;
-            UpdatePanelDelivery.Update();
+
+            if (ddlEntrega.SelectedValue == "1")
+            {
+                Model.User user = (Model.User)Session["user"];
+                txtProvince.Text = user.Address.Province is null ? "" : user.Address.Province;
+                txtTown.Text = user.Address.Town is null ? "" : user.Address.Town;
+                txtDistrict.Text = user.Address.District is null ? "" : user.Address.District;
+                txtCP.Text = user.Address.CP is null ? "" : user.Address.CP.ToString();
+                txtStreet.Text = user.Address.Street is null ? "" : user.Address.Street;
+                txtNumber.Text = user.Address.Number.ToString() is null ? "" : user.Address.Number.ToString();
+                txtFloor.Text = user.Address.Floor is null ? "" : user.Address.Floor;
+                txtUnit.Text = user.Address.Unit is null ? "" : user.Address.Unit;
+            }
+
+            UpdatePanelPago.Update();
         }
 
         protected void btnFinalizar_Click(object sender, EventArgs e)
         {
-
             Model.User user = (Model.User)Session["user"];
+
             var userEmail = user.Email;
             byte[] pdfBytes = GeneratePdf();
 
@@ -97,8 +113,6 @@ namespace TpIntegrador_Grupo_3A
             var attachment = new System.Net.Mail.Attachment(ms, "ConfirmacionCompra.pdf", "application/pdf");
 
             Task.Run(() => emailService.SendEmailAsync(userEmail, subject, body, attachment));
-
-
 
 
             Response.Redirect("BuyConfirmation.aspx", false);
@@ -179,47 +193,90 @@ namespace TpIntegrador_Grupo_3A
                 return ms.ToArray();
             }
         }
+
+        protected void ddlMetodoPago_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddlMetodoPago.SelectedValue == "2") // Pago con tarjeta
+            {
+                PanelTarjeta.Visible = true;
+            }
+            else // Pago en efectivo
+            {
+                PanelTarjeta.Visible = false;
+                txtTarjetaNumero.Text = string.Empty;
+                txtFechaExpiracion.Text = string.Empty;
+                txtCVV.Text = string.Empty;
+            }
+            UpdatePanelPago.Update();
+        }
+
+        protected void btnMercadoPago_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnConfirmarCompra_Click(object sender, EventArgs e)
+        {
+            List<string> errores = new List<string>();
+
+            // Validar datos según el método de pago seleccionado
+            if (ddlMetodoPago.SelectedValue == "2") // Tarjeta
+            {
+                if (string.IsNullOrWhiteSpace(txtTarjetaNumero.Text) || txtTarjetaNumero.Text.Length != 19)
+                {
+                    errores.Add("El número de tarjeta debe tener 19 caracteres en formato XXXX-XXXX-XXXX-XXXX.");
+                }
+
+                if (string.IsNullOrWhiteSpace(txtFechaExpiracion.Text) || !ValidarFecha(txtFechaExpiracion.Text))
+                {
+                    errores.Add("La fecha de vencimiento debe estar en el formato MM/AA y debe ser válida.");
+                }
+
+                if (string.IsNullOrWhiteSpace(txtCVV.Text) || txtCVV.Text.Length != 3)
+                {
+                    errores.Add("El código de seguridad (CVV) debe tener 3 dígitos.");
+                }
+            }
+            
+
+            // Si hay errores, mostrar mensaje y no habilitar el botón
+            if (errores.Count > 0)
+            {
+                lblError.Text = string.Join("<br />", errores);
+                lblError.CssClass = "text-danger";
+                btnFinalizar.Enabled = false;
+                return;
+            }
+
+            // Si no hay errores, habilitar el botón "Realizar compra"
+            lblError.Text = "Datos confirmados correctamente.";
+            lblError.CssClass = "text-success";
+            btnFinalizar.Enabled = true;
+        }
+
+        private bool ValidarFecha(string fecha)
+        {
+            try
+            {
+                if (fecha.Length != 5 || fecha[2] != '/')
+                    return false;
+
+                var partes = fecha.Split('/');
+                int mes = int.Parse(partes[0]);
+                int anio = int.Parse("20" + partes[1]);
+
+                if (mes < 1 || mes > 12)
+                    return false;
+
+                DateTime fechaExpiracion = new DateTime(anio, mes, 1).AddMonths(1).AddDays(-1);
+                return fechaExpiracion >= DateTime.Now;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
     }
-    }
+}
 
-
-
-
-        //private byte[] GeneratePdf()
-        //{
-        //    // Crear el archivo PDF en memoria (stream)
-        //    using (MemoryStream ms = new MemoryStream())
-        //    {
-        //        PdfWriter writer = new PdfWriter(ms);
-        //        PdfDocument pdf = new PdfDocument(writer);
-        //        Document document = new Document(pdf);
-
-        //        // Añadir título y contenido
-        //        document.Add(new Paragraph("Confirmación de compra"));
-        //        document.Add(new Paragraph("Gracias por tu compra. A continuación, los detalles de la misma:"));
-
-        //        // Accedemos al carrito
-        //        Model.User user = (Model.User)Session["user"];
-        //        if (user != null && user.Cart != null && user.Cart.Items != null)
-        //        {
-        //            foreach (var item in user.Cart.Items)
-        //            {
-        //                document.Add(new Paragraph($"{item.Product.Name} - Cantidad: {item.Number} - Subtotal: ${item.Subtotal}"));
-        //            }
-
-        //            document.Add(new Paragraph($"Total: ${user.Cart.SumTotal()}"));
-        //        }
-
-        //        document.Close();
-        //        //string filePath = Server.MapPath("~/App_Data/BuyConfirmation.pdf");
-        //        //File.WriteAllBytes(filePath, ms.ToArray());
-
-
-
-
-        //        // Devolver el PDF como un string en base64 (si quieres adjuntarlo a un email o almacenarlo)
-        //        return ms.ToArray();
-
-        //    }
-    //}
-    //}

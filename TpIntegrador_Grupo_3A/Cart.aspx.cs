@@ -49,16 +49,18 @@ namespace TpIntegrador_Grupo_3A
             Model.User user = (Model.User)Session["user"];
             int stockId = int.Parse(((LinkButton)sender).CommandArgument);
             Items = user.Cart.Items; //lo tuve que agregar porque sino quedaba Items==null
-            Total = user.Cart.SumTotal();
+            
             ItemCart selectedItem = Items.Find(item => item.Stock.Id == stockId);
 
             bool edited=user.Cart.UpdateProduct(selectedItem.Stock, 0); //envio un 1 para disminuir, un 0 para aumentar
+            Total = user.Cart.SumTotal();
             if (!edited)
             {
-                Control_Toast.ShowToast($"No es posible. El pedido de este producto llegó al límite de stock disponible", false);
+                Control_Toast.ShowToast("No es posible. El pedido de este producto llegó al límite de stock disponible", false);
             }
             else
             {
+                
                 Session["user"] = user;
                 Response.Redirect(Request.RawUrl);
             }

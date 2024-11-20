@@ -4,9 +4,13 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:UpdatePanel runat="server">
+    <asp:UpdatePanel runat="server" UpdateMode="Conditional">
         <ContentTemplate>
+           
             <h3 class="text-center mt-5">Mi carrito</h3>
+            <div class="container">
+                <uc1:Control_Toast runat="server" ID="Control_Toast" />
+            </div>
             <% if (Items != null && Items.Count != 0)
                 { %>
             <table class="table">
@@ -109,7 +113,6 @@
             <% } %>
 
 
-            <uc1:Control_Toast runat="server" ID="Control_Toast" />
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
