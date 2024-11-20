@@ -233,6 +233,7 @@
     <Content Include="MyProfile.aspx" />
     <Content Include="PassConfig.aspx" />
     <Content Include="Products.aspx" />
+    <Content Include="Purchases.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="ResetPassword.aspx" />
     <Content Include="ResetPasswordConfirm.aspx" />
@@ -465,6 +466,13 @@
       <DependentUpon>Products.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Purchases.aspx.cs">
+      <DependentUpon>Purchases.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Purchases.aspx.designer.cs">
+      <DependentUpon>Purchases.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

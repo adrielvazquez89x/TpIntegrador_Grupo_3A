@@ -139,7 +139,7 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-end">
-                    <asp:Button ID="btnFinalizar" runat="server" CssClass="btn btn-success btn-lg" Enabled="false" Text="Realizar compra" OnClick="btnFinalizar_Click" />
+                    <asp:Button ID="btnFinalizar" runat="server" CssClass="btn btn-success btn-lg" Text="Realizar compra" OnClick="btnFinalizar_Click" />
                 </div>
             </div>
         </div>

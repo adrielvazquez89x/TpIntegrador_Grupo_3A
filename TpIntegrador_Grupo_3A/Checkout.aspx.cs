@@ -96,6 +96,49 @@ namespace TpIntegrador_Grupo_3A
             Model.User user = (Model.User)Session["user"];
 
             var userEmail = user.Email;
+            var userName = user.FirstName;
+
+            // Recoger los detalles del formulario
+            //string name = txtName.Text;
+            //string dni = txtDni.Text;
+            //string province = txtProvince.Text;
+            //string town = txtTown.Text;
+            //string district = txtDistrict.Text;
+            //string postalCode = txtCP.Text;
+            //string street = txtStreet.Text;
+            //string number = txtNumber.Text;
+            //string floor = txtFloor.Text;
+            //string unit = txtUnit.Text;
+            //string deliveryMethod = ddlEntrega.SelectedValue; // "1" para entrega a domicilio, "2" para retiro en tienda
+            //string paymentMethod = ddlMetodoPago.SelectedValue; // "1" para efectivo, "2" para tarjeta
+
+            // Crear el objeto de compra (Purchase)
+            var purchase = new Purchase
+            {
+                IdUser = user.UserId,
+                date = DateTime.Now,
+                Total = user.Cart.SumTotal(),
+                State = "Pendiente",  // Estado inicial de la compra
+                Details = new List<PurchaseDetail>()
+            };
+
+            // Añadir los detalles de la compra (productos del carrito)
+            foreach (var item in user.Cart.Items)
+            {
+                var detail = new PurchaseDetail
+                {
+                    CodProd = item.Product.Code,
+                    Quantity = item.Number,
+                    Price = item.Product.Price
+                };
+                purchase.Details.Add(detail);
+            }
+
+            // Llamar al servicio de BusinessPurchase para guardar la compra
+            var businessPurchase = new BusisnessPurchase();
+            businessPurchase.SavePurchase(purchase);
+
+            //var userEmail = user.Email;
             byte[] pdfBytes = GeneratePdf();
 
 
@@ -114,6 +157,8 @@ namespace TpIntegrador_Grupo_3A
 
             Task.Run(() => emailService.SendEmailAsync(userEmail, subject, body, attachment));
 
+            // Vaciar el carrito despues de que ya compro 
+            user.Cart.ClearCart();
 
             Response.Redirect("BuyConfirmation.aspx", false);
 

@@ -128,6 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessAdress.cs" />
+    <Compile Include="BusisnessPurchase.cs" />
     <Compile Include="ProductAttributes\BusinessCategory.cs" />
     <Compile Include="BusinessImageProduct.cs" />
     <Compile Include="BusinessProduct.cs" />

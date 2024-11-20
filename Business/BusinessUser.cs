@@ -107,7 +107,7 @@ namespace Business
                     user.firstAccess = (bool)data.Reader["PrimerAcceso"];
                     user.Admin = (bool)(data.Reader["EsAdmin"]);
                     user.Owner = (bool)(data.Reader["EsOwner"]);
-                    user.Active = (bool)(data.Reader["Active"]);    
+                    user.Active = (bool)(data.Reader["Active"]);
                     //if (!(data.Reader["urlImagenPerfil"] is DBNull))
                     //    user.ImagenPerfil = (string)(data.Reader["urlImagenPerfil"]);
                     if (!(data.Reader["Nombre"] is DBNull))
@@ -119,14 +119,23 @@ namespace Business
 
                     var hashedPassword = reader["ContraseniaHash"].ToString();
 
-                    // Verificar la contraseña hasheada
-                    PasswordHasher hasher = new PasswordHasher();
-                    var verificationResult = hasher.VerifyHashedPassword(hashedPassword, user.PasswordHash);
-
-                    if (verificationResult == PasswordVerificationResult.Success)
+                    if (user.Owner)
                     {
-                        // El inicio de sesión fue exitoso
+                        // Si es Owner, no verifico el hash porque ese lo cree desde la db
                         return true;
+                    }
+                    else
+                    {
+
+                        // Verificar la contraseña hasheada
+                        PasswordHasher hasher = new PasswordHasher();
+                        var verificationResult = hasher.VerifyHashedPassword(hashedPassword, user.PasswordHash);
+
+                        if (verificationResult == PasswordVerificationResult.Success)
+                        {
+                            // El inicio de sesión fue exitoso
+                            return true;
+                        }
                     }
                 }
 
