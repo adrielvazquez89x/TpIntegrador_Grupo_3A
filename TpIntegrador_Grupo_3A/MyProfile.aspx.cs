@@ -23,7 +23,7 @@ namespace TpIntegrador_Grupo_3A
                     {
 
                         Model.User user = (Model.User)Session["user"];
-                        //System.Diagnostics.Debug.WriteLine("User: " + user.ToString());
+             
                         if(user.firstAccess)
                         {
                             BusinessUser businessUser = new BusinessUser();
