@@ -43,15 +43,6 @@ namespace TpIntegrador_Grupo_3A
                         {
                             txtNacimiento.Text = ""; // O un valor por defecto si es nula
                         }
-                        //if (user.ImageUrl != null)
-                        //{
-                        //    imgNuevoPerfil.ImageUrl = "~/Images/" + user.ImageUrl;
-                        //}
-                        //else
-                        //{
-                        //    imgNuevoPerfil.ImageUrl = "https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg"; // Imagen por defecto
-                        //}
-
 
                         if (user.AddressId > 0)
                         {
@@ -83,6 +74,7 @@ namespace TpIntegrador_Grupo_3A
             catch (Exception ex)
             {
                 Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
             }
         }
         protected void cvBirthDate_ServerValidate(object source, ServerValidateEventArgs args)
@@ -93,18 +85,16 @@ namespace TpIntegrador_Grupo_3A
                 // Verificamos si la fecha es mayor a la fecha actual
                 if (birthDate > DateTime.Now)
                 {
-                    // La fecha es inválida
                     args.IsValid = false;
                 }
                 else
                 {
-                    // La fecha es válida
                     args.IsValid = true;
                 }
             }
             else
             {
-                // Si la fecha no es válida (por ejemplo, si el campo está vacío o mal formateado)
+                // Si la fecha no es válida
                 args.IsValid = false;
             }
         }
@@ -135,8 +125,6 @@ namespace TpIntegrador_Grupo_3A
                             txtImagen.PostedFile.SaveAs(ruta + imgName);
                             user.ImageUrl = imgName;
 
-                            // Actualiza la URL de la imagen mostrada en la página
-                            //imgNuevoPerfil.ImageUrl = "~/Images/" + imgName;
                         }
                         else
                         {
@@ -146,10 +134,6 @@ namespace TpIntegrador_Grupo_3A
                         }
                     }
 
-                    // Actualiza la base de datos
-                    // businessUser.Update(user);
-
-                    // Actualiza el avatar en el MasterPage si existe
                     Image imgAvatar = (Image)Master.FindControl("imgAvatar");
                     if (imgAvatar != null && user.ImageUrl != null)
                     {
@@ -170,31 +154,25 @@ namespace TpIntegrador_Grupo_3A
 
                     if ( user.AddressId > 0)
                     {
-                        adress.Id = user.AddressId; // Si ya tiene dirección, asignamos el Id de la dirección
-                        businessAdress.Update(adress); // Llamamos a un método Update que debería actualizar la tabla de direcciones
+                        adress.Id = user.AddressId;
+                        businessAdress.Update(adress);
                     }
                     else
                     {
                         // Si el usuario no tiene dirección, hacemos un INSERT
-                        businessAdress.Add(adress);// Este método debe insertar la nueva dirección en la base de datos
+                        businessAdress.Add(adress);
                         Console.WriteLine("Dirección insertada con Id: " + adress.Id);
-                        user.AddressId = adress.Id; // Asignamos el nuevo Id de la dirección al usuario
+                        user.AddressId = adress.Id;
                     }
 
-
-
-                    //businessAdress.Add(adress);
-                    //user.AddressId = adress.Id;
-
                     businessUser.Update(user);
+                    Session["user"] = user;
                 }
                 catch (Exception ex)
                 {
                     throw ex;
                 }
 
-
-                // Redirige
                 Response.Redirect("Default.aspx", false);
             }
         }

@@ -228,7 +228,6 @@
     <Content Include="Cart.aspx" />
     <Content Include="Favourites.aspx" />
     <Content Include="MyProfile.aspx" />
-    <Content Include="PassConfig.aspx" />
     <Content Include="Products.aspx" />
     <Content Include="Purchases.aspx" />
     <Content Include="Register.aspx" />
@@ -453,13 +452,6 @@
     </Compile>
     <Compile Include="MyProfile.aspx.designer.cs">
       <DependentUpon>MyProfile.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="PassConfig.aspx.cs">
-      <DependentUpon>PassConfig.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PassConfig.aspx.designer.cs">
-      <DependentUpon>PassConfig.aspx</DependentUpon>
     </Compile>
     <Compile Include="Products.aspx.cs">
       <DependentUpon>Products.aspx</DependentUpon>

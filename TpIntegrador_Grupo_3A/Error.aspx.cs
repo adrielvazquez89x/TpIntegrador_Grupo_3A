@@ -15,7 +15,6 @@ namespace TpIntegrador_Grupo_3A
             {
                 lblMensaje.Text = Session["error"].ToString();
             }
-            //Session.Remove("error");
         }
     }
 }
