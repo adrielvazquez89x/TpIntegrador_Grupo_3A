@@ -46,14 +46,27 @@ namespace TpIntegrador_Grupo_3A
 
                     txtName.Text = user.FirstName is null ? "" : user.FirstName;
                     txtDni.Text = user.Dni is null ? "" : user.Dni.ToString();
-                    txtProvince.Text = user.Address.Province is null ? "" : user.Address.Province;
-                    txtTown.Text = user.Address.Town is null ? "" : user.Address.Town;
-                    txtDistrict.Text = user.Address.District is null ? "" : user.Address.District;
-                    txtCP.Text = user.Address.CP is null ? "" : user.Address.CP.ToString();
-                    txtStreet.Text = user.Address.Street is null ? "" : user.Address.Street;
-                    txtNumber.Text = user.Address.Number.ToString() is null ? "" : user.Address.Number.ToString();
-                    txtFloor.Text = user.Address.Floor is null ? "" : user.Address.Floor;
-                    txtUnit.Text = user.Address.Unit is null ? "" : user.Address.Unit;
+                    if (user.Address != null)
+                    {
+                        txtProvince.Text = user.Address.Province;
+                        txtTown.Text = user.Address.Town;
+                        txtDistrict.Text = user.Address.District;
+                        txtCP.Text = user.Address.CP?.ToString() ?? "";
+                        txtStreet.Text = user.Address.Street;
+                        txtNumber.Text = user.Address.Number.ToString() ?? "";
+                        txtFloor.Text = user.Address.Floor;
+                        txtUnit.Text = user.Address.Unit;
+                    }
+                    else
+                    {
+                        txtProvince.Text = "";
+                        txtTown.Text = "";
+                        txtStreet.Text = "";
+                        txtNumber.Text = "";
+                        txtFloor.Text = "";
+                        txtUnit.Text = "";
+                        txtUnit.Text = "";
+                    }
 
                     ViewState["delivery"] = false; //inicia con la opcion de retiro en tienda
                 }
@@ -282,7 +295,7 @@ namespace TpIntegrador_Grupo_3A
                     errores.Add("El código de seguridad (CVV) debe tener 3 dígitos.");
                 }
             }
-            
+
 
             // Si hay errores, mostrar mensaje y no habilitar el botón
             if (errores.Count > 0)
