@@ -11,9 +11,8 @@ using static TpIntegrador_Grupo_3A.Admin.Categories;
 
 namespace TpIntegrador_Grupo_3A.Admin
 {
-    public partial class Products : System.Web.UI.Page
+    public partial class ProductsManagement : System.Web.UI.Page
     {
-
         protected void Page_Load(object sender, EventArgs e)
         {
 

@@ -345,7 +345,6 @@
     </Compile>
     <Compile Include="Admin\ProductsManagement.aspx.cs">
       <DependentUpon>ProductsManagement.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Admin\ProductsManagement.aspx.designer.cs">
       <DependentUpon>ProductsManagement.aspx</DependentUpon>
