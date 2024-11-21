@@ -14,7 +14,7 @@
                     <asp:Button ID="btnExit" runat="server" Text="Volver" CssClass="btn btn-primary" OnClick="btnExit_Click" />
                 </div>
 
-                <!-- Formulario para Agregar Usuario -->
+
                 <div class="form-group">
                     <label for="txtFirstName">Nombre:</label>
                     <asp:TextBox ID="txtFirstName" runat="server" CssClass="form-control"></asp:TextBox>
@@ -88,6 +88,14 @@
                 <div class="form-group">
                     <label for="txtMobile">Teléfono Móvil:</label>
                     <asp:TextBox ID="txtMobile" runat="server" CssClass="form-control"></asp:TextBox>
+                    <asp:RegularExpressionValidator
+                        ID="revNumero"
+                        runat="server"
+                        ControlToValidate="txtMobile"
+                        ValidationExpression="^\d+$"
+                        ErrorMessage="El Telefono solo puede contener números"
+                        ForeColor="Red"
+                        Display="Dynamic" />
                 </div>
 
                 <div class="form-group">
@@ -103,7 +111,7 @@
                         Display="Dynamic" />
                 </div>
 
-                <!-- Campo para la contraseña -->
+
                 <div class="form-group" id="divPassword" runat="server">
                     <label for="txtPassword">Contraseña:</label>
                     <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>

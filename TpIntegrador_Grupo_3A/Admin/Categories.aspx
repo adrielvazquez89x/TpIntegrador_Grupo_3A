@@ -6,19 +6,19 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <%-- Contenedor principal --%>
+           
             <div class="container my-4">
-                <%-- Título de la página --%>
+               
                 <h2 class="text-center mb-4">Gestión de Categorías</h2>
 
-                <%-- Botón para volver --%>
+              
                 <div class="mb-3">
                     <uc1:UserControl_ButtonBack runat="server" ID="UserControl_ButtonBack" />
                 </div>
 
-                <%-- Sección de Categorías --%>
+              
                 <div class="row">
-                    <%-- Formulario de Categorías --%>
+                   
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-header bg-success text-white">
@@ -36,8 +36,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <%-- Lista de Categorías --%>
                     <div class="col-md-8">
                         <asp:GridView
                             ID="dgvCategories"
@@ -50,10 +48,10 @@
                             AllowPaging="true"
                             PageSize="5">
                             <Columns>
-                                <%-- Nombre de la Categoría --%>
+                             
                                 <asp:BoundField DataField="Description" HeaderText="Nombre" ItemStyle-CssClass="align-middle" />
 
-                                <%-- Estado Activo/Inactivo --%>
+                              
                                 <asp:TemplateField HeaderText="Activo">
                                     <ItemTemplate>
                                         <div class="text-center">
@@ -64,11 +62,10 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                <%-- Acciones --%>
                                 <asp:TemplateField HeaderText="Acciones">
                                     <ItemTemplate>
                                         <div class="d-flex justify-content-center">
-                                            <%-- Botón Editar --%>
+                                           
                                             <asp:LinkButton
                                                 ID="btnEditCategory"
                                                 runat="server"
@@ -78,7 +75,7 @@
                                                 <i class="bi bi-pencil-square"></i>
                                             </asp:LinkButton>
 
-                                            <%-- Botón Eliminar --%>
+                                          
                                             <asp:LinkButton
                                                 ID="btnDeleteCategory"
                                                 runat="server"
@@ -90,7 +87,7 @@
                                                 <i class="bi bi-trash-fill"></i>
                                             </asp:LinkButton>
 
-                                            <%-- Botón Activar --%>
+                                       
                                             <asp:LinkButton
                                                 ID="btnActivateCategory"
                                                 runat="server"
@@ -109,7 +106,7 @@
                     </div>
                 </div>
 
-                <%-- Toast de Notificaciones --%>
+                
                 <uc1:UserControl_Toast runat="server" ID="UserControl_Toast" />
             </div>
         </ContentTemplate>

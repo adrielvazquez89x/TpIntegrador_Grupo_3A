@@ -24,9 +24,7 @@
                 <asp:TextBox runat="server" CssClass="form-control w-100" ID="txtPassword" TextMode="Password" required="true" />
 
             </div>
-            <%--<div class="mb-3">
-                <asp:CheckBox ID="chkRememberMe" runat="server" Text="Mantener sesión abierta" />
-            </div>--%>
+           
             <div>
                 <asp:Label ID="lblError" runat="server" Text="" CssClass="form-label text-danger"></asp:Label>
             </div>
