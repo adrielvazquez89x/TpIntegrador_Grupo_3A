@@ -28,13 +28,11 @@ namespace Business
                 data.setParameter("@Estado", purchase.State);
                 int idCompra = data.ActionScalar();
 
-                Console.WriteLine($"IdCompra generado: {idCompra}");
                 if (idCompra == 0)
                 {
                     throw new Exception("No se pudo generar un ID de compra válido.");
                 }
 
-                Console.WriteLine($"Compra insertada correctamente con ID: {idCompra}");
                 foreach (var detail in purchase.Details)
                 {
                     data.clearParams();
@@ -59,18 +57,22 @@ namespace Business
 
         }
 
-        public List<Model.Purchase> ListPurchases(string userId)
+        public List<Model.Purchase> ListPurchases(string userId = "")
         {
             List<Purchase> purchaseList = new List<Purchase>();
             DataAccess data = new DataAccess();
 
             try
             {
-                string query = "SELECT C.Id, C.FechaCompra, C.Total, C.Estado, C.IdUsuario FROM Compras C WHERE C.IdUsuario = @UserId";
+                string query = "SELECT C.Id, C.FechaCompra, C.Total, C.Estado, C.IdUsuario FROM Compras C ";
+
+                if(!string.IsNullOrEmpty(userId))
+                {
+                    query += "WHERE C.IdUsuario = @UserId";
+                }
 
                 data.setQuery(query);
                 data.setParameter("@UserId", userId);
-             
 
                 data.executeRead();
 
@@ -99,8 +101,6 @@ namespace Business
             }
         }
 
-
-
         public List<PurchaseDetail> ListPurchaseDetails(int purchaseId)
         {
             List<PurchaseDetail> purchaseDetails = new List<PurchaseDetail>();
@@ -110,15 +110,15 @@ namespace Business
             {
                 
                 string query = @"
-            SELECT 
-                P.Nombre AS ProductoNombre, 
-                D.CodigoProducto, 
-                D.Cantidad, 
-                D.PrecioUnitario, 
-                D.Subtotal
-            FROM DetallesCompras D
-            INNER JOIN Productos P ON D.CodigoProducto = P.Codigo
-            WHERE D.IdCompra = @PurchaseId";
+                                SELECT 
+                                    P.Nombre AS ProductoNombre, 
+                                    D.CodigoProducto, 
+                                    D.Cantidad, 
+                                    D.PrecioUnitario, 
+                                    D.Subtotal
+                                FROM DetallesCompras D
+                                INNER JOIN Productos P ON D.CodigoProducto = P.Codigo
+                                WHERE D.IdCompra = @PurchaseId";
 
                 data.setQuery(query);
                 data.setParameter("@PurchaseId", purchaseId);
@@ -146,6 +146,29 @@ namespace Business
             catch (Exception ex)
             {
                 throw new Exception("Error al obtener los detalles de la compra: " + ex.Message);
+            }
+            finally
+            {
+                data.closeConnection();
+            }
+        }
+
+        public void Update(int saleId, string newState)
+        {
+            DataAccess data = new DataAccess();
+            try
+            {
+
+                data.setQuery("UPDATE Compras SET  Estado = @State Where Id = @Id ");
+                data.setParameter("@State", newState);
+                data.setParameter("@Id", saleId);
+
+                data.executeAction();
+            }
+            catch (Exception ex )
+            {
+
+                throw ex;
             }
             finally
             {

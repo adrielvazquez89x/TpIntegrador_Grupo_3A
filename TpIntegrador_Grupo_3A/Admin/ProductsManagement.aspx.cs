@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Business;
 using Business.ProductAttributes;
 using Model;
+using Security;
 using static TpIntegrador_Grupo_3A.Admin.Categories;
 
 namespace TpIntegrador_Grupo_3A.Admin
@@ -17,12 +18,12 @@ namespace TpIntegrador_Grupo_3A.Admin
         {
 
             //volver a poner para verificar la seguridad
-            //var user = Session["user"];
-            //if (user == null || !Security.isAdmin(user))
-            //{
-            //    // Redirige a Login.aspx si no es un administrador o si no hay sesión
-            //    Response.Redirect("~/Login.aspx");
-            //}
+            var user = Session["user"];
+            if (user == null || !SessionSecurity.IsAdmin(user))
+            {
+                // Redirige a Login.aspx si no es un administrador o si no hay sesión
+                Response.Redirect("~/Login.aspx");
+            }
             if (!IsPostBack)
             {
                 BindProducts();

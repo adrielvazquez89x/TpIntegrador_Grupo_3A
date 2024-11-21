@@ -23,7 +23,6 @@
                             <asp:TextBox ID="txtProvince" runat="server" placeholder="Provincia" CssClass="form-control mb-3" />
                             <span id="errorProvince" class="text-danger"></span>
                         </div>
-                        <!-- Agrega los demás campos de dirección aquí -->
                         <div class="form-group">
                             <asp:TextBox ID="txtTown" runat="server" placeholder="Ciudad" CssClass="form-control mb-3" />
                             <span id="errorTown" class="text-danger"></span>
@@ -153,7 +152,6 @@
         </div>
     </div>
 
-    <!-- JavaScript para controlar la visibilidad -->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function () {
         var ddlEntrega = document.getElementById('<%= ddlEntrega.ClientID %>');
@@ -191,13 +189,13 @@
             }
         }
 
-        // Inicializar la visibilidad de los paneles de pago
+
         togglePaymentPanels();
 
-        // Evento al cambiar el método de pago
+
         ddlMetodoPago.addEventListener('change', togglePaymentPanels);
 
-        // No llamamos a validarFormulario() aquí
+
     });
 
     // Función de validación del formulario
