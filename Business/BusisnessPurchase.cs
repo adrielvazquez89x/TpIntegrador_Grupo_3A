@@ -59,18 +59,22 @@ namespace Business
 
         }
 
-        public List<Model.Purchase> ListPurchases(string userId)
+        public List<Model.Purchase> ListPurchases(string userId = "")
         {
             List<Purchase> purchaseList = new List<Purchase>();
             DataAccess data = new DataAccess();
 
             try
             {
-                string query = "SELECT C.Id, C.FechaCompra, C.Total, C.Estado, C.IdUsuario FROM Compras C WHERE C.IdUsuario = @UserId";
+                string query = "SELECT C.Id, C.FechaCompra, C.Total, C.Estado, C.IdUsuario FROM Compras C ";
+
+                if(!string.IsNullOrEmpty(userId))
+                {
+                    query += "WHERE C.IdUsuario = @UserId";
+                }
 
                 data.setQuery(query);
                 data.setParameter("@UserId", userId);
-             
 
                 data.executeRead();
 
@@ -98,8 +102,6 @@ namespace Business
                 data.closeConnection();
             }
         }
-
-
 
         public List<PurchaseDetail> ListPurchaseDetails(int purchaseId)
         {
