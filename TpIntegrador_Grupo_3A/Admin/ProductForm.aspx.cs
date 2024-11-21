@@ -42,17 +42,14 @@ namespace TpIntegrador_Grupo_3A.Admin
 
                 if (currentProductId != 0)
                 {
-                    // Si se está editando un producto existente
                     FillForm(currentProductId);
                 }
                 else
                 {
-                    // Si se está agregando un nuevo producto
                     int categoryId = int.Parse(ddlCategory.Items[0].Value);
                     BindSubCategories(categoryId);
                 }
 
-                // Vincular las temporadas
                 ddlSeason.DataSource = businessSeason.list(false);
                 ddlSeason.DataValueField = "Id";
                 ddlSeason.DataTextField = "Description";
@@ -63,7 +60,6 @@ namespace TpIntegrador_Grupo_3A.Admin
             }
             else
             {
-                // Postback
                 currentProductId = Session["idCurrentItem"] != null ? (int)Session["idCurrentItem"] : 0;
                 currentProductCode = Session["CurrentProductCode"] != null ? (string)Session["CurrentProductCode"] : "";
 
@@ -183,7 +179,7 @@ namespace TpIntegrador_Grupo_3A.Admin
             }
             catch (Exception ex)
             {
-                // Manejar la excepción adecuadamente
+
                 lblMessage.Text = "Ocurrió un error: " + ex.Message;
                 lblMessage.CssClass = "text-danger";
             }
@@ -218,37 +214,30 @@ namespace TpIntegrador_Grupo_3A.Admin
 
         private void ClearForm()
         {
-            // Limpiar los campos de texto
             txtCode.Text = "";
             txtName.Text = "";
             txtPrice.Text = "";
             txtDescription.Text = "";
 
-            // Resetear los DropDownLists a su primer elemento
             ddlCategory.SelectedIndex = 0;
             ddlSubCategory.Items.Clear();
             ddlSubCategory.Items.Insert(0, new ListItem("Selecciona una subcategoría", "0"));
             ddlSubCategory.Enabled = false;
             ddlSeason.SelectedIndex = 0;
-            // ddlSection.SelectedIndex = 0; // Si lo utilizas, descoméntalo
 
-            // Limpiar la lista de nuevas imágenes en el ViewState y actualizar el ListBox
             ViewState[NewImagesViewStateKey] = new List<string>();
             BindImagesListBox();
 
-            // Limpiar el Repeater de imágenes existentes
             rptExistingImages.DataSource = null;
             rptExistingImages.DataBind();
 
-            // Resetear currentProductId y las variables de sesión asociadas
             currentProductId = 0;
             Session["idCurrentItem"] = currentProductId;
             Session["CurrentProductCode"] = "";
 
-            // Ocultar la imagen de previsualización
+
             imgPreview.Visible = false;
 
-            //Limpiar cualquier otro estado o control adicional si es necesario
             lblMessage.Text = "";
             lblMessage.CssClass = "";
         }
@@ -278,7 +267,6 @@ namespace TpIntegrador_Grupo_3A.Admin
                     ddlCategory.SelectedValue = product[0].Category.Id.ToString();
                     BindSubCategories(product[0].Category.Id);
 
-                    // Verificar si el SubCategory.Id existe en el DropDownList antes de asignarlo
                     string subCategoryId = product[0].SubCategory.Id.ToString();
                     if (ddlSubCategory.Items.FindByValue(subCategoryId) != null)
                     {
@@ -286,8 +274,7 @@ namespace TpIntegrador_Grupo_3A.Admin
                     }
                     else
                     {
-
-                        ddlSubCategory.SelectedValue = "0"; // Asegúrate de que "0" exista como opción
+                        ddlSubCategory.SelectedValue = "0"; 
                         lblMessage.Text = "La subcategoría del producto no está disponible para la categoría seleccionada.";
                         lblMessage.CssClass = "text-warning";
                     }
@@ -304,7 +291,6 @@ namespace TpIntegrador_Grupo_3A.Admin
             }
             catch (Exception ex)
             {
-                // Manejar la excepción adecuadamente
                 lblMessage.Text = "Error al cargar el producto: " + ex.Message;
                 lblMessage.CssClass = "text-danger";
             }
@@ -318,10 +304,8 @@ namespace TpIntegrador_Grupo_3A.Admin
 
         }
         //IMAGENES
-
         private void InitializeImages()
         {
-            // Inicializa la lista de nuevas imágenes en ViewState si está vacía
             if (ViewState[NewImagesViewStateKey] == null)
             {
                 ViewState[NewImagesViewStateKey] = new List<string>();
@@ -365,10 +349,8 @@ namespace TpIntegrador_Grupo_3A.Admin
 
             if (currentProductId != 0)
             {
-                // Usar currentProductId para obtener el código del producto si no está disponible
                 if (string.IsNullOrEmpty(currentProductCode))
                 {
-                    // Cargar el producto para obtener el código
                     BusinessProduct businessProduct = new BusinessProduct();
                     List<Product> product = businessProduct.listAdmin(currentProductId);
                     if (product.Count > 0)
@@ -452,7 +434,6 @@ namespace TpIntegrador_Grupo_3A.Admin
 
             if (!string.IsNullOrEmpty(imagesToDeleteValue))
             {
-                // Separar los IDs por comas y convertirlos a enteros
                 string[] ids = imagesToDeleteValue.Split(',');
                 foreach (string idStr in ids)
                 {
@@ -521,7 +502,6 @@ namespace TpIntegrador_Grupo_3A.Admin
                          }, 1260);
                          ";
 
-                        // Registrar el script para ejecutarlo en el lado del cliente
                         ScriptManager.RegisterStartupScript(this, GetType(), "redirectAfterDelay", script, true);
 
                     }

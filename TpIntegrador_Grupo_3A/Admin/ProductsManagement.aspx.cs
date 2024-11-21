@@ -20,7 +20,6 @@ namespace TpIntegrador_Grupo_3A.Admin
             var user = Session["user"];
             if (user == null || !Security.SessionSecurity.IsAdmin(user))
             {
-                // Redirige a Login.aspx si no es un administrador o si no hay sesión
                 Response.Redirect("~/Login.aspx");
             }
             if (!IsPostBack)
@@ -49,7 +48,6 @@ namespace TpIntegrador_Grupo_3A.Admin
         {
             int newPageIndex = e.NewPageIndex;
 
-            // Validar que el nuevo índice está dentro del rango válido
             if (newPageIndex < 0)
             {
                 newPageIndex = 0;
@@ -74,7 +72,6 @@ namespace TpIntegrador_Grupo_3A.Admin
             {
                 string productCode = e.CommandArgument.ToString();
 
-                // Redirigir a StockManagement.aspx pasando el código del producto
                 Response.Redirect("StockManagement.aspx?code=" + Server.UrlEncode(productCode));
             }
             else if (e.CommandName == "EditProduct")

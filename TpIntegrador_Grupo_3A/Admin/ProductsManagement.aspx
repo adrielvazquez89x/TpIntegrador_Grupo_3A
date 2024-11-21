@@ -8,7 +8,6 @@
     <h2 class="text-center my-5">Gestión de Productos</h2>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-
             <uc1:UserControl_Buttons runat="server" ID="ControUser_Buttons" />
             <h2 class="my-5 text-center">Artículos existentes</h2>
             <asp:GridView

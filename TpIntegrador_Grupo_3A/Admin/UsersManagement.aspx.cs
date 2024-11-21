@@ -94,7 +94,6 @@ namespace TpIntegrador_Grupo_3A.Admin
             }
             else
             {
-                // Si hay un error, mostrar mensaje de error
                 UserControl_Toast.ShowToast("Error al dar de baja al usuario", false);
             }
         }
@@ -115,7 +114,6 @@ namespace TpIntegrador_Grupo_3A.Admin
             }
             else
             {
-                // Si hay un error, mostrar mensaje de error
                 UserControl_Toast.ShowToast("Error al activar el usuario", false);
             }
         }

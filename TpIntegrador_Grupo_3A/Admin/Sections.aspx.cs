@@ -83,7 +83,7 @@ namespace TpIntegrador_Grupo_3A.Admin
 
             txtSection.Text = Section.Description;
             btnAddSection.Text = "Editar";
-            //CurrentOption = Buttons.Section;
+            
         }
         protected void btnDeleteSection_Click(object sender, EventArgs e)
         {
@@ -95,7 +95,7 @@ namespace TpIntegrador_Grupo_3A.Admin
             if (result == "ok")
             {
                 UserControl_Toast.ShowToast("Categoría Eliminada correctamente", true);
-                //CurrentOption = Buttons.Section;
+                
                 BindSections();
             }
 
@@ -110,7 +110,7 @@ namespace TpIntegrador_Grupo_3A.Admin
             if (result == "ok")
             {
                 UserControl_Toast.ShowToast("Categoría Activada correctamente", true);
-                //CurrentOption = Buttons.Section;
+                
                 BindSections();
             }
         }
@@ -131,7 +131,7 @@ namespace TpIntegrador_Grupo_3A.Admin
         {
             dgvSections.PageIndex = e.NewPageIndex;
             BindSections();
-            //CurrentOption = Buttons.Section;
+            
         }
     }
 }

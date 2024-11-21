@@ -82,7 +82,7 @@ namespace TpIntegrador_Grupo_3A.Admin
 
             txtSize.Text = size.Description;
             btnAddSize.Text = "Editar";
-            //CurrentOption = Buttons.Size;
+            
         }
         protected void btnDeleteSize_Click(object sender, EventArgs e)
         {
@@ -94,7 +94,7 @@ namespace TpIntegrador_Grupo_3A.Admin
             if (result == "ok")
             {
                 UserControl_Toast.ShowToast("Talle Eliminado correctamente", true);
-                //CurrentOption = Buttons.Size;
+                
                 BindSizes();
             }
 
@@ -109,7 +109,7 @@ namespace TpIntegrador_Grupo_3A.Admin
             if (result == "ok")
             {
                 UserControl_Toast.ShowToast("Talle Activado correctamente", true);
-                //CurrentOption = Buttons.Size;
+                
                 BindSizes();
             }
         }
@@ -130,7 +130,7 @@ namespace TpIntegrador_Grupo_3A.Admin
         {
             dgvSizes.PageIndex = e.NewPageIndex;
             BindSizes();
-            //CurrentOption = Buttons.Size;
+            
         }
     }
 }

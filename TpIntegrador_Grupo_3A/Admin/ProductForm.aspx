@@ -66,13 +66,6 @@
                             </div>
                         </div>
 
-                        <%--                        
-                    <div class="form-group">
-                        <label for="ddlSection">Sección:</label>
-                        <asp:DropDownList ID="ddlSection" runat="server" CssClass="form-control"></asp:DropDownList>
-                    </div>
-                        --%>
-
                         <!-- Botones de Guardar y Volver -->
                         <div class="d-flex justify-content-between mt-4">
                             <uc1:UserControl_ButtonBack runat="server" ID="UserControl_ButtonBack" CssClass="btn btn-danger" />

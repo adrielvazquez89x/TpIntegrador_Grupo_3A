@@ -55,7 +55,7 @@ namespace TpIntegrador_Grupo_3A.Admin
             {
                 UserControl_Toast.ShowToast(result, false);
             }
-            //CurrentOption = Buttons.Colour;
+            
         }
 
         private void BindColours()
@@ -82,7 +82,7 @@ namespace TpIntegrador_Grupo_3A.Admin
 
             txtColour.Text = colour.Description;
             btnAddColour.Text = "Editar";
-            //CurrentOption = Buttons.Colour;
+            
         }
         protected void btnDeleteColour_Click(object sender, EventArgs e)
         {
@@ -94,7 +94,7 @@ namespace TpIntegrador_Grupo_3A.Admin
             if (result == "ok")
             {
                 UserControl_Toast.ShowToast("Categoría Eliminada correctamente", true);
-                //CurrentOption = Buttons.Colour;
+                
                 BindColours();
             }
 
@@ -109,7 +109,7 @@ namespace TpIntegrador_Grupo_3A.Admin
             if (result == "ok")
             {
                 UserControl_Toast.ShowToast("Categoría Activada correctamente", true);
-                //CurrentOption = Buttons.Colour;
+                
                 BindColours();
             }
         }
@@ -130,7 +130,7 @@ namespace TpIntegrador_Grupo_3A.Admin
         {
             dgvColours.PageIndex = e.NewPageIndex;
             BindColours();
-            //CurrentOption = Buttons.Colour;
+            
         }
     }
 }

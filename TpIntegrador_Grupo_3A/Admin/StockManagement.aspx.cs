@@ -27,7 +27,6 @@ namespace TpIntegrador_Grupo_3A.Admin
                 }
                 else
                 {
-                    // Manejar el caso donde no hay código de producto
                     Response.Redirect("ProductsManagement.aspx");
                 }
             }
@@ -45,7 +44,6 @@ namespace TpIntegrador_Grupo_3A.Admin
             }
             else
             {
-                // Manejar el caso donde no se encuentra el producto
                 Response.Redirect("ProductsManagement.aspx");
             }
         }
@@ -142,18 +140,15 @@ namespace TpIntegrador_Grupo_3A.Admin
                 newStock.Size = new Model.Size() { Id = talleId };
                 newStock.Amount = cantidad;
 
-                // Agregar el nuevo stock a la base de datos
                 BusinessStock businessStock = new BusinessStock();
                 string resultado = businessStock.Add(newStock);
 
                 if (resultado == "ok")
                 {
-                    // Limpiar los campos
                     ddlColor.SelectedIndex = 0;
                     ddlTalle.SelectedIndex = 0;
                     txtCantidad.Text = "";
 
-                    // Recargar el stock para incluir la nueva combinación
                     LoadStock(productCode);
                 }
                 else
@@ -166,7 +161,6 @@ namespace TpIntegrador_Grupo_3A.Admin
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-            // Redirigir a la página anterior o limpiar los campos
             Response.Redirect("ProductsManagement.aspx");
         }
     }
