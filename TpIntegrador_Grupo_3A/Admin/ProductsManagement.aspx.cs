@@ -7,13 +7,13 @@ using System.Web.UI.WebControls;
 using Business;
 using Business.ProductAttributes;
 using Model;
+using Security;
 using static TpIntegrador_Grupo_3A.Admin.Categories;
 
 namespace TpIntegrador_Grupo_3A.Admin
 {
     public partial class ProductsManagement : System.Web.UI.Page
     {
-
         protected void Page_Load(object sender, EventArgs e)
         {
 
