@@ -39,16 +39,16 @@ namespace TpIntegrador_Grupo_3A
                     user = businessUser.GetUserById(user.UserId);
                     if (!user.Active)
                     {
-                        //quedaria mejor implementar el toast no pude por el momento 
+                        
                         Control_Toast.ShowToast("Tu cuenta está inactiva. Contacta con el administrador.",false);
                         lblError.Text = "Tu cuenta está inactiva. Contacta con el administrador.";
-                        return;  // Detener el proceso de redirección
+                        return;  
                     }
                     Session.Add("user", user);
 
                     if (Session["Cart"] == null)
                     {
-                        Model.Cart cart = new Model.Cart(); // Si no existe, creamos un nuevo carrito
+                        Model.Cart cart = new Model.Cart(); 
                         Session["Cart"] = cart;
                         user.Cart = cart;
                     }
@@ -60,15 +60,15 @@ namespace TpIntegrador_Grupo_3A
                         
                     }
 
-                    // Redirigir a la página principal o al área protegida
+                   
                     if (user.firstAccess)
                     {
-                        // Redirigir a la página para completar el perfil
+                        
                         Response.Redirect("/MyProfile.aspx", false);
                     }
                     else
                     {
-                        // Redirigir a la página principal
+                     
                         Response.Redirect("/Default.aspx", false);
                     }
 
@@ -81,7 +81,7 @@ namespace TpIntegrador_Grupo_3A
 
             catch (Exception ex)
             {
-                // Manejo de errores
+              
                 Session.Add("error", ex.ToString());
                 lblError.Text = "Ocurrió un error durante el inicio de sesión. Inténtalo de nuevo.";
             }

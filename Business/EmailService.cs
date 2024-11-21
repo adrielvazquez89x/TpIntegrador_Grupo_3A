@@ -54,7 +54,7 @@ namespace Business
                         await client.SendMailAsync(mailMessage);
                     }
 
-                   // await client.SendMailAsync(mailMessage);
+               
                    
                 }
             }

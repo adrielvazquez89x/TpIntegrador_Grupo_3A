@@ -27,8 +27,8 @@ namespace Business
                 data.setQuery("INSERT INTO Usuarios (Email, ContraseniaHash, SeguridadStamp, FechaAlta) OUTPUT INSERTED.IdUsuario values (@email, @pass, @security, GETDATE());");
                 data.setParameter("@email", user.Email);
                 data.setParameter("@pass", user.PasswordHash);
-                data.setParameter("@security", user.SecurityStamp); //no tenia el @
-                //data.setParameter("@fechaAlta", getdate());
+                data.setParameter("@security", user.SecurityStamp); 
+               
 
                 user.UserId = data.ActionScalar();
 
@@ -72,14 +72,14 @@ namespace Business
                 data.setParameter("@celular", user.Mobile);
                // data.setParameter("@fechaAlta", user.RegistrationDate);
                 data.setParameter("fechaNac", user.BirthDate);
-                data.setParameter("@pass", user.PasswordHash); // Contraseña ya hasheada
-                data.setParameter("@stamp", user.SecurityStamp); // Security Stamp
-                data.setParameter("@admin", user.Admin); // Admin: true
-                data.setParameter("@owner", user.Owner); // Owner: false
-                data.setParameter("@active", user.Active); // Active: true
+                data.setParameter("@pass", user.PasswordHash); 
+                data.setParameter("@stamp", user.SecurityStamp); 
+                data.setParameter("@admin", user.Admin); 
+                data.setParameter("@owner", user.Owner); 
+                data.setParameter("@active", user.Active); 
 
                 data.executeAction();
-                //user.UserId = data.ActionScalar();
+                
             }
             catch (Exception ex)
             {
@@ -94,7 +94,7 @@ namespace Business
             try
             {
 
-                // Buscar el usuario por email
+             
                 data.setQuery("SELECT * FROM Usuarios WHERE Email = @Email;");
                 data.setParameter("@Email", user.Email);
                 data.executeRead();
@@ -108,8 +108,7 @@ namespace Business
                     user.Admin = (bool)(data.Reader["EsAdmin"]);
                     user.Owner = (bool)(data.Reader["EsOwner"]);
                     user.Active = (bool)(data.Reader["Active"]);
-                    //if (!(data.Reader["urlImagenPerfil"] is DBNull))
-                    //    user.ImagenPerfil = (string)(data.Reader["urlImagenPerfil"]);
+                   
                     if (!(data.Reader["Nombre"] is DBNull))
                         user.FirstName = (string)(data.Reader["Nombre"]);
                     if (!(data.Reader["Apellido"] is DBNull))
@@ -121,7 +120,7 @@ namespace Business
 
                     if (user.Owner)
                     {
-                        // Si es Owner, no verifico el hash porque ese lo cree desde la db
+                       
                         return true;
                     }
                     else
@@ -133,13 +132,13 @@ namespace Business
 
                         if (verificationResult == PasswordVerificationResult.Success)
                         {
-                            // El inicio de sesión fue exitoso
+              
                             return true;
                         }
                     }
                 }
 
-                // Si no se encuentra el usuario o la contraseña no es correcta
+               
                 return false;
 
             }
@@ -170,14 +169,9 @@ namespace Business
                 if (reader.Read())
                 {
                     aux.UserId = (int)reader["IdUsuario"];
-                    // aux.Dni = (string)reader["Dni"];
-                    // aux.FirstName = (string)reader["Nombre"];
-                    //aux.LastName = (string)reader["Apellido"];
+                  
                     aux.Email = (string)reader["Email"];
-                    // aux.ImageUrl = (string)reader["UrlImg"];
-                    // aux.Mobile = (string)reader["Celular"];
-                    // aux.BirthDate = (DateTime)reader["FechaNac"];
-                    //aux.RegistrationDate = (DateTime)reader["FechaAlta"];
+             
                     aux.AddressId = reader["IdDireccion"] != DBNull.Value ? (int)reader["IdDireccion"] : 0;
 
                 }
@@ -204,7 +198,7 @@ namespace Business
 
             try
             {
-                // Realizamos la consulta para obtener los detalles del usuario por ID
+                // Consulta para obtener los detalles del usuario por ID
                 data.setQuery("SELECT * FROM Usuarios U WHERE IdUsuario = @IdUsuario;");
                 data.setParameter("@IdUsuario", userId);
                 data.executeRead();
@@ -229,7 +223,7 @@ namespace Business
                     user.ImageUrl = data.Reader["UrlImg"] != DBNull.Value ? (string)data.Reader["UrlImg"] : string.Empty;
 
 
-                    //user.PasswordHash = data.Reader["ContraseniaHash"] != DBNull.Value ? (string)data.Reader["ContraseniaHash"] : string.Empty;
+                   
 
                     user.AddressId = data.Reader["IdDireccion"] != DBNull.Value ? (int)data.Reader["IdDireccion"] : 0;
               
@@ -381,7 +375,7 @@ namespace Business
         {
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(token))
             {
-                return false; // Retorna false si el email o token están vacíos
+                return false; 
             }
 
             try
@@ -392,11 +386,9 @@ namespace Business
 
                 if (data.Reader.Read())
                 {
-                    Console.WriteLine("El token es válido.");
+                    
                     var expiration = (DateTime)data.Reader["TokenVencimiento"];
-                    //Console.WriteLine($"Email: {email}, Token: {token}, Expiration: {expiration}");
-
-                    //return expiration > DateTime.Now; // Verifica si el token no ha expirado
+                    
                     return expiration > DateTime.Now;
                 }
                 else
@@ -406,11 +398,11 @@ namespace Business
             }
             catch (Exception ex)
             {
-                // Manejar excepciones adecuadamente
-                Console.WriteLine($"Error al verificar el token: {ex.Message}");
+                
+                throw ex;
             }
 
-            return false; // Retorna false si no se encontró el token o si ha expirado
+            return false;
         }
 
 
@@ -446,19 +438,19 @@ namespace Business
             {
                 string query = "SELECT U.IdUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Celular, U.FechaAlta,U.FechaNac, U.Active, U.ContraseniaHash FROM Usuarios U WHERE U.EsAdmin = 1";
 
-                // Si se pasa un id, agrega la condición WHERE
+                
                 if (!string.IsNullOrEmpty(id))
                 {
                     query += " AND U.IdUsuario = @UserId";
                 }
 
-                // Establecer la consulta
+               
                 data.setQuery(query);
 
-                // Si el id se pasa, añade el parámetro para evitar SQL Injection
+               
                 if (!string.IsNullOrEmpty(id))
                 {
-                    data.setParameter("@UserId", id); // Usamos setParameter aquí para pasar el valor
+                    data.setParameter("@UserId", id); 
                 }
 
                 data.executeRead();
@@ -486,7 +478,7 @@ namespace Business
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al listar usuarios: " + ex.Message); // Mejor manejo de excepciones
+                throw new Exception("Error al listar usuarios: " + ex.Message); 
             }
             finally
             {
@@ -550,58 +542,3 @@ namespace Business
         }
     }
 }
-//public User userById(int id)
-//{
-//    DataAccess data = new DataAccess();
-//    try
-//    {
-//        data.setQuery("SELECT U.Id, U.Dni, U.Nombre, U.Apellido, U.Email, U.Contrasenia, U.UrlImg, U.Admin, U.Celular, U.IdDireccion, U.FechaNac, U.FechaAlta, U.Estado, "+
-//             "D.Id, D.Provincia, D.Ciudad, D.Barrio, D.Calle, D.Numero, D.CP, D.Piso, D.Unidad "+
-//             "FROM Usuarios U JOIN Direcciones D ON U.IdDireccion=D.Id WHERE U.Id=@id");
-//        data.setParameter("@id", id);
-//        data.executeRead();
-
-//        SqlDataReader reader = data.Reader;
-//        User aux = new User();
-
-//        if (reader.Read()) // Si se encuentra un registro
-//        {
-//           // aux.Id = (int)reader["Id"];
-//           // aux.Dni = (int)reader["Dni"];
-//           // aux.Name = (string)reader["Nombre"];
-//           // aux.Lastname = (string)reader["Apellido"];
-//           // aux.Email = (string)reader["Email"];
-//           // aux.Passsword = (string)reader["Contrasenia"];
-//           // aux.UrlProfileImg= (string)reader["UrlImg"];
-//           // aux.Admin = (bool)reader["Admin"];
-//           // aux.CellPhone = reader["Celular"] is DBNull ? null : (string)reader["Celular"];
-//           // aux.Adress = new Adress();
-//           // aux.Adress.Id = (int)reader["IdDireccion"];
-//           // aux.Adress.Province = (string)reader["Provincia"];
-//           // aux.Adress.Town = (string)reader["Ciudad"];
-//           // aux.Adress.District = (string)reader["Barrio"];
-//           // aux.Adress.Street = (string)reader["Calle"];
-//           // aux.Adress.Number = (int)reader["Numero"];
-//           // aux.Adress.CP = (string)reader["Celular"];
-//           // aux.Adress.Floor = reader["Piso"] is DBNull ? 0 : (int)reader["Piso"];
-//           // aux.Adress.Unit = (string)reader["Unidad"];   //como es la sintaxis si viene con null este campo que toma char?
-//           // aux.BirthDate = (DateTime)reader["FechaNac"];
-//           // aux.SignInDate = (DateTime)reader["FechaAlta"];
-//           //// aux.status = (bool)reader["Estado"];
-//        }
-//        else
-//        {
-//            /*aux.Id = -1*/; // User no encontrado
-//        }
-
-//        return aux;
-//    }
-//    catch (Exception ex)
-//    {
-//        throw ex;
-//    }
-//    finally
-//    {
-//        data.closeConnection();
-//    }
-//}

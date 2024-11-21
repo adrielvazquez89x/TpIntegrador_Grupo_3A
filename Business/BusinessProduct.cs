@@ -12,7 +12,7 @@ namespace Business
         List<Product> productList = new List<Product>();
         List<ImageProduct> imageList = new List<ImageProduct>();
         DataAccess data = new DataAccess();
-        // Método para listar productos como administrador
+   
         public List<Product> listAdmin(int id = 0)
         {
             List<Product> productList = new List<Product>();
@@ -67,7 +67,7 @@ namespace Business
                         Description = data.Reader["Temporada"] != DBNull.Value ? (string)data.Reader["Temporada"] : string.Empty
                     };
 
-                    // Obtener imágenes del producto
+                    
                     BusinessImageProduct businessImage = new BusinessImageProduct();
                     List<ImageProduct> imageList = businessImage.list(aux.Code);
                     aux.Images = imageList;
@@ -79,7 +79,7 @@ namespace Business
             }
             catch (Exception ex)
             {
-                // Manejo de excepciones (puedes registrar el error o lanzarlo nuevamente)
+                
                 throw ex;
             }
             finally
@@ -88,7 +88,7 @@ namespace Business
             }
         }
 
-        // Método para listar productos de manera estándar
+        
         public List<Product> list(string code="")
         {
             List<Product> productList = new List<Product>();
@@ -153,7 +153,7 @@ namespace Business
                         Description = data.Reader["Temporada"] != DBNull.Value ? (string)data.Reader["Temporada"] : string.Empty
                     };
 
-                    // Obtener imágenes del producto
+                    
                     BusinessImageProduct businessImage = new BusinessImageProduct();
                     List<ImageProduct> imageList = businessImage.list(aux.Code);
                     aux.Images = imageList;
@@ -165,7 +165,7 @@ namespace Business
             }
             catch (Exception ex)
             {
-                // Manejo de excepciones
+                
                 throw ex;
             }
             finally
@@ -476,30 +476,30 @@ namespace Business
             BusinessImageProduct businesImgProduct = new BusinessImageProduct();
             try
             {
-                // Iniciar la transacción
+                
                 data.BeginTransaction();
 
-                //Eliminar todos los registros en la tabla 'Stock'
+                
                 data.setQuery("DELETE FROM Stock WHERE CodigoProducto = @CodigoProducto");
                 data.setParameter("@CodigoProducto", code);
                 data.executeAction();
 
-                //Eliminar todos los registros tabla 'ImagenesProductos'
+               
                 businesImgProduct.DeleteAll(code, data);
 
-                //Eliminar todos los registros relacionados en la tabla 'Favoritos'
+               
                 data.clearParams();
                 data.setQuery("DELETE FROM Favoritos WHERE CodigoProducto = @CodigoProducto");
                 data.setParameter("@CodigoProducto", code);
                 data.executeAction();
 
-                //Eliminar todos los registros  la tabla 'ProductosXSecciones'
+                
                 data.clearParams();
                 data.setQuery("DELETE FROM ProductosXSecciones WHERE CodigoProducto = @CodigoProducto");
                 data.setParameter("@CodigoProducto", code);
                 data.executeAction();
 
-                //Finalmente, eliminar el producto de la tabla 'Productos'
+                
                 data.clearParams();
                 data.setQuery("DELETE FROM Productos WHERE Id = @Id");
                 data.setParameter("@Id", id);
@@ -512,7 +512,7 @@ namespace Business
             }
             catch (Exception ex)
             {
-                // Revertir la transacción si hay algún error
+              
                 data.RollbackTransaction();
                 throw ex;
             }
