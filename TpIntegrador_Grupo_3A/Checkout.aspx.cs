@@ -274,9 +274,5 @@ namespace TpIntegrador_Grupo_3A
             }
         }
 
-        protected void btnMercadoPago_Click(object sender, EventArgs e)
-        {
-            // Aquí manejas la redirección o lógica para Mercado Pago
-        }
     }
 }

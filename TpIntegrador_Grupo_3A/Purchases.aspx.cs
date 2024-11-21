@@ -14,18 +14,27 @@ namespace TpIntegrador_Grupo_3A
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            try
             {
+                if (!IsPostBack)
+                {
 
-                if (Session["user"] != null)
-                {
-                    Model.User user = (Model.User)Session["user"];
-                    BindPurchases(user.UserId.ToString());
+                    if (Session["user"] != null)
+                    {
+                        Model.User user = (Model.User)Session["user"];
+                        BindPurchases(user.UserId.ToString());
+                    }
+                    else
+                    {
+                        Session.Add("error", "Debes estar logueado para ingresar a esta seccion");
+                        Response.Redirect("Error.aspx", false);
+                    }
                 }
-                else
-                {
-                    Response.Redirect("~/Login.aspx");
-                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
             }
         }
 
@@ -39,14 +48,14 @@ namespace TpIntegrador_Grupo_3A
                 if (purchases == null || purchases.Count == 0)
                 {
                     // si no hay compras  muestro el mensaje y oculto el GridView
-                    noPurchasesPanel.Visible = true; 
-                    dgvPurchases.Visible = false;   
+                    noPurchasesPanel.Visible = true;
+                    dgvPurchases.Visible = false;
                 }
                 else
                 {
                     // Si hay compras, muestr el GridView y oculto el mensaje
-                    noPurchasesPanel.Visible = false; 
-                    dgvPurchases.Visible = true;      
+                    noPurchasesPanel.Visible = false;
+                    dgvPurchases.Visible = true;
                     dgvPurchases.DataSource = purchases;
                     dgvPurchases.DataBind();
                 }
@@ -86,34 +95,34 @@ namespace TpIntegrador_Grupo_3A
         {
             LinkButton btn = (LinkButton)sender;
 
-           
+
             int purchaseId = Convert.ToInt32(btn.CommandArgument);
 
             bool isDetailsVisible = dgvPurchaseDetails.Visible;
 
             if (!isDetailsVisible)
             {
-                
+
                 BusisnessPurchase businessPurchase = new BusisnessPurchase();
                 List<PurchaseDetail> purchaseDetails = businessPurchase.ListPurchaseDetails(purchaseId);
 
-                
+
                 dgvPurchaseDetails.DataSource = purchaseDetails;
                 dgvPurchaseDetails.DataBind();
 
-                
+
                 dgvPurchaseDetails.Visible = true;
             }
             else
             {
-                
+
                 dgvPurchaseDetails.Visible = false;
             }
         }
 
         protected void btnLogout_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Login.aspx",false);
+            Response.Redirect("Login.aspx", false);
         }
     }
 }

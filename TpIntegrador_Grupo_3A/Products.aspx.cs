@@ -34,11 +34,11 @@ namespace TpIntegrador_Grupo_3A
             {
                 BusinessProduct businessProd = new BusinessProduct();
                 
-                int idCategory = Request.QueryString["Idcategory"] is null ? 0 : int.Parse(Request.QueryString["Idcategory"]);  //validarlo (podrian a mano ponerle algo no entero)
+                int idCategory = Request.QueryString["Idcategory"] is null ? 0 : int.Parse(Request.QueryString["Idcategory"]);
 
-                int idSubCategory = Request.QueryString["IdSubCategory"] is null ? 0 : int.Parse(Request.QueryString["IdSubCategory"]);  //validarlo (podrian a mano ponerle algo no entero)
+                int idSubCategory = Request.QueryString["IdSubCategory"] is null ? 0 : int.Parse(Request.QueryString["IdSubCategory"]);
 
-                int idSection = Request.QueryString["IdSection"] is null ? 0 : int.Parse(Request.QueryString["IdSection"]);  //validarlo (podrian a mano ponerle algo no entero)
+                int idSection = Request.QueryString["IdSection"] is null ? 0 : int.Parse(Request.QueryString["IdSection"]);
 
                 prodList = prodList is null ? businessProd.list() : prodList;
 

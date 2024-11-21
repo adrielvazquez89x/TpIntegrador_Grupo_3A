@@ -68,7 +68,7 @@ namespace TpIntegrador_Grupo_3A
             catch (Exception ex)
             {
                 Session.Add("error", ex.ToString());
-                //Response.Redirect("Error.aspx");
+                Response.Redirect("Error.aspx", false);
             }
 
         }
