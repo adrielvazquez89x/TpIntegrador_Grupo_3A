@@ -6,7 +6,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2 class="text-center my-5">Gestión de Productos</h2>
-    <!-- Puedes eliminar el UpdatePanel si ya no es necesario -->
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
 

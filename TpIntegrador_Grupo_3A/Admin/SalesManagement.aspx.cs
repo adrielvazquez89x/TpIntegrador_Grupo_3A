@@ -34,7 +34,7 @@ namespace TpIntegrador_Grupo_3A.Admin
                 Model.User user = businessUser.GetUserById(purchase.IdUser);
                 if (user != null)
                 {
-                    customerName = $"{user.FirstName} {user.LastName}"; 
+                    customerName = $"{user.FirstName} {user.LastName}";
                 }
 
                 PurchaseView viewModel = new PurchaseView
@@ -49,7 +49,6 @@ namespace TpIntegrador_Grupo_3A.Admin
                 purchaseViewModels.Add(viewModel);
             }
 
-            
             var filteredData = purchaseViewModels.AsQueryable();
 
             if (!string.IsNullOrEmpty(txtSearch.Text))
@@ -93,5 +92,39 @@ namespace TpIntegrador_Grupo_3A.Admin
                     return "badge bg-secondary";
             }
         }
+
+        protected void gvSales_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            gvSales.EditIndex = e.NewEditIndex;
+            BindGrid();
+        }
+
+        protected void gvSales_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "SetPagado" || e.CommandName == "SetPendiente" || e.CommandName == "SetCancelado")
+            {
+                int purchaseId = Convert.ToInt32(e.CommandArgument);
+                string newState = "";
+
+                switch (e.CommandName)
+                {
+                    case "SetPagado":
+                        newState = "Pagado";
+                        break;
+                    case "SetPendiente":
+                        newState = "Pendiente";
+                        break;
+                    case "SetCancelado":
+                        newState = "Cancelado";
+                        break;
+                }
+
+                BusisnessPurchase businessPurchase = new BusisnessPurchase();
+                businessPurchase.Update(purchaseId, newState);
+
+                BindGrid();
+            }
+        }
+
     }
 }
