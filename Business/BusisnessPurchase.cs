@@ -37,6 +37,7 @@ namespace Business
                 Console.WriteLine($"Compra insertada correctamente con ID: {idCompra}");
                 foreach (var detail in purchase.Details)
                 {
+                    data.clearParams();
                     string queryDetalle = "INSERT INTO DetallesCompras (IdCompra, CodigoProducto, Cantidad, PrecioUnitario,Subtotal) " +
                                           "VALUES (@IdCompra, @CodigoProducto, @Cantidad, @PrecioUnitario,@Subtotal)";
                     data.setQuery(queryDetalle);

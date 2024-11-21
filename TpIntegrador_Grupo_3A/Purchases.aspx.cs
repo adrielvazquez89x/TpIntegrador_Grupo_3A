@@ -69,8 +69,17 @@ namespace TpIntegrador_Grupo_3A
         protected void dgvPurchases_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             dgvPurchases.PageIndex = e.NewPageIndex;
-            string userId = Session["UserId"].ToString();
-            BindPurchases(userId);
+
+            if (Session["user"] != null)
+            {
+                Model.User user = (Model.User)Session["user"];
+                string userId = user.UserId.ToString();
+                BindPurchases(userId);
+            }
+            else
+            {
+                Response.Redirect("~/Login.aspx");
+            }
         }
 
         protected void btnViewDetails_Click(object sender, EventArgs e)

@@ -11,15 +11,9 @@ using Model.ProductAttributes;
 using Security;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Drawing2D;
 using System.IO;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace TpIntegrador_Grupo_3A
 {
@@ -28,80 +22,48 @@ namespace TpIntegrador_Grupo_3A
         public Model.Cart Cart { get; set; }
         public new List<ItemCart> Items = new List<ItemCart>();
         public decimal Total;
-        public bool delivery = false;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (SessionSecurity.ActiveSession(Session["user"]))
             {
-                if (SessionSecurity.ActiveSession(Session["user"]))
+                Model.User user = (Model.User)Session["user"];
+                Cart = user.Cart;
+
+                if (Cart == null || Cart.Items == null || Cart.Items.Count == 0)
                 {
-                    Model.User user = (Model.User)Session["user"];
-                    Cart = ((User)Session["user"]).Cart;
+                    // Redirigir al carrito si está vacío
+                    Response.Redirect("Cart.aspx", false);
+                    return;
+                }
 
-                    if (Cart.Items.Count == 0)
-                        Response.Redirect("Cart.aspx", false);
+                Items = Cart.Items;
+                Total = Cart.SumTotal();
 
-                    Items = user.Cart.Items;
-                    Total = user.Cart.SumTotal();
+                if (!IsPostBack)
+                {
+                    // Inicializar campos
+                    txtName.Text = user.FirstName ?? "";
+                    txtDni.Text = user.Dni?.ToString() ?? "";
 
-                    txtName.Text = user.FirstName is null ? "" : user.FirstName;
-                    txtDni.Text = user.Dni is null ? "" : user.Dni.ToString();
                     if (user.Address != null)
                     {
-                        txtProvince.Text = user.Address.Province;
-                        txtTown.Text = user.Address.Town;
-                        txtDistrict.Text = user.Address.District;
+                        txtProvince.Text = user.Address.Province ?? "";
+                        txtTown.Text = user.Address.Town ?? "";
+                        txtDistrict.Text = user.Address.District ?? "";
                         txtCP.Text = user.Address.CP?.ToString() ?? "";
-                        txtStreet.Text = user.Address.Street;
+                        txtStreet.Text = user.Address.Street ?? "";
                         txtNumber.Text = user.Address.Number.ToString() ?? "";
-                        txtFloor.Text = user.Address.Floor;
-                        txtUnit.Text = user.Address.Unit;
+                        txtFloor.Text = user.Address.Floor ?? "";
+                        txtUnit.Text = user.Address.Unit ?? "";
                     }
-                    else
-                    {
-                        txtProvince.Text = "";
-                        txtTown.Text = "";
-                        txtStreet.Text = "";
-                        txtNumber.Text = "";
-                        txtFloor.Text = "";
-                        txtUnit.Text = "";
-                        txtUnit.Text = "";
-                    }
-
-                    ViewState["delivery"] = false; //inicia con la opcion de retiro en tienda
-                }
-                else
-                {
-                    Session.Add("error", "Debes estar logueado para ingresar a esta seccion");
-                    Response.Redirect("Error.aspx", false);
                 }
             }
             else
             {
-                if (ViewState["delivery"] != null)
-                    delivery = (bool)ViewState["delivery"];
+                Session.Add("error", "Debes estar logueado para ingresar a esta sección");
+                Response.Redirect("Error.aspx", false);
             }
-        }
-
-        protected void ddlEntrega_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            delivery = ddlEntrega.SelectedValue == "1";  //verdadero, a domicilio
-            ViewState["delivery"] = delivery;
-
-            if (ddlEntrega.SelectedValue == "1")
-            {
-                Model.User user = (Model.User)Session["user"];
-                txtProvince.Text = user.Address.Province is null ? "" : user.Address.Province;
-                txtTown.Text = user.Address.Town is null ? "" : user.Address.Town;
-                txtDistrict.Text = user.Address.District is null ? "" : user.Address.District;
-                txtCP.Text = user.Address.CP is null ? "" : user.Address.CP.ToString();
-                txtStreet.Text = user.Address.Street is null ? "" : user.Address.Street;
-                txtNumber.Text = user.Address.Number.ToString() is null ? "" : user.Address.Number.ToString();
-                txtFloor.Text = user.Address.Floor is null ? "" : user.Address.Floor;
-                txtUnit.Text = user.Address.Unit is null ? "" : user.Address.Unit;
-            }
-
-            UpdatePanelPago.Update();
         }
 
         protected void btnFinalizar_Click(object sender, EventArgs e)
@@ -110,22 +72,6 @@ namespace TpIntegrador_Grupo_3A
 
             var userEmail = user.Email;
             var userName = user.FirstName;
-
-            // Recoger los detalles del formulario
-            //string name = txtName.Text;
-            //string dni = txtDni.Text;
-            //string province = txtProvince.Text;
-            //string town = txtTown.Text;
-            //string district = txtDistrict.Text;
-            //string postalCode = txtCP.Text;
-            //string street = txtStreet.Text;
-            //string number = txtNumber.Text;
-            //string floor = txtFloor.Text;
-            //string unit = txtUnit.Text;
-            //string deliveryMethod = ddlEntrega.SelectedValue; // "1" para entrega a domicilio, "2" para retiro en tienda
-            //string paymentMethod = ddlMetodoPago.SelectedValue; // "1" para efectivo, "2" para tarjeta
-
-            // Crear el objeto de compra (Purchase)
             var purchase = new Purchase
             {
                 IdUser = user.UserId,
@@ -174,7 +120,6 @@ namespace TpIntegrador_Grupo_3A
             user.Cart.ClearCart();
 
             Response.Redirect("BuyConfirmation.aspx", false);
-
         }
 
         private byte[] GeneratePdf()
@@ -252,27 +197,6 @@ namespace TpIntegrador_Grupo_3A
             }
         }
 
-        protected void ddlMetodoPago_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (ddlMetodoPago.SelectedValue == "2") // Pago con tarjeta
-            {
-                PanelTarjeta.Visible = true;
-            }
-            else // Pago en efectivo
-            {
-                PanelTarjeta.Visible = false;
-                txtTarjetaNumero.Text = string.Empty;
-                txtFechaExpiracion.Text = string.Empty;
-                txtCVV.Text = string.Empty;
-            }
-            UpdatePanelPago.Update();
-        }
-
-        protected void btnMercadoPago_Click(object sender, EventArgs e)
-        {
-
-        }
-
         protected void btnConfirmarCompra_Click(object sender, EventArgs e)
         {
             List<string> errores = new List<string>();
@@ -296,6 +220,21 @@ namespace TpIntegrador_Grupo_3A
                 }
             }
 
+            // Validar campos de dirección si la entrega es a domicilio
+            if (ddlEntrega.SelectedValue == "1") // A domicilio
+            {
+                if (string.IsNullOrWhiteSpace(txtProvince.Text) ||
+                    string.IsNullOrWhiteSpace(txtTown.Text) ||
+                    string.IsNullOrWhiteSpace(txtDistrict.Text) ||
+                    string.IsNullOrWhiteSpace(txtCP.Text) ||
+                    string.IsNullOrWhiteSpace(txtStreet.Text) ||
+                    string.IsNullOrWhiteSpace(txtNumber.Text) ||
+                    string.IsNullOrWhiteSpace(txtFloor.Text) ||
+                    string.IsNullOrWhiteSpace(txtUnit.Text))
+                {
+                    errores.Add("Todos los campos de dirección son obligatorios para entrega a domicilio.");
+                }
+            }
 
             // Si hay errores, mostrar mensaje y no habilitar el botón
             if (errores.Count > 0)
@@ -335,6 +274,9 @@ namespace TpIntegrador_Grupo_3A
             }
         }
 
+        protected void btnMercadoPago_Click(object sender, EventArgs e)
+        {
+            // Aquí manejas la redirección o lógica para Mercado Pago
+        }
     }
 }
-

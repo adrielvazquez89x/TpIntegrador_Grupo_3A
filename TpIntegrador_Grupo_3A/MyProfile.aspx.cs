@@ -57,7 +57,7 @@ namespace TpIntegrador_Grupo_3A
                         {
                             // Obtener la dirección del usuario
                             BusinessAdress businessAdress = new BusinessAdress();
-                            Adress adress = businessAdress.GetAddressById(user.AddressId); 
+                            Address adress = businessAdress.GetAddressById(user.AddressId); 
 
                             if (adress != null)
                             {
@@ -157,7 +157,7 @@ namespace TpIntegrador_Grupo_3A
                     }
 
                     BusinessAdress businessAdress = new BusinessAdress();
-                    Adress adress = new Adress();
+                    Address adress = new Address();
 
                     adress.Province = txtProvincia.Text;
                     adress.Town = txtCiudad.Text;

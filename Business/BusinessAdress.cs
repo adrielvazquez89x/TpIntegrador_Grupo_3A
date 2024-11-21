@@ -15,9 +15,9 @@ namespace Business
 {
     public class BusinessAdress
     {
-        List<Adress> adressList = new List<Adress>();
+        List<Address> adressList = new List<Address>();
         DataAccess data = new DataAccess();
-        public List<Adress> List(string id = "")
+        public List<Address> List(string id = "")
         {
 
             try
@@ -37,7 +37,7 @@ namespace Business
 
                 while (reader.Read())
                 {
-                    Adress aux = new Adress
+                    Address aux = new Address
                     {
                         Id = (int)reader["Id"],
                         Province = (string)reader["Provincia"],
@@ -64,7 +64,7 @@ namespace Business
             }
         }
 
-        public void Add(Adress adress)
+        public void Add(Address adress)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace Business
         }
 
 
-        public void Update(Adress adress)
+        public void Update(Address adress)
         {
             DataAccess data = new DataAccess();
             try
@@ -140,9 +140,9 @@ namespace Business
             }
         }
 
-        public Adress GetAddressById(int addressId)
+        public Address GetAddressById(int addressId)
         {
-            Adress adress = null;
+            Address adress = null;
             DataAccess data = new DataAccess();
             
 
@@ -156,7 +156,7 @@ namespace Business
 
                 while (reader.Read())
                 {
-                    adress = new Adress
+                    adress = new Address
                     {
                         Id = (int)reader["Id"],
                         Province = (string)reader["Provincia"],
