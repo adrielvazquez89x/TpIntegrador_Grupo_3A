@@ -11,19 +11,18 @@ using static TpIntegrador_Grupo_3A.Admin.Categories;
 
 namespace TpIntegrador_Grupo_3A.Admin
 {
-    public partial class Products : System.Web.UI.Page
+    public partial class ProductsManagement : System.Web.UI.Page
     {
 
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            //volver a poner para verificar la seguridad
-            //var user = Session["user"];
-            //if (user == null || !Security.isAdmin(user))
-            //{
-            //    // Redirige a Login.aspx si no es un administrador o si no hay sesión
-            //    Response.Redirect("~/Login.aspx");
-            //}
+            var user = Session["user"];
+            if (user == null || !Security.SessionSecurity.IsAdmin(user))
+            {
+                // Redirige a Login.aspx si no es un administrador o si no hay sesión
+                Response.Redirect("~/Login.aspx");
+            }
             if (!IsPostBack)
             {
                 BindProducts();

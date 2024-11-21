@@ -11,7 +11,7 @@ namespace TpIntegrador_Grupo_3A.Admin
 {
 
 
-    public partial class Products
+    public partial class ProductsManagement
     {
 
         /// <summary>
