@@ -12,17 +12,17 @@ namespace Business
 
         private static readonly PasswordHasher hasher = new PasswordHasher();
 
-        //Este método toma una contraseña en texto plano y devuelve su hash
+      
         public string HashPassword(string password)
         {
-            // Usa el PasswordHasher de ASP.NET Identity para hashear la contraseñ
+           
             var hasher = new Microsoft.AspNet.Identity.PasswordHasher();
 
             return hasher.HashPassword(password);
         }
 
 
-        ////Este método compara el hash de la contraseña almacenado con una contraseña
+     
         public PasswordVerificationResult VerifyHashedPassword(string hashedPassword, string providedPassword)
         {
             var hasher = new Microsoft.AspNet.Identity.PasswordHasher();

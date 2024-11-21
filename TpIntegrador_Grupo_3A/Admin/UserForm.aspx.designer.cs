@@ -132,6 +132,15 @@ namespace TpIntegrador_Grupo_3A.Admin
         protected global::System.Web.UI.WebControls.TextBox txtMobile;
 
         /// <summary>
+        /// revNumero control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revNumero;
+
+        /// <summary>
         /// txtBirthDate control.
         /// </summary>
         /// <remarks>

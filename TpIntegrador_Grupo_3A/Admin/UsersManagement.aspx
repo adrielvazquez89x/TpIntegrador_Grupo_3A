@@ -7,20 +7,18 @@
 
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <%-- Contenedor principal --%>
+            
             <div class="container my-4">
-                <%-- Título de la página --%>
+           
                 <h2 class="text-center mb-4">Gestión de Administradores</h2>
 
-                <%-- Botón para volver --%>
                 <div class="mb-3">
                     <uc1:UserControl_ButtonBack runat="server" ID="UserControl_ButtonBack" />
                 </div>
 
-                <%-- Sección de Administradores --%>
                 <div class="row d-flex justify-content-center">
 
-                    <%-- Lista de Usuarios --%>
+                   
                     <div class="col-12 col-md-8 ">
                         <asp:GridView
                             ID="dgvUsers"
@@ -40,7 +38,7 @@
                                 <asp:BoundField DataField="Mobile" HeaderText="Celular" ItemStyle-CssClass="align-middle" />
                                 <asp:BoundField DataField="RegistrationDate" HeaderText="Fecha de Alta" ItemStyle-CssClass="align-middle" DataFormatString="{0:dd/MM/yyyy}" />
 
-                                <%-- Estado Activo/Inactivo --%>
+                              
                                 <asp:TemplateField HeaderText="Activo">
                                     <ItemTemplate>
                                         <div class="text-center">
@@ -51,13 +49,13 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                <%-- Acciones --%>
+                               
                                 <asp:TemplateField HeaderText="Estado">
                                     <ItemTemplate>
                                         <div class="d-flex justify-content-center">
 
 
-                                            <%-- Botón Editar --%>
+                                           
                                             <asp:LinkButton
                                                 ID="btnEditUser"
                                                 runat="server"
@@ -67,7 +65,7 @@
                                                 <i class="bi bi-pencil-square"></i>
                                             </asp:LinkButton>
 
-                                            <%-- Botón Eliminar --%>
+                                           
                                             <asp:LinkButton
                                                 ID="btnDeleteUser"
                                                 runat="server"
@@ -79,7 +77,7 @@
                                                 <i class="bi bi-trash-fill"></i>
                                             </asp:LinkButton>
 
-                                            <%-- Botón Activar --%>
+                                           
                                             <asp:LinkButton
                                                 ID="btnActivateUser"
                                                 runat="server"
@@ -101,7 +99,7 @@
                 <div class="text-center my-3">
                     <asp:Button ID="btnAddUser" runat="server" CssClass="btn btn-primary mb-3" Text="Agregar Nuevo Usuario" OnClick="btnAddUser_Click" />
                 </div>
-                <%-- Toast de Notificaciones --%>
+               
                 <uc1:UserControl_Toast runat="server" ID="UserControl_Toast" />
             </div>
         </ContentTemplate>

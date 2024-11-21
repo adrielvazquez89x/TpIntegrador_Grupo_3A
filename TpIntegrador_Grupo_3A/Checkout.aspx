@@ -64,7 +64,7 @@
                     <h4 class="mt-4">Método de pago</h4>
                     <div class="form-group">
                         <asp:DropDownList ID="ddlMetodoPago" runat="server" CssClass="form-select mb-3">
-                            <asp:ListItem Value="1">Mercado Pago</asp:ListItem>
+                            <asp:ListItem Value="1">Efectivo</asp:ListItem>
                             <asp:ListItem Value="2">Tarjeta</asp:ListItem>
                         </asp:DropDownList>
                     </div>
@@ -88,9 +88,8 @@
                         </div>
                     </div>
 
-                    <!-- Detalles de pago con Mercado Pago -->
-                    <div id="panelMercadoPago" class="mt-3" style="display: none;">
-                        <p>Serás redirigido a Mercado Pago para completar tu transacción de forma segura.</p>
+                    <div id="panelEfectivo" class="mt-3" style="display: none;">
+                        <p>Se abonará al recibir el producto</p>
 
                     </div>
 
@@ -174,21 +173,6 @@
         // Controlar la visibilidad de los paneles de pago
         var ddlMetodoPago = document.getElementById('<%= ddlMetodoPago.ClientID %>');
         var panelTarjeta = document.getElementById('panelTarjeta');
-        var panelMercadoPago = document.getElementById('panelMercadoPago');
-
-        function togglePaymentPanels() {
-            if (ddlMetodoPago.value === "2") { // Tarjeta
-                panelTarjeta.style.display = 'block';
-                panelMercadoPago.style.display = 'none';
-            } else if (ddlMetodoPago.value === "1") { // Mercado Pago
-                panelTarjeta.style.display = 'none';
-                panelMercadoPago.style.display = 'block';
-            } else {
-                panelTarjeta.style.display = 'none';
-                panelMercadoPago.style.display = 'none';
-            }
-        }
-
 
         togglePaymentPanels();
 

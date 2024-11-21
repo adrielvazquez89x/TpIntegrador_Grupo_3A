@@ -17,17 +17,10 @@ namespace TpIntegrador_Grupo_3A.Admin
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            {
-                // Verificar que el usuario esté autenticado y tenga los roles necesarios
-                //User currentUser = Session["CurrentUser"] as User;
-                //if (currentUser == null || !(currentUser.Admin || currentUser.Owner))
-                //{
-                //    Response.Redirect("~/Login.aspx"); // Redirigir al login si no tiene permisos
-                //}
-                //else
-                //{
-                    BindUsers(); // Cargar los usuarios si tiene los permisos adecuados
-                //}
+            { 
+                
+                    BindUsers(); 
+                
             }
         }
 
@@ -69,7 +62,7 @@ namespace TpIntegrador_Grupo_3A.Admin
 
         protected void btnEditUser_Click(object sender, EventArgs e)
         {
-            //User user = GetUserFromCommandArgument(sender);
+            
             LinkButton btn = (LinkButton)sender;
 
             
@@ -94,6 +87,7 @@ namespace TpIntegrador_Grupo_3A.Admin
             }
             else
             {
+                
                 UserControl_Toast.ShowToast("Error al dar de baja al usuario", false);
             }
         }
@@ -114,6 +108,7 @@ namespace TpIntegrador_Grupo_3A.Admin
             }
             else
             {
+                
                 UserControl_Toast.ShowToast("Error al activar el usuario", false);
             }
         }
@@ -121,11 +116,11 @@ namespace TpIntegrador_Grupo_3A.Admin
 
         private Model.User GetUserFromCommandArgument(object sender)
         {
-            //Viene el botón de editar, se hace un split para obtener los datos
+            
             LinkButton btn = (LinkButton)sender;
-            //Separamos todo el string, con el método split, muy similar a js
+           
             string[] args = btn.CommandArgument.Split('|');
-            //Parseamos los datos, porque split me devuelve un array de strings
+            
             int userId = int.Parse(args[0]);
             bool userActive = bool.Parse(args[1]);
 

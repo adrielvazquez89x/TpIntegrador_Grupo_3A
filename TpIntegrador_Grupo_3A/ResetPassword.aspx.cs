@@ -29,16 +29,15 @@ namespace TpIntegrador_Grupo_3A
 
                 if (user != null && user.Active)
                 {
-                    // Generar el token de restablecimiento de contraseña
+                  
                     var token = businessUser.GenerateToken();
 
                     businessUser.StoreResetToken(userEmail, token);
 
 
-                    // Crear el enlace para restablecer la contraseña
                     var resetLink = $"https://localhost:44379/ResetPasswordConfirm.aspx?email={userEmail}&token={token}";
 
-                    // Enviar el correo
+                   
                     EmailService emailService = new EmailService("programacionsorteos@gmail.com", "rdnnfccpmyfoamap");
 
                     var subject = "Restablecer Contraseña";

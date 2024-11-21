@@ -32,7 +32,7 @@ namespace TpIntegrador_Grupo_3A
 
                 if (Cart == null || Cart.Items == null || Cart.Items.Count == 0)
                 {
-                    // Redirigir al carrito si está vacío
+                   
                     Response.Redirect("Cart.aspx", false);
                     return;
                 }
@@ -42,7 +42,7 @@ namespace TpIntegrador_Grupo_3A
 
                 if (!IsPostBack)
                 {
-                    // Inicializar campos
+                    
                     txtName.Text = user.FirstName ?? "";
                     txtDni.Text = user.Dni?.ToString() ?? "";
 
@@ -77,11 +77,11 @@ namespace TpIntegrador_Grupo_3A
                 IdUser = user.UserId,
                 date = DateTime.Now,
                 Total = user.Cart.SumTotal(),
-                State = "Pendiente",  // Estado inicial de la compra
+                State = "Pendiente", 
                 Details = new List<PurchaseDetail>()
             };
 
-            // Añadir los detalles de la compra (productos del carrito)
+           
             foreach (var item in user.Cart.Items)
             {
                 var detail = new PurchaseDetail
@@ -93,30 +93,30 @@ namespace TpIntegrador_Grupo_3A
                 purchase.Details.Add(detail);
             }
 
-            // Llamar al servicio de BusinessPurchase para guardar la compra
+            
             var businessPurchase = new BusisnessPurchase();
             businessPurchase.SavePurchase(purchase);
 
-            //var userEmail = user.Email;
+            
             byte[] pdfBytes = GeneratePdf();
 
 
             var subject = "Confirmacion de compra";
             var body = "Adjunto encontrarás el detalle de tu compra en formato PDF.";
-            //var body = GenerateBody();
+         
 
             EmailService emailService = new EmailService("programacionsorteos@gmail.com", "rdnnfccpmyfoamap");
 
             MemoryStream ms = new MemoryStream(pdfBytes);
 
-            // Crear el archivo adjunto (PDF)
+            
             ms.Position = 0;
             Console.WriteLine($"Tamaño del PDF generado: {ms.Length} bytes");
             var attachment = new System.Net.Mail.Attachment(ms, "ConfirmacionCompra.pdf", "application/pdf");
 
             Task.Run(() => emailService.SendEmailAsync(userEmail, subject, body, attachment));
 
-            // Vaciar el carrito despues de que ya compro 
+             
             user.Cart.ClearCart();
 
             Response.Redirect("BuyConfirmation.aspx", false);
@@ -124,36 +124,36 @@ namespace TpIntegrador_Grupo_3A
 
         private byte[] GeneratePdf()
         {
-            // Crear el archivo PDF en memoria (stream)
+          
             using (MemoryStream ms = new MemoryStream())
             {
                 PdfWriter writer = new PdfWriter(ms);
                 PdfDocument pdf = new PdfDocument(writer);
                 Document document = new Document(pdf);
 
-                // Configuración de estilo (fuentes, tamaños y colores)
+              
                 PdfFont fontHeader = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
                 PdfFont fontNormal = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
                 PdfFont fontItalic = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_OBLIQUE);
 
-                // Estilo de la tabla
-                float[] columnWidths = { 3, 1, 1, 2 };  // Ajuste el tamaño de las columnas
+                
+                float[] columnWidths = { 3, 1, 1, 2 };  
                 iText.Layout.Element.Table table = new iText.Layout.Element.Table(columnWidths);
 
-                // Título de la factura
+                
                 document.Add(new Paragraph("Factura de Compra")
                     .SetFont(fontHeader)
                     .SetFontSize(18)
                     .SetTextAlignment(TextAlignment.CENTER)
                     .SetMarginBottom(10));
 
-                // Encabezados de la tabla
+             
                 table.AddHeaderCell(new Cell().Add(new Paragraph("Producto").SetFont(fontHeader).SetFontSize(12)));
                 table.AddHeaderCell(new Cell().Add(new Paragraph("Cantidad").SetFont(fontHeader).SetFontSize(12)));
                 table.AddHeaderCell(new Cell().Add(new Paragraph("Precio Unitario").SetFont(fontHeader).SetFontSize(12)));
                 table.AddHeaderCell(new Cell().Add(new Paragraph("Subtotal").SetFont(fontHeader).SetFontSize(12)));
 
-                // Agregar los productos del carrito
+               
                 Model.User user = (Model.User)Session["user"];
                 if (user != null && user.Cart != null && user.Cart.Items != null)
                 {
@@ -165,15 +165,15 @@ namespace TpIntegrador_Grupo_3A
                         table.AddCell(new Cell().Add(new Paragraph($"${item.Subtotal:F2}").SetFont(fontNormal).SetFontSize(12)));
                     }
 
-                    // Total de la compra
+                    
                     table.AddCell(new Cell(1, 3).Add(new Paragraph("Total").SetFont(fontHeader).SetFontSize(12)).SetTextAlignment(TextAlignment.RIGHT));
                     table.AddCell(new Cell().Add(new Paragraph($"${user.Cart.SumTotal():F2}").SetFont(fontHeader).SetFontSize(12)));
                 }
 
-                // Agregar la tabla al documento
+                
                 document.Add(table);
 
-                // Detalles adicionales (pie de página, fecha, etc.)
+               
                 document.Add(new Paragraph("\nGracias por tu compra!")
                     .SetFont(fontItalic)
                     .SetFontSize(10)
@@ -189,10 +189,10 @@ namespace TpIntegrador_Grupo_3A
                     .SetFontSize(10)
                     .SetTextAlignment(TextAlignment.CENTER));
 
-                // Cerrar el documento
+               
                 document.Close();
 
-                // Retornar el PDF generado como un arreglo de bytes
+                
                 return ms.ToArray();
             }
         }
@@ -201,8 +201,8 @@ namespace TpIntegrador_Grupo_3A
         {
             List<string> errores = new List<string>();
 
-            // Validar datos según el método de pago seleccionado
-            if (ddlMetodoPago.SelectedValue == "2") // Tarjeta
+           
+            if (ddlMetodoPago.SelectedValue == "2") 
             {
                 if (string.IsNullOrWhiteSpace(txtTarjetaNumero.Text) || txtTarjetaNumero.Text.Length != 19)
                 {
@@ -220,8 +220,8 @@ namespace TpIntegrador_Grupo_3A
                 }
             }
 
-            // Validar campos de dirección si la entrega es a domicilio
-            if (ddlEntrega.SelectedValue == "1") // A domicilio
+            
+            if (ddlEntrega.SelectedValue == "1") 
             {
                 if (string.IsNullOrWhiteSpace(txtProvince.Text) ||
                     string.IsNullOrWhiteSpace(txtTown.Text) ||
@@ -236,7 +236,7 @@ namespace TpIntegrador_Grupo_3A
                 }
             }
 
-            // Si hay errores, mostrar mensaje y no habilitar el botón
+            
             if (errores.Count > 0)
             {
                 lblError.Text = string.Join("<br />", errores);
@@ -245,7 +245,7 @@ namespace TpIntegrador_Grupo_3A
                 return;
             }
 
-            // Si no hay errores, habilitar el botón "Realizar compra"
+            
             lblError.Text = "Datos confirmados correctamente.";
             lblError.CssClass = "text-success";
             btnFinalizar.Enabled = true;
@@ -274,9 +274,5 @@ namespace TpIntegrador_Grupo_3A
             }
         }
 
-        protected void btnMercadoPago_Click(object sender, EventArgs e)
-        {
-            // Aquí manejas la redirección o lógica para Mercado Pago
-        }
     }
 }

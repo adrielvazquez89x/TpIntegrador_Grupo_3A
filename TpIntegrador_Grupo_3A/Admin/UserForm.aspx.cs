@@ -19,7 +19,7 @@ namespace TpIntegrador_Grupo_3A.Admin
                 string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
 
                 if (!IsPostBack && !string.IsNullOrEmpty(id))
-                //if (id != "" && !IsPostBack)
+             
                 {
                     Model.User select = (businessUser.ListUsers(id))[0];
 
@@ -31,13 +31,13 @@ namespace TpIntegrador_Grupo_3A.Admin
                     txtPassword.Text = select.PasswordHash;
                     if (select.BirthDate.HasValue)
                     {
-                        txtBirthDate.Text = select.BirthDate.Value.ToString("yyyy-MM-dd"); // Formato año-mes-día
+                        txtBirthDate.Text = select.BirthDate.Value.ToString("yyyy-MM-dd");
                     }
                     else
                     {
-                        txtBirthDate.Text = ""; // O un valor por defecto si es nula
+                        txtBirthDate.Text = ""; 
                     }
-                    // txtBirthDate.Text = select.BirthDate.Value.ToString("yyyy-MM-dd");
+                   
 
                     btnSave.Text = "Actualizar Usuario";
                     txtEmail.ReadOnly = true;
@@ -68,22 +68,22 @@ namespace TpIntegrador_Grupo_3A.Admin
 
         protected void cvBirthDate_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            // Validar que la fecha de nacimiento no sea mayor a la fecha actual
+            
             DateTime birthDate;
             if (DateTime.TryParse(args.Value, out birthDate))
             {
                 if (birthDate > DateTime.Now)
                 {
-                    args.IsValid = false; // Si la fecha es mayor a la actual, la validación falla
+                    args.IsValid = false; 
                 }
                 else
                 {
-                    args.IsValid = true; // La fecha es válida
+                    args.IsValid = true; 
                 }
             }
             else
             {
-                args.IsValid = false; // Si no se puede parsear la fecha, la validación falla
+                args.IsValid = false; 
             }
         }
 
@@ -121,7 +121,7 @@ namespace TpIntegrador_Grupo_3A.Admin
 
                     if (Request.QueryString["id"] != null)
                     {
-                        // Actualizar el usuario existente
+                     
                         user.UserId = int.Parse(Request.QueryString["id"]);
                         businessUser.UpdateUserForm(user);
                         UserControl_Toast.ShowToast("Usuario actualizado correctamente.", true);
@@ -146,7 +146,7 @@ namespace TpIntegrador_Grupo_3A.Admin
             }
             catch (Exception ex)
             {
-                // Manejo de errores
+                
                 UserControl_Toast.ShowToast($"Error al crear el usuario: {ex.Message}", false);
             }
         }

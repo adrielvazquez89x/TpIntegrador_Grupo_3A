@@ -31,13 +31,13 @@ namespace TpIntegrador_Grupo_3A
 
                 if (txtPassword.Text != txtConfirmPass.Text)
                 {
-                    //lblError.Text = "Las contraseñas no coinciden.";
+                    
                     return;
                 }
 
                 if (txtPassword.Text.Length < 8)
                 {
-                    //lblError.Text = "La contraseña debe tener entre 3 y 9 caracteres.";
+                   
                     return;
                 }
 
@@ -68,7 +68,7 @@ namespace TpIntegrador_Grupo_3A
             catch (Exception ex)
             {
                 Session.Add("error", ex.ToString());
-                //Response.Redirect("Error.aspx");
+                Response.Redirect("Error.aspx", false);
             }
 
         }

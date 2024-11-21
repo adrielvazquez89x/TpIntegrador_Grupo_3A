@@ -24,8 +24,7 @@ namespace Business
             {
                 data.setQuery("SELECT Id, Provincia, Ciudad, Barrio, Calle, Numero, CP, Piso, Unidad FROM Direcciones");
 
-                // Si se proporciona un ID, se ajusta la consulta
-                //para precargar un agente existente
+             
                 if (!string.IsNullOrEmpty(id))
                 {
                     data.setQuery("SELECT Id, Provincia, Ciudad, Barrio, Calle, Numero, CP, Piso, Unidad FROM Direcciones WHERE Id=" + id);
@@ -113,7 +112,7 @@ namespace Business
                         Unidad = @unidad
                     WHERE Id = @Id";
 
-                // Asignar los parámetros a la consulta
+              
                 data.setQuery(query);
                 data.setParameter("@provincia", adress.Province);
                 data.setParameter("@ciudad",adress.Town);
@@ -127,7 +126,7 @@ namespace Business
 
                 data.setParameter("@Id", adress.Id);
 
-                // Ejecutar la acción
+                
                 data.executeAction();
             }
             catch (Exception ex)

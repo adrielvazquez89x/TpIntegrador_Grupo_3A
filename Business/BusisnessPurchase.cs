@@ -44,7 +44,7 @@ namespace Business
                     data.setParameter("@Cantidad", detail.Quantity);
                     data.setParameter("@PrecioUnitario", detail.Price);
                     data.setParameter("@Subtotal", detail.Quantity * detail.Price);
-                    data.executeAction(); // Ejecutar el insert del detalle
+                    data.executeAction(); 
                 }
 
 
