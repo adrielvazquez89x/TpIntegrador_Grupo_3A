@@ -60,6 +60,7 @@
                         <%if (Security.SessionSecurity.IsAdmin(Session["user"]))
                             { %>
                         <li><a href="/Admin/ProductsManagement.aspx" class="nav-link me-2">Admin</a></li>
+                        <li><a href="/Admin/SalesManagement.aspx" class="nav-link me-2">Ventas</a></li>
                         <% if (Security.SessionSecurity.isOwner(Session["user"]))
                             { %>
                         <!-- Solo visible si también es Owner -->
@@ -105,7 +106,14 @@
                                                 <a href="/MyProfile.aspx" class="text-decoration-none">Mi Perfil</a>
                                             </li>
                                             <li>
-                                                <asp:Button Text="Salir" ID="btnExit" CssClass="text-decoration-none text-light d-block bg-transparent border-0" OnClick="btnExit_Click" runat="server" />
+                                                <asp:Button 
+                                                    Text="Salir" 
+                                                    ID="btnExit" 
+                                                    CssClass="text-decoration-none mt-4 text-light d-block bg-transparent border-0" 
+                                                    OnClick="btnExit_Click" 
+                                                    UseSubmitBehavior="false"
+                                                    runat="server" 
+                                                    />
                                             </li>
                                         </ul>
                                     </div>
