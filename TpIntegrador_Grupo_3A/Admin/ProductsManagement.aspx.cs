@@ -17,9 +17,8 @@ namespace TpIntegrador_Grupo_3A.Admin
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            //volver a poner para verificar la seguridad
             var user = Session["user"];
-            if (user == null || !SessionSecurity.IsAdmin(user))
+            if (user == null || !Security.SessionSecurity.IsAdmin(user))
             {
                 // Redirige a Login.aspx si no es un administrador o si no hay sesión
                 Response.Redirect("~/Login.aspx");

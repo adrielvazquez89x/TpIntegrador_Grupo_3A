@@ -42,17 +42,22 @@ namespace TpIntegrador_Grupo_3A
                     imgAvatar.ImageUrl = "~/Images/" + ((Model.User)Session["user"]).ImageUrl;
                 else
                     imgAvatar.ImageUrl = "https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Download-Free-PNG.png";
+                if (!Security.SessionSecurity.IsAdmin(user))
+                {
+                    if ((base.Page is Categories || base.Page is Colours || base.Page is ProductsManagement || base.Page is Seasons || base.Page is Sections || base.Page is Sizes || base.Page is StockManagement || base.Page is SubCategories || base.Page is UserForm || base.Page is UsersManagement) && (Session["error"] == null))
+                        Response.Redirect("~/Login.aspx", false);
+                }
+                else if (!Security.SessionSecurity.isOwner(user)) 
+                {
+                    if (( base.Page is UserForm || base.Page is UsersManagement) && (Session["error"] == null))
+                        Response.Redirect("~/Login.aspx", false);
+                }
             }
             else
             {
                 if (!(base.Page is Login || base.Page is Register || base.Page is ResetPassword || base.Page is ResetPasswordConfirm || base.Page is Products || base.Page is Default || base.Page is Details || base.Page is Error) && (Session["error"] == null))
                     Response.Redirect("~/Login.aspx", false);
             }
-
-            //if (Request.Url.AbsolutePath.Contains("login") || Request.Url.AbsolutePath.Contains("Login"))
-            //{
-            //    sidebar.Visible = false;
-            //}
         }
 
         protected void RepeaterSidebar_ItemDataBound(object sender, RepeaterItemEventArgs e)
