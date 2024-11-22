@@ -46,17 +46,18 @@ namespace TpIntegrador_Grupo_3A
                     txtName.Text = user.FirstName ?? "";
                     txtDni.Text = user.Dni?.ToString() ?? "";
 
-                    if (user.Address != null)
-                    {
-                        txtProvince.Text = user.Address.Province ?? "";
-                        txtTown.Text = user.Address.Town ?? "";
-                        txtDistrict.Text = user.Address.District ?? "";
-                        txtCP.Text = user.Address.CP?.ToString() ?? "";
-                        txtStreet.Text = user.Address.Street ?? "";
-                        txtNumber.Text = user.Address.Number.ToString() ?? "";
-                        txtFloor.Text = user.Address.Floor ?? "";
-                        txtUnit.Text = user.Address.Unit ?? "";
-                    }
+                    
+                }
+                if (user.Address != null)
+                {
+                    txtProvince.Text = user.Address.Province ?? "";
+                    txtTown.Text = user.Address.Town ?? "";
+                    txtDistrict.Text = user.Address.District ?? "";
+                    txtCP.Text = user.Address.CP?.ToString() ?? "";
+                    txtStreet.Text = user.Address.Street ?? "";
+                    txtNumber.Text = user.Address.Number.ToString() ?? "";
+                    txtFloor.Text = user.Address.Floor ?? "";
+                    txtUnit.Text = user.Address.Unit ?? "";
                 }
             }
             else
