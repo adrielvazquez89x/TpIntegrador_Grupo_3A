@@ -117,6 +117,7 @@ namespace TpIntegrador_Grupo_3A.Admin
                 product.Season.Id = int.Parse(ddlSeason.SelectedValue);
 
                 product.CreationDate = DateTime.Now;
+                product.IsActive = (bool)Session["isActive"];
 
                 // Lista para almacenar las nuevas imágenes
                 List<ImageProduct> newImagesList = new List<ImageProduct>();

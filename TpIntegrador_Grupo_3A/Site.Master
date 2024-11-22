@@ -59,12 +59,12 @@
 
                         <%if (Security.SessionSecurity.IsAdmin(Session["user"]))
                             { %>
-                        <li><a href="/Admin/ProductsManagement.aspx" class="nav-link me-2">Admin</a></li>
+                        <li><a href="/Admin/ProductsManagement.aspx" class="nav-link me-2">Administrar</a></li>
                         <li><a href="/Admin/SalesManagement.aspx" class="nav-link me-2">Ventas</a></li>
                         <% if (Security.SessionSecurity.isOwner(Session["user"]))
                             { %>
                         <!-- Solo visible si también es Owner -->
-                        <li><a href="/Admin/UsersManagement.aspx" class="nav-link me-2">Owner</a></li>
+                        <li><a href="/Admin/UsersManagement.aspx" class="nav-link me-2">Administración Dueño</a></li>
                         <%}%>
                              <%}else
                             { %>
